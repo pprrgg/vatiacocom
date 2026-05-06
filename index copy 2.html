@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.web = "Vatiaco";
+        var initials = "VA";
+        document.title = window.web + " - Perspectiva Energética Global";
+
+        function generateFavicon(initials) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.width = 64; canvas.height = 64;
+            context.fillStyle = "#003399";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "bold 40px sans-serif";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillStyle = "white";
+            context.fillText(initials, canvas.width / 2, canvas.height / 2);
+            var link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = canvas.toDataURL('image/png');
+            document.head.appendChild(link);
+        }
+        window.onload = () => { generateFavicon(initials); };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #050a18;
+            overflow-x: hidden;
+        }
+
+        /* NAVEGACIÓN CAPA SUPREMA */
+        nav {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            z-index: 10000 !important;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+
+        /* MEGA-MENU */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: 0.3s;
+            z-index: 10001 !important;
+            top: 60px;
+            background: white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .group:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* VISOR IFRAME */
+        #app-viewer {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: #f1f5f9;
+            z-index: 8000;
+            display: none;
+            border-top: 1px solid #cbd5e1;
+        }
+
+        header#inicio {
+            margin-top: 80px;
+        }
+
+        .mobile-submenu {
+            display: none;
+        }
+
+        .mobile-submenu.active {
+            display: block;
+        }
+
+        .rotate-icon {
+            transform: rotate(180deg);
+        }
+
+        .fixed-video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.85;
+            filter: brightness(0.7) contrast(1.1);
+        }
+
+        .text-shadow-hero {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .window-section {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .solid-section {
+            position: relative;
+            z-index: 20;
+            background: white;
+            box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .news-card {
+            background: white;
+            border-left: 4px solid #003399;
+            transition: 0.4s;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateX(10px);
+            background: #f8faff;
+            border-left-color: #22c55e;
+        }
+
+        #map {
+            height: 350px;
+            width: 100%;
+            border: 1px solid #ddd;
+            z-index: 10;
+        }
+
+        .btn-euronews {
+            background: #003399;
+            color: white;
+            padding: 15px 30px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-euronews:hover {
+            background: #22c55e;
+        }
+
+        .close-app-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10005;
+            background: #ef4444;
+            color: white;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay muted loop playsinline class="fixed-video-bg">
+        <source src="smart_grid_aerial_viewmp_.mp4" type="video/mp4">
+    </video>
+
+    <!-- VISOR DE IFRAME -->
+    <div id="app-viewer">
+        <div class="close-app-btn" onclick="closeApp()">
+            <i class="material-icons">close</i>
+        </div>
+        <iframe id="app-iframe" class="w-full h-full border-none" src=""></iframe>
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center relative">
+            <div class="flex items-center gap-2 cursor-pointer"
+                onclick="closeApp(); window.scrollTo({top:0, behavior:'smooth'})">
+                <i class="material-icons text-[#003399] text-3xl">bolt</i>
+                <span class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-[#003399]">Vatiaco<span
+                        class="text-slate-400">.com</span></span>
+            </div>
+
+            <div id="desktop-menu" class="hidden lg:flex items-center h-20 space-x-1"></div>
+
+            <button id="sandwich-btn" class="lg:hidden text-slate-900 p-2 focus:outline-none"><i
+                    class="material-icons text-4xl">menu</i></button>
+
+            <div id="mobile-nav"
+                class="hidden absolute top-full left-0 w-full bg-white border-t shadow-2xl z-[11000] p-8 flex-col space-y-4 max-h-[85vh] overflow-y-auto">
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="window-section" id="inicio">
+        <div class="max-w-7xl mx-auto px-6 text-white w-full">
+            <span
+                class="bg-[#003399] px-4 py-1 text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-4 shadow-lg">Perspectiva
+                Global</span>
+            <h1
+                class="text-5xl md:text-9xl font-black leading-tight md:leading-[0.8] mb-8 tracking-tighter italic uppercase text-shadow-hero">
+                Tu visión <br><span class="text-[#ffd700]">A pleno Vatio.</span></h1>
+            <p class="text-lg md:text-2xl max-w-xl font-bold text-shadow-hero">Ingeniería de microredes distribuida bajo
+                el estándar State-of-Grid.</p>
+        </div>
+    </header>
+
+    <!-- SECCIÓN SOFTWARE (Ahora es el destino del menú) -->
+    <section id="software" class="solid-section py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2
+                class="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-12 border-b-4 border-slate-100 pb-4">
+                Software <span class="text-[#003399]">Suite</span></h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- CARD ROI -->
+                <div class="news-card" id="card-roi">
+                    <span class="text-[10px] font-black text-blue-600 mb-2 uppercase tracking-widest">Financial
+                        Tech</span>
+                    <h3 class="text-2xl font-black mb-4 uppercase">ROI Simulator</h3>
+                    <p class="text-slate-500 mb-8 flex-grow leading-relaxed">Modelado financiero avanzado. Calcule la
+                        amortización técnica de su instalación en segundos.</p>
+                    <button onclick="openApp('https://informetecnicoeconomico.com/')" class="btn-euronews">Ejecutar
+                        Simulador</button>
+                </div>
+                <!-- CARD IOT -->
+                <div class="news-card" id="card-iot">
+                    <span class="text-[10px] font-black text-green-600 mb-2 uppercase tracking-widest">Industrial
+                        IoT</span>
+                    <h3 class="text-2xl font-black mb-4 uppercase">SoG Monitor</h3>
+                    <p class="text-slate-500 mb-8 flex-grow leading-relaxed">Visualización State-of-Grid impulsada por
+                        ThingsBoard. Control operativo 24/7.</p>
+                    <button onclick="openApp('https://thingsboard.io/')" class="btn-euronews">Acceder al Portal</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- SECCIÓN MICROREDES CORREGIDA -->
+<section id="microredes" class="window-section overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 text-white text-right w-full">
+        <!-- Ajuste de text-4xl a text-8xl con breaking dinámico -->
+        <h4 class="text-4xl sm:text-6xl md:text-8xl font-black italic uppercase leading-[0.9] mb-8 text-shadow-hero break-words overflow-wrap-anywhere">
+            Redes <br>
+            <span class="text-[#003399] bg-white px-2 inline-block max-w-full">
+                Descentra<wbr>lizadas.
+            </span>
+        </h4>
+        
+        <div class="inline-block border-r-8 border-green-500 pr-4 md:pr-6 text-right">
+            <span class="block text-3xl md:text-5xl font-black tracking-tighter text-shadow-hero">400.0V DC</span>
+            <p class="text-[9px] md:text-[10px] uppercase font-bold text-green-400 mt-2 tracking-widest italic">
+                Protocolo Vasos Comunicantes
+            </p>
+        </div>
+    </div>
+</section>
+
+    <!-- SECCIÓN COMUNIDADES -->
+    <section id="comunidades" class="solid-section py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-black uppercase italic mb-8">Comunidades <span
+                        class="text-[#003399]">IDAE</span></h2>
+                <p class="text-slate-600 text-lg mb-10 italic">Consultoría para la creación de Comunidades Energéticas
+                    Locales y tramitación de ayudas públicas del IDAE.</p>
+                <button onclick="openApp('https://www.idae.es/ayudas-y-financiacion/comunidades-energeticas')"
+                    class="btn-euronews">Abrir Portal IDAE</button>
+            </div>
+            <div class="h-64 md:h-96 grayscale hover:grayscale-0 transition duration-700 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=800"
+                    class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section id="contacto" class="solid-section py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-3xl font-black uppercase italic mb-8 border-b-4 border-slate-50 pb-4">Corresponsalía
+                        <span class="text-[#003399]">Técnica</span></h2>
+                    <form id="contactForm" class="space-y-5">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div><label
+                                    class="text-[10px] font-black text-[#003399] uppercase mb-1 block">Nombre</label><input
+                                    type="text" id="name" name="name"
+                                    class="w-full p-4 border-2 border-slate-100 focus:border-[#003399] outline-none transition"
+                                    required></div>
+                            <div><label
+                                    class="text-[10px] font-black text-[#003399] uppercase mb-1 block">Teléfono</label><input
+                                    type="tel" id="phone" name="phone"
+                                    class="w-full p-4 border-2 border-slate-100 focus:border-[#003399] outline-none transition"
+                                    required></div>
+                        </div>
+                        <div><label
+                                class="text-[10px] font-black text-[#003399] uppercase mb-1 block">Email</label><input
+                                type="email" id="email" name="email"
+                                class="w-full p-4 border-2 border-slate-100 focus:border-[#003399] outline-none transition"
+                                required></div>
+                        <div id="map" class="shadow-lg"></div>
+                        <input type="hidden" id="lat"><input type="hidden" id="lng">
+                        <button type="submit" class="btn-euronews w-full text-lg">Solicitar Estudio Satelital</button>
+                        <p id="formStatus" class="mt-4 text-center font-bold text-[#003399] uppercase text-xs"></p>
+                    </form>
+                </div>
+                <div class="p-12 bg-[#050a18] text-white flex flex-col justify-center shadow-2xl">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-[#ffd700] mb-8">Ventajas Vatiaco</h4>
+                    <ul class="space-y-8">
+                        <li class="flex gap-5 items-start">
+                            <i class="material-icons text-[#003399] text-3xl">check_circle</i>
+                            <div><b class="block uppercase text-sm mb-1">Independencia Energética</b><span
+                                    class="text-slate-400 text-sm">Protocolo SoG garantizado.</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="solid-section bg-[#050a18] text-white py-12 text-center">
+        <span class="text-2xl font-black uppercase">Vatiaco<span class="text-[#003399]">.com</span></span>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // CONFIGURACIÓN JSON (Corregida: enlaces siempre internos a la sección)
+        const menuData = [
+            {
+                title: "Ingeniería",
+                items: [
+                    { label: "Microredes DC", desc: "Sistemas State-of-Grid.", link: "#microredes" },
+                    { label: "Comunidades", desc: "Proyectos CEL / IDAE.", link: "#comunidades" },
+                    { label: "Estudio Satelital", desc: "Viabilidad técnica.", link: "#contacto" }
+                ]
+            },
+            {
+                title: "Software",
+                items: [
+                    { label: "Simulador ROI", desc: "Cálculo de retorno.", link: "#software" },
+                    { label: "Monitor IoT", desc: "Telemetría en vivo.", link: "#software" }
+                ]
+            }
+        ];
+
+        // RENDERIZADO
+        const desktopMenu = document.getElementById('desktop-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        menuData.forEach((section, idx) => {
+            desktopMenu.innerHTML += `
+                <div class="group h-full flex items-center">
+                    <button class="px-6 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-[#003399] flex items-center outline-none">
+                        ${section.title} <i class="material-icons text-xs ml-1">expand_more</i>
+                    </button>
+                    <div class="mega-menu absolute left-0 w-full bg-white shadow-2xl border-t p-10">
+                        <div class="max-w-7xl mx-auto grid grid-cols-3 gap-6">
+                            ${section.items.map(item => `
+                                <a href="${item.link}" class="news-card" onclick="closeApp()">
+                                    <span class="block font-black text-xs uppercase mb-2 text-slate-800">${item.label}</span>
+                                    <p class="text-[10px] text-slate-400 uppercase leading-tight">${item.desc}</p>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>`;
+
+            mobileNav.innerHTML += `
+                <div class="border-b border-slate-100 pb-2">
+                    <button onclick="toggleMobileSub(${idx})" class="w-full flex justify-between items-center py-3 font-black uppercase text-sm text-slate-700 outline-none">
+                        ${section.title} <i class="material-icons transition-transform" id="arrow-${idx}">expand_more</i>
+                    </button>
+                    <div id="sub-${idx}" class="mobile-submenu pl-4 flex flex-col space-y-4 py-2">
+                        ${section.items.map(item => `
+                            <a href="${item.link}" class="text-xs font-bold text-slate-500 uppercase" onclick="closeMobileMenu(); closeApp();">
+                                ${item.label}
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>`;
+        });
+
+        function toggleMobileSub(idx) {
+            document.getElementById(`sub-${idx}`).classList.toggle('active');
+            document.getElementById(`arrow-${idx}`).classList.toggle('rotate-icon');
+        }
+
+        document.getElementById('sandwich-btn').onclick = () => {
+            mobileNav.classList.toggle('hidden');
+            mobileNav.classList.toggle('flex');
+        };
+
+        function closeMobileMenu() {
+            mobileNav.classList.add('hidden');
+            mobileNav.classList.remove('flex');
+        }
+
+        function openApp(url) {
+            const viewer = document.getElementById('app-viewer');
+            const iframe = document.getElementById('app-iframe');
+            iframe.src = "about:blank";
+            viewer.style.display = 'block';
+            setTimeout(() => { iframe.src = url; }, 50);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeApp() {
+            document.getElementById('app-viewer').style.display = 'none';
+            document.getElementById('app-iframe').src = "";
+        }
+
+        // MAPA
+        var map = L.map('map', { scrollWheelZoom: false }).setView([36.7213, -4.4214], 16);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Esri' }).addTo(map);
+        var marker;
+        map.on('click', function (e) {
+            if (marker) marker.setLatLng(e.latlng);
+            else marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('lat').value = e.latlng.lat;
+            document.getElementById('lng').value = e.latlng.lng;
+        });
+
+        // FORMULARIO
+        document.getElementById("contactForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById("formStatus");
+            statusEl.textContent = "PROCESANDO SOLICITUD...";
+            const formData = new FormData(e.target);
+            const params = new URLSearchParams(formData);
+            params.append('lat', document.getElementById('lat').value);
+            params.append('lng', document.getElementById('lng').value);
+            params.append('asunto', 'Lead Vatiaco Satelital');
+            try {
+                const res = await fetch("https://doctec.duckdns.org/fast/contacto", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: params.toString()
+                });
+                if (res.ok) { statusEl.textContent = "¡ENVIADO CORRECTAMENTE!"; statusEl.style.color = "#22c55e"; e.target.reset(); }
+            } catch (err) { statusEl.textContent = "ERROR DE SERVIDOR"; }
+        });
+    </script>
+</body>
+
+</html>

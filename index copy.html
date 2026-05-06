@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.web = "Vatiaco";
+        var initials = "VA";
+        document.title = window.web + " - Perspectiva Energética Global";
+
+        function generateFavicon(initials) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.width = 64; canvas.height = 64;
+            context.fillStyle = "#003399";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = "bold 40px sans-serif";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillStyle = "white";
+            context.fillText(initials, canvas.width / 2, canvas.height / 2);
+            var link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = canvas.toDataURL('image/png');
+            document.head.appendChild(link);
+        }
+        window.onload = () => { generateFavicon(initials); };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #050a18; overflow-x: hidden; }
+        
+        /* MEGA-MENU */
+        .mega-menu { opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; z-index: 3000; }
+        .group:hover .mega-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        /* MOBILE ACCORDION */
+        .mobile-submenu { display: none; }
+        .mobile-submenu.active { display: block; }
+        .rotate-icon { transform: rotate(180deg); }
+
+        /* VIDEO FONDO */
+        .fixed-video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.9; filter: brightness(0.8) contrast(1.1); }
+        .text-shadow-hero { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
+
+        .window-section { position: relative; min-height: 85vh; display: flex; align-items: center; background: transparent; z-index: 10; }
+        .solid-section { position: relative; z-index: 20; background: white; box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5); }
+
+        .news-card { background: white; border-left: 4px solid #003399; transition: 0.4s; padding: 2rem; height: 100%; display: flex; flex-direction: column; }
+        .news-card:hover { transform: translateX(10px); background: #f8faff; border-left-color: #22c55e; }
+
+        #map { height: 350px; width: 100%; border: 1px solid #ddd; z-index: 10; }
+        .btn-euronews { background: #003399; color: white; padding: 15px 30px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.3s; display: inline-block; text-align: center; }
+        .btn-euronews:hover { background: #22c55e; }
+
+        #app-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: white; z-index: 9999; display: none; }
+
+</style>
+</head>
+
+<body>
+
+    <video autoplay muted loop playsinline class="fixed-video-bg">
+        <source src="smart_grid_aerial_viewmp_.mp4" type="video/mp4">
+    </video>
+
+    <!-- VISOR DE APPS -->
+    <div id="app-viewer">
+        <div class="absolute top-5 right-5 z-[10000] bg-red-500 text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer shadow-xl" onclick="closeApp()">
+            <i class="material-icons">close</i>
+        </div>
+        <iframe id="app-iframe" class="w-full h-full border-none" src=""></iframe>
+    </div>
+
+    <!-- NAVEGACIÓN DINÁMICA -->
+    <nav class="sticky top-0 z-[5000] bg-white border-b border-slate-200 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center relative">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <i class="material-icons text-[#003399]">bolt</i>
+                <span class="text-2xl md:text-3xl font-black tracking-tighter uppercase text-[#003399]">Vatiaco<span class="text-slate-400">.com</span></span>
+            </div>
+
+            <!-- Menu Desktop (Inyectado por JS) -->
+            <div id="desktop-menu" class="hidden lg:flex items-center h-20 space-x-1"></div>
+
+            <button id="sandwich-btn" class="lg:hidden text-slate-900 p-2"><i class="material-icons text-3xl">menu</i></button>
+
+            <!-- Menú Móvil (Inyectado por JS) -->
+            <div id="mobile-nav" class="hidden absolute top-full left-0 w-full bg-white border-t shadow-2xl z-[6000] p-8 flex-col space-y-4 max-h-[85vh] overflow-y-auto"></div>
+        </div>
+    </nav>
+
+    <!-- HEADER HERO -->
+    <header class="window-section" id="inicio">
+        <div class="max-w-7xl mx-auto px-6 text-white w-full">
+            <span class="bg-[#003399] px-4 py-1 text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-4">Exclusiva Técnica</span>
+            <h1 class="text-5xl md:text-9xl font-black leading-tight md:leading-[0.8] mb-8 tracking-tighter italic uppercase text-shadow-hero">
+                Tu visión <br><span class="text-[#ffd700]">A pleno Vatio.</span></h1>
+            <p class="text-lg md:text-2xl max-w-xl font-bold text-shadow-hero">Ingeniería de microredes distribuida bajo el principio de vasos comunicantes.</p>
+        </div>
+    </header>
+
+    <!-- SECCIÓN SOFTWARE -->
+    <section id="software" class="solid-section py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-12 border-b-2 border-slate-100 pb-4">Cerebro <span class="text-[#003399]">Digital</span></h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="news-card">
+                    <span class="text-[10px] font-black text-blue-600 mb-2 uppercase">Financial Tech</span>
+                    <h3 class="text-2xl font-black mb-4 uppercase">ROI Simulator</h3>
+                    <p class="text-slate-500 mb-8 flex-grow">Proyecte su retorno de inversión antes de la instalación mediante telemetría satelital.</p>
+                    <button onclick="openApp('https://informetecnicoeconomico.com/')" class="btn-euronews">Abrir Simulador</button>
+                </div>
+                <div class="news-card">
+                    <span class="text-[10px] font-black text-green-600 mb-2 uppercase">Industrial IoT</span>
+                    <h3 class="text-2xl font-black mb-4 uppercase">SoG Monitor</h3>
+                    <p class="text-slate-500 mb-8 flex-grow">Gestión operativa impulsada por ThingsBoard para monitorización en tiempo real.</p>
+                    <button onclick="openApp('https://thingsboard.io/')" class="btn-euronews">Acceder al Portal</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN MICROREDES (VENTANA) -->
+    <section id="microredes" class="window-section">
+        <div class="max-w-7xl mx-auto px-6 text-white text-right w-full">
+            <h2 class="text-4xl md:text-8xl font-black italic uppercase leading-none mb-8">Redes <br><span class="text-[#003399] bg-white px-2">Descentralizadas.</span></h2>
+            <div class="inline-block border-r-8 border-green-500 pr-6 text-right">
+                <span class="block text-3xl md:text-5xl font-black tracking-tighter">400.0V DC</span>
+                <p class="text-[10px] uppercase font-bold text-green-400 mt-2 tracking-widest italic">Protocolo SoG / Vasos Comunicantes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN COMUNIDADES -->
+    <section id="comunidades" class="solid-section py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-black uppercase italic mb-8">Comunidades <span class="text-[#003399]">IDAE</span></h2>
+                <p class="text-slate-600 text-lg mb-10 italic">Lideramos el control técnico de Comunidades Energéticas Locales, tramitando ayudas y garantizando el reparto SoG entre miembros.</p>
+                <button onclick="openApp('https://www.idae.es/ayudas-y-financiacion/comunidades-energeticas')" class="btn-euronews">Consultar IDAE</button>
+            </div>
+            <div class="h-64 md:h-96 grayscale hover:grayscale-0 transition duration-700 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO Y MAPA -->
+    <section id="contacto" class="solid-section py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-3xl font-black uppercase italic mb-8">Corresponsalía <span class="text-[#003399]">Técnica</span></h2>
+                    <form id="contactForm" class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div><label class="text-[10px] font-black text-[#003399] uppercase">Nombre</label><input type="text" id="name" class="w-full p-3 border border-slate-200 focus:border-blue-600 outline-none" required></div>
+                            <div><label class="text-[10px] font-black text-[#003399] uppercase">Teléfono</label><input type="tel" id="phone" class="w-full p-3 border border-slate-200 focus:border-blue-600 outline-none" required></div>
+                        </div>
+                        <div><label class="text-[10px] font-black text-[#003399] uppercase">Email</label><input type="email" id="email" class="w-full p-3 border border-slate-200 focus:border-blue-600 outline-none" required></div>
+                        <div id="map"></div>
+                        <input type="hidden" id="lat"><input type="hidden" id="lng">
+                        <button type="submit" class="btn-euronews w-full">Generar Análisis Satelital</button>
+                        <p id="formStatus" class="mt-4 text-center font-bold text-[#003399] uppercase text-xs"></p>
+                    </form>
+                </div>
+                <div class="p-10 bg-slate-900 text-white flex flex-col justify-center">
+                    <h4 class="text-xs font-black uppercase tracking-widest text-[#ffd700] mb-8">Compromiso Vatiaco</h4>
+                    <ul class="space-y-6">
+                        <li class="flex gap-4 items-start"><i class="material-icons text-[#003399]">check_circle</i><span>Independencia total de la red eléctrica.</span></li>
+                        <li class="flex gap-4 items-start"><i class="material-icons text-[#003399]">check_circle</i><span>Amortización técnica garantizada por software.</span></li>
+                        <li class="flex gap-4 items-start"><i class="material-icons text-[#003399]">check_circle</i><span>Monitorización operativa en tiempo real (SoG).</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="solid-section bg-[#050a18] text-white py-12 text-center">
+        <span class="text-2xl font-black uppercase">Vatiaco<span class="text-[#003399]">.com</span></span>
+        <p class="text-slate-600 text-[10px] uppercase tracking-widest mt-6">© 2026 Vatiaco Engineering - Perspectiva Global.</p>
+    </footer>
+
+    <a href="https://wa.me/600366211" class="fixed bottom-6 right-6 bg-[#25d366] text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl z-[4000]" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // --- 1. CONFIGURACIÓN DEL MENÚ (JSON) ---
+        // Para ampliar, solo añade objetos aquí.
+        const menuData = [
+            {
+                title: "Soluciones",
+                items: [
+                    { label: "Microredes DC", desc: "Control SoG descentralizado.", link: "#microredes" },
+                    { label: "Comunidades IDAE", desc: "Gestión de CEL y ayudas.", link: "#comunidades" },
+                    { label: "Estudio Satelital", desc: "Viabilidad por telemetría.", link: "#contacto" }
+                ]
+            },
+            {
+                title: "Software Suite",
+                items: [
+                    { label: "ROI Simulator", desc: "Modelado financiero.", link: "https://informetecnicoeconomico.com/", isApp: true },
+                    { label: "Portal IoT", desc: "Gestión de red en vivo.", link: "https://thingsboard.io/", isApp: true }
+                ]
+            }
+        ];
+
+        // --- 2. RENDERIZADO DINÁMICO ---
+        const desktopMenu = document.getElementById('desktop-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        menuData.forEach((section, idx) => {
+            // Desktop
+            desktopMenu.innerHTML += `
+                <div class="group h-full flex items-center">
+                    <button class="px-6 text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-[#003399] flex items-center">
+                        ${section.title} <i class="material-icons text-xs ml-1">expand_more</i>
+                    </button>
+                    <div class="mega-menu absolute left-0 top-20 w-full bg-white shadow-2xl border-t p-10">
+                        <div class="max-w-7xl mx-auto grid grid-cols-3 gap-6">
+                            ${section.items.map(item => `
+                                <a href="${item.link}" onclick="${item.isApp ? `openApp('${item.link}'); return false;` : ''}" class="news-card">
+                                    <span class="block font-black text-xs uppercase mb-2 text-slate-800">${item.label}</span>
+                                    <p class="text-[10px] text-slate-400 uppercase">${item.desc}</p>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>`;
+
+            // Móvil
+            mobileNav.innerHTML += `
+                <div class="border-b border-slate-100 pb-2">
+                    <button onclick="toggleMobileSub(${idx})" class="w-full flex justify-between items-center py-3 font-black uppercase text-sm text-slate-700">
+                        ${section.title} <i class="material-icons transition-transform" id="arrow-${idx}">expand_more</i>
+                    </button>
+                    <div id="sub-${idx}" class="mobile-submenu pl-4 flex flex-col space-y-4 py-2">
+                        ${section.items.map(item => `
+                            <a href="${item.link}" class="text-xs font-bold text-slate-500 uppercase" 
+                               onclick="${item.isApp ? `openApp('${item.link}');` : ''} closeMobileMenu()">
+                                ${item.label}
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>`;
+        });
+
+        // --- 3. LÓGICA DE NAVEGACIÓN ---
+        function toggleMobileSub(idx) {
+            const sub = document.getElementById(`sub-${idx}`);
+            const arrow = document.getElementById(`arrow-${idx}`);
+            sub.classList.toggle('active');
+            arrow.classList.toggle('rotate-icon');
+        }
+
+        document.getElementById('sandwich-btn').onclick = () => {
+            mobileNav.classList.toggle('hidden');
+            mobileNav.classList.toggle('flex');
+        };
+
+        function closeMobileMenu() {
+            mobileNav.classList.add('hidden');
+            mobileNav.classList.remove('flex');
+        }
+
+        function openApp(url) {
+            document.getElementById('app-iframe').src = url;
+            document.getElementById('app-viewer').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeApp() {
+            document.getElementById('app-viewer').style.display = 'none';
+            document.getElementById('app-iframe').src = "";
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- 4. MAPA Y FORMULARIO (FUNCIONALIDAD MANTENIDA) ---
+        var map = L.map('map', { scrollWheelZoom: false }).setView([36.7213, -4.4214], 16);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Esri'
+        }).addTo(map);
+        
+        var marker;
+        map.on('click', function (e) {
+            if (marker) marker.setLatLng(e.latlng);
+            else marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('lat').value = e.latlng.lat;
+            document.getElementById('lng').value = e.latlng.lng;
+        });
+
+        document.getElementById("contactForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById("formStatus");
+            statusEl.textContent = "CONECTANDO CON SATÉLITE...";
+
+            const params = new URLSearchParams();
+            params.append('name', document.getElementById('name').value);
+            params.append('email', document.getElementById('email').value);
+            params.append('phone', document.getElementById('phone').value);
+            params.append('lat', document.getElementById('lat').value);
+            params.append('lng', document.getElementById('lng').value);
+            params.append('asunto', 'Petición Estudio Vatiaco');
+
+            try {
+                const res = await fetch("https://doctec.duckdns.org/fast/contacto", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: params.toString()
+                });
+                if (res.ok) {
+                    statusEl.textContent = "¡ANÁLISIS SOLICITADO!";
+                    statusEl.style.color = "#22c55e";
+                    e.target.reset();
+                }
+            } catch (err) {
+                statusEl.textContent = "ERROR DE CONEXIÓN";
+            }
+        });
+    </script>
+</body>
+</html>
