@@ -82,7 +82,7 @@
             top: 18px;
             left: 0;
             width: 100%;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 20px);
             background: white;
             z-index: 99990;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -291,27 +291,33 @@
     <nav>
         <div class="flex items-center w-full max-w-7xl mx-auto px-6 h-full relative">
 
-            <button class="text-[#003399] flex items-center mr-4 hover:opacity-70 transition"
+            <!-- Menú Hamburguesa más pequeño -->
+            <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition"
                 onclick="document.getElementById('mobile-menu').classList.toggle('active')">
-                <i class="material-icons text-3xl">menu</i>
+                <!-- Icono de menú: bajado a 20px -->
+                <i class="material-icons text-[20px]">menu</i>
             </button>
 
-            <div class="flex items-center gap-2 cursor-pointer shrink-0"
+            <!-- Logo VATIACO más compacto -->
+            <div class="flex items-center gap-1.5 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="bg-[#003399] p-1.5 rounded-sm"><i class="material-icons text-white text-xl">bolt</i></div>
-                <span class="text-xl font-black italic tracking-tighter text-[#003399]">VATIACO</span>
+                <div class="bg-[#003399] p-1 rounded-sm">
+                    <i class="material-icons text-white text-base">bolt</i> <!-- Icono base -->
+                </div>
+                <span class="text-base font-black italic tracking-tighter text-[#003399]">VATIACO</span>
             </div>
 
-            <div id="nav-content" class="hidden md:flex items-center h-full ml-6"></div>
+            <div id="nav-content" class="hidden md:flex items-center h-full ml-4"></div>
 
-            <div class="flex items-center gap-4 ml-auto">
+            <!-- Botones de la derecha reducidos -->
+            <div class="flex items-center gap-3 ml-auto">
                 <button onclick="document.getElementById('contacto').scrollIntoView()"
-                    class="text-slate-600 hover:text-[#003399] p-2 transition">
-                    <i class="material-icons">send</i>
+                    class="text-slate-600 hover:text-[#003399] p-1 transition">
+                    <i class="material-icons text-lg">send</i>
                 </button>
                 <button onclick="openLogin()"
-                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white p-2 rounded-full transition">
-                    <i class="material-icons">person</i>
+                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white p-1 rounded-full transition">
+                    <i class="material-icons text-lg">person</i>
                 </button>
             </div>
         </div>
