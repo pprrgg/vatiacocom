@@ -67,7 +67,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 50px;
+            height: 30px;
             z-index: 100000 !important;
             background-color: white !important;
             border-bottom: 2px solid #003399;
@@ -79,7 +79,7 @@
         #iframe-viewer {
             display: none;
             position: fixed;
-            top: 18px;
+            top: -5px;
             left: 0;
             width: 100%;
             height: calc(100vh - 20px);
@@ -93,7 +93,7 @@
             opacity: 0;
             visibility: hidden;
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 0;
             width: 100vw;
             background: white;
@@ -117,13 +117,27 @@
             color: #1e293b !important;
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            padding: 0 20px;
-            height: 70px;
+            font-size: 9px !important;
+            /* Tamaño ultra-compacto */
+            letter-spacing: 0.05em;
+            padding: 4px 10px !important;
+            /* Padding reducido para el botón */
+            height: auto !important;
+            /* Quitamos el height fijo para que sea un botón real */
             display: flex;
             align-items: center;
             cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            /* Bordes ligeramente suaves */
+        }
+
+        /* Efecto Hover similar a los botones de la derecha */
+        .nav-item-group:hover .nav-link-text {
+            background-color: #f1f5f9;
+            /* Gris muy suave (slate-100) */
+            color: #003399 !important;
+            /* Cambia a azul al pasar el ratón */
         }
 
         /* CARDS SUBMENÚ */
@@ -298,26 +312,33 @@
                 <i class="material-icons text-[20px]">menu</i>
             </button>
 
-            <!-- Logo VATIACO más compacto -->
+            <!-- Logo VATIACO con recuadro ultra-fino -->
             <div class="flex items-center gap-1.5 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="bg-[#003399] p-1 rounded-sm">
-                    <i class="material-icons text-white text-base">bolt</i> <!-- Icono base -->
-                </div>
-                <span class="text-base font-black italic tracking-tighter text-[#003399]">VATIACO</span>
-            </div>
 
+                <!-- Recuadro: altura fija (h-4 = 16px), ancho fijo (w-5 = 20px) para que sea rectangular -->
+                <div class="bg-[#003399] h-4 w-5 rounded-[2px] flex items-center justify-center overflow-hidden">
+                    <!-- Icono: un poco más pequeño para que no toque los bordes -->
+                    <i class="material-icons text-white text-[13px]">bolt</i>
+                </div>
+
+                <!-- Texto alineado perfectamente -->
+                <span class="text-base font-black italic tracking-tighter text-[#003399] leading-none">VATIACO</span>
+            </div>
             <div id="nav-content" class="hidden md:flex items-center h-full ml-4"></div>
 
             <!-- Botones de la derecha reducidos -->
-            <div class="flex items-center gap-3 ml-auto">
+            <div class="flex items-center gap-2 ml-auto">
+                <!-- Botón Contacto ACHICADO -->
                 <button onclick="document.getElementById('contacto').scrollIntoView()"
-                    class="text-slate-600 hover:text-[#003399] p-1 transition">
-                    <i class="material-icons text-lg">send</i>
+                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
+                    <i class="material-icons text-[15px]">send</i>
                 </button>
+
+                <!-- Botón Login ACHICADO -->
                 <button onclick="openLogin()"
-                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white p-1 rounded-full transition">
-                    <i class="material-icons text-lg">person</i>
+                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
+                    <i class="material-icons text-[15px]">person</i>
                 </button>
             </div>
         </div>
@@ -339,8 +360,8 @@
     </div>
 
     <header class="h-[75vh] flex items-center px-10">
-        <h1 class="text-6xl md:text-9xl font-black italic uppercase leading-[0.8] tracking-tighter">
-            State-of-Grid <br><span class="text-[#ffd700]">Control</span>
+        <h1 class="text-6xl md:text-9xl font-black italic  leading-[0.8] tracking-tighter">
+            SoG <br><span class="text-[#ffd700]">Control</span>
         </h1>
     </header>
 
