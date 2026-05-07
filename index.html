@@ -10,10 +10,10 @@
             items: [
                 { id: "pv", title: "PV.Design", subtitle: "Diseño Solar Profesional ( datos PVGis )", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
                 { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
-                { id: "roi", title: "ROI.Sim", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
+                { id: "roi", title: "ROI.Calc", subtitle: "Cálculo del Retorno de una inversión", description: "El ROI calculator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "roi.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
             ]
         },
-    {
+        {
             category: "Ingeniería",
             items: [
                 { id: "microredes", title: "Microredes DC", subtitle: "Arquitectura 400V", description: "Sistemas de transporte directo en corriente continua. Eficiencia industrial sin precedentes.", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200", btnText: "Ver Esquema", btnLink: "https://vatiaco.com/tech" },
@@ -296,7 +296,8 @@
                 <i class="material-icons text-3xl">menu</i>
             </button>
 
-            <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
+            <div class="flex items-center gap-2 cursor-pointer shrink-0"
+                onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
                 <div class="bg-[#003399] p-1.5 rounded-sm"><i class="material-icons text-white text-xl">bolt</i></div>
                 <span class="text-xl font-black italic tracking-tighter text-[#003399]">VATIACO</span>
             </div>
@@ -408,11 +409,11 @@
         const subjectSelector = document.getElementById('subjectSelector');
 
         // BUSCA ESTA SECCIÓN EN TU SCRIPT Y SUSTITÚYELA:
-appData.forEach((cat, index) => {
-    // 1. RENDER NAV DESKTOP
-    const navGroup = document.createElement('div');
-    navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
-    navGroup.innerHTML = `
+        appData.forEach((cat, index) => {
+            // 1. RENDER NAV DESKTOP
+            const navGroup = document.createElement('div');
+            navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
+            navGroup.innerHTML = `
         <span class="nav-link-text">${cat.category}</span>
         <div class="mega-menu">
             <div class="max-w-7xl mx-auto px-12 grid grid-cols-${cat.items.length} gap-8">
@@ -425,36 +426,36 @@ appData.forEach((cat, index) => {
                 </a>`).join('')}
             </div>
         </div>`;
-    navContainer.appendChild(navGroup);
+            navContainer.appendChild(navGroup);
 
-    // 2. RENDER NAV MOBILE
-    const mobileCatWrapper = document.createElement('div');
-    mobileCatWrapper.className = "mb-6";
-    mobileCatWrapper.innerHTML = `
+            // 2. RENDER NAV MOBILE
+            const mobileCatWrapper = document.createElement('div');
+            mobileCatWrapper.className = "mb-6";
+            mobileCatWrapper.innerHTML = `
         <div class="text-[#003399] font-black uppercase text-xs border-b-2 border-slate-100 pb-2 mb-3 flex items-center gap-2">
             <i class="material-icons text-sm">account_tree</i> ${cat.category}
         </div>`;
-    
-    const mobileItemsContainer = document.createElement('div');
-    mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
 
-    // 3. RENDER FOOTER & SECCIONES
-    const footerCatWrapper = document.createElement('div');
-    footerCatWrapper.className = "mb-8";
-    footerCatWrapper.innerHTML = `
+            const mobileItemsContainer = document.createElement('div');
+            mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
+
+            // 3. RENDER FOOTER & SECCIONES
+            const footerCatWrapper = document.createElement('div');
+            footerCatWrapper.className = "mb-8";
+            footerCatWrapper.innerHTML = `
         <h4 class="text-[10px] font-black uppercase text-[#003399] mb-4 tracking-[0.2em] flex items-center gap-2">
             <span class="w-1 h-3 bg-[#003399] inline-block"></span> ${cat.category}
         </h4>`;
-    
-    const footerItemsList = document.createElement('div');
-    footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
 
-    const categorySectionGroup = document.createElement('div');
-    const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
-    categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
-    categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
-    
-    categorySectionGroup.innerHTML = `
+            const footerItemsList = document.createElement('div');
+            footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
+
+            const categorySectionGroup = document.createElement('div');
+            const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
+            categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
+            categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
+
+            categorySectionGroup.innerHTML = `
         <div class="max-w-7xl mx-auto px-6 mb-16">
             <div class="flex items-center gap-6">
                 <div class="flex flex-col text-white/90">
@@ -465,77 +466,89 @@ appData.forEach((cat, index) => {
             </div>
         </div>`;
 
-    cat.items.forEach(sec => {
-        // Selector contacto
-        const opt = document.createElement('option');
-        opt.value = sec.title; opt.textContent = sec.title;
-        subjectSelector.appendChild(opt);
+            cat.items.forEach((sec, secIndex) => { // Añadimos secIndex aquí                // Selector contacto
+                const opt = document.createElement('option');
+                opt.value = sec.title; opt.textContent = sec.title;
+                subjectSelector.appendChild(opt);
 
-        // Mobile Link: Ahora cierra el Iframe y el Menú
-        const mobileLink = document.createElement('a');
-        mobileLink.href = `#${sec.id}`;
-        mobileLink.className = "group flex flex-col no-underline";
-        mobileLink.onclick = () => {
-            closeIframe();
-            document.getElementById('mobile-menu').classList.remove('active');
-        };
-        mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px] leading-none">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px] tracking-tighter">${sec.subtitle}</span>`;
-        mobileItemsContainer.appendChild(mobileLink);
+                // Mobile Link: Ahora cierra el Iframe y el Menú
+                const mobileLink = document.createElement('a');
+                mobileLink.href = `#${sec.id}`;
+                mobileLink.className = "group flex flex-col no-underline";
+                mobileLink.onclick = () => {
+                    closeIframe();
+                    document.getElementById('mobile-menu').classList.remove('active');
+                };
+                mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px] leading-none">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px] tracking-tighter">${sec.subtitle}</span>`;
+                mobileItemsContainer.appendChild(mobileLink);
 
-        // Footer Link: Cierra el Iframe al clicar
-        const fLink = document.createElement('a');
-        fLink.href = `#${sec.id}`;
-        fLink.className = "footer-link !mb-0";
-        fLink.onclick = () => closeIframe();
-        fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase font-light">${sec.subtitle}</span>`;
-        footerItemsList.appendChild(fLink);
+                // Footer Link: Cierra el Iframe al clicar
+                const fLink = document.createElement('a');
+                fLink.href = `#${sec.id}`;
+                fLink.className = "footer-link !mb-0";
+                fLink.onclick = () => closeIframe();
+                fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase font-light">${sec.subtitle}</span>`;
+                footerItemsList.appendChild(fLink);
 
-        // Renderizado de Sección
-        const section = document.createElement('section');
-        section.id = sec.id;
-        section.className = 'py-16 flex items-center scroll-mt-28';
-        
-        const layout = Math.floor(Math.random() * 4);
-        let cCls = "flex flex-col md:flex-row items-center gap-12", 
-            iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500", 
-            tCls = "w-full md:w-1/2";
-            
-        if (layout === 1) cCls += " md:flex-row-reverse";
-        if (layout >= 2) { 
-            cCls = "flex flex-col items-center text-center gap-8"; 
-            iCls = "w-full img-banner-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:scale-[1.02] transition-all duration-500"; 
-            tCls = "w-full max-w-4xl"; 
-            if (layout === 3) cCls += " flex-col-reverse"; 
-        }
+                // Renderizado de Sección
 
-        const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
 
-        section.innerHTML = `
-            <div class="max-w-7xl mx-auto px-6 w-full">
-                <div class="${cCls}">
-                    <img src="${sec.image}" class="${iCls}" ${clickAction}>
-                    <div class="${tCls}">
-                        <div class="glass-panel cursor-pointer hover:bg-white/10 transition-colors text-left ${layout >= 2 ? 'text-center' : ''}" ${clickAction}>
-                            <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
-                            <p class="text-white/80 text-lg font-light mb-6 whitespace-pre-line leading-relaxed">${sec.description}</p>
-                            <div class="text-xl font-black text-[#ffd700] border-b-2 border-[#ffd700] inline-block pb-1 mb-6">${sec.subtitle}</div><br>
-                            ${sec.btnText ? `<button class="btn-action" onclick="event.stopPropagation(); openIframe('${sec.btnLink}')">${sec.btnText}</button>` : ''}
-                        </div>
-                    </div>
+
+
+                // Renderizado de Sección
+                const section = document.createElement('section');
+                section.id = sec.id;
+                section.className = 'py-16 flex items-center scroll-mt-28';
+
+                // CAMBIO CLAVE: Usamos el índice para alternar (0 = Izquierda, 1 = Derecha)
+                // secIndex % 2 devolverá 0 para el primer item, 1 para el segundo, 0 para el tercero...
+                const layout = secIndex % 2;
+
+                let cCls = "flex flex-col md:flex-row items-center gap-12",
+                    iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500",
+                    tCls = "w-full md:w-1/2";
+
+                // Si el índice es impar (1, 3, 5...), ponemos la imagen a la derecha
+                if (layout === 1) {
+                    cCls += " md:flex-row-reverse";
+                }
+
+                const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
+
+                section.innerHTML = `
+    <div class="max-w-7xl mx-auto px-6 w-full">
+        <div class="${cCls}">
+            <img src="${sec.image}" class="${iCls}" ${clickAction}>
+            <div class="${tCls}">
+                <div class="glass-panel cursor-pointer hover:bg-white/10 transition-colors text-left" ${clickAction}>
+                    <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
+                    <p class="text-white/80 text-lg font-light mb-6 whitespace-pre-line leading-relaxed">${sec.description}</p>
+                    <div class="text-xl font-black text-[#ffd700] border-b-2 border-[#ffd700] inline-block pb-1 mb-6">${sec.subtitle}</div><br>
+                    ${sec.btnText ? `<button class="btn-action" onclick="event.stopPropagation(); openIframe('${sec.btnLink}')">${sec.btnText}</button>` : ''}
                 </div>
-            </div>`;
-        
-        categorySectionGroup.appendChild(section);
-    });
+            </div>
+        </div>
+    </div>`;
 
-    mainContent.appendChild(categorySectionGroup);
-    mobileCatWrapper.appendChild(mobileItemsContainer);
-    mobileNavContainer.appendChild(mobileCatWrapper);
-    footerCatWrapper.appendChild(footerItemsList);
-    footerLinksContainer.appendChild(footerCatWrapper);
-});
+                categorySectionGroup.appendChild(section);
 
-// IFRAME
+
+            });
+
+
+
+
+
+
+
+            mainContent.appendChild(categorySectionGroup);
+            mobileCatWrapper.appendChild(mobileItemsContainer);
+            mobileNavContainer.appendChild(mobileCatWrapper);
+            footerCatWrapper.appendChild(footerItemsList);
+            footerLinksContainer.appendChild(footerCatWrapper);
+        });
+
+        // IFRAME
 
 
         function openIframe(url) {
