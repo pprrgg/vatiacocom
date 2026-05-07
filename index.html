@@ -6,20 +6,21 @@
 <script>
     const appData = [
         {
+            category: "Software",
+            items: [
+                { id: "roi", title: "PV Design", subtitle: "Calculadora Solar Profesional ( datos PVGis )", description: "plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
+                { id: "roi", title: "ROI Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
+                { id: "sog", title: "SoG Monitor", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
+            ]
+        },
+        {
             category: "Ingeniería",
             items: [
                 { id: "microredes", title: "Microredes DC", subtitle: "Arquitectura 400V", description: "Sistemas de transporte directo en corriente continua. Eficiencia industrial sin precedentes.", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200", btnText: "Ver Esquema", btnLink: "https://vatiaco.com/tech" },
                 { id: "comunidades", title: "Comunidades", subtitle: "Gestión CEL / IDAE", description: "Protocolos de intercambio energético entre pares. Legalidad y técnica unificadas.", image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&q=80&w=1200", btnText: "Info IDAE", btnLink: "https://www.idae.es" }
             ]
         },
-        {
-            category: "Software",
-            items: [
-                { id: "roi", title: "ROI Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=1200", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
-                { id: "roi", title: "ROI Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=1200", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
-                { id: "sog", title: "SoG Monitor", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
-            ]
-        }
+
     ];
 
 </script>
@@ -343,6 +344,11 @@
             <div class="glass-panel grid lg:grid-cols-1 gap-12">
                 <div>
                     <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
+
+                    <div
+                        class="flex flex-col justify-end border-l border-white/10 pl-10 text-white/30 text-[10px] uppercase font-bold tracking-widest leading-loose">
+                        VATIACO ENGINEERING • MMXXVI <br> ANDALUCÍA TECH PARK
+                    </div>
                     <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="text" name="nombre" placeholder="Nombre" required
                             class="bg-white/10 p-4 outline-none border border-white/10">
@@ -402,9 +408,8 @@
         const subjectSelector = document.getElementById('subjectSelector');
 
         // BUSCA ESTA SECCIÓN EN TU SCRIPT Y SUSTITÚYELA:
-
-        appData.forEach(cat => {
-            // 1. RENDER NAV DESKTOP (Mega Menú con Cards)
+        appData.forEach((cat, index) => {
+            // 1. RENDER NAV DESKTOP
             const navGroup = document.createElement('div');
             navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
             navGroup.innerHTML = `
@@ -420,101 +425,108 @@
         </div>`;
             navContainer.appendChild(navGroup);
 
-            // 2. RENDER NAV MOBILE (Estructura de Árbol)
+            // 2. RENDER NAV MOBILE
             const mobileCatWrapper = document.createElement('div');
             mobileCatWrapper.className = "mb-6";
             mobileCatWrapper.innerHTML = `
         <div class="text-[#003399] font-black uppercase text-xs border-b-2 border-slate-100 pb-2 mb-3 flex items-center gap-2">
             <i class="material-icons text-sm">account_tree</i> ${cat.category}
-        </div>
-    `;
+        </div>`;
             const mobileItemsContainer = document.createElement('div');
             mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
 
-            // 3. RENDER FOOTER (Estructura de Árbol)
+            // 3. RENDER FOOTER
             const footerCatWrapper = document.createElement('div');
             footerCatWrapper.className = "mb-8";
             footerCatWrapper.innerHTML = `
         <h4 class="text-[10px] font-black uppercase text-[#003399] mb-4 tracking-[0.2em] flex items-center gap-2">
             <span class="w-1 h-3 bg-[#003399] inline-block"></span> ${cat.category}
-        </h4>
-    `;
+        </h4>`;
             const footerItemsList = document.createElement('div');
             footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
 
+            // --- SECCIÓN DE CATEGORÍA CON FONDO DIFERENCIADO ---
+            const categorySectionGroup = document.createElement('div');
+            // Aplicamos un fondo alterno: par e impar para dar ritmo visual
+            const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
+            categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
+            categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
+
+            categorySectionGroup.innerHTML = `
+        <div class="max-w-7xl mx-auto px-6 mb-16">
+            <div class="flex items-center gap-6">
+                <div class="flex flex-col">
+                    <span class="text-[#ffd700] font-black text-xs tracking-[0.8em] uppercase italic mb-2">Category Sector</span>
+                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic text-white/90">${cat.category}</h3>
+                </div>
+                <div class="h-px bg-gradient-to-r from-[#ffd700]/50 to-transparent flex-grow"></div>
+            </div>
+        </div>
+    `;
+
             // BUCLE DE ITEMS
             cat.items.forEach(sec => {
-                // Selector Formulario de Contacto
                 const opt = document.createElement('option');
-                opt.value = sec.title;
-                opt.textContent = sec.title;
+                opt.value = sec.title; opt.textContent = sec.title;
                 subjectSelector.appendChild(opt);
 
-                // Enlace Árbol Móvil
                 const mobileLink = document.createElement('a');
                 mobileLink.href = `#${sec.id}`;
                 mobileLink.className = "group flex flex-col no-underline";
                 mobileLink.onclick = () => document.getElementById('mobile-menu').classList.remove('active');
-                mobileLink.innerHTML = `
-            <span class="text-slate-800 font-bold uppercase text-[11px] leading-none">${sec.title}</span>
-            <span class="text-slate-400 font-medium uppercase text-[8px] tracking-tighter">${sec.subtitle}</span>
-        `;
+                mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px]">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px]">${sec.subtitle}</span>`;
                 mobileItemsContainer.appendChild(mobileLink);
 
-                // Enlace Árbol Footer
                 const fLink = document.createElement('a');
                 fLink.href = `#${sec.id}`;
                 fLink.className = "footer-link !mb-0";
-                fLink.innerHTML = `
-            <span class="block">${sec.title}</span>
-            <span class="text-[8px] opacity-40 lowercase font-light tracking-normal">${sec.subtitle}</span>
-        `;
+                fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase">${sec.subtitle}</span>`;
                 footerItemsList.appendChild(fLink);
 
-                // Renderizado de Secciones Principales (Main Content)
+                // Renderizado de la Sección con interactividad total
                 const section = document.createElement('section');
                 section.id = sec.id;
-                section.className = 'py-12 flex items-center';
+                section.className = 'py-16 flex items-center scroll-mt-28';
 
                 const layout = Math.floor(Math.random() * 4);
                 let cCls = "flex flex-col md:flex-row items-center gap-12",
-                    iCls = "w-full md:w-1/2 img-side-mode shadow-2xl",
+                    iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500",
                     tCls = "w-full md:w-1/2";
 
                 if (layout === 1) cCls += " md:flex-row-reverse";
                 if (layout >= 2) {
                     cCls = "flex flex-col items-center text-center gap-8";
-                    iCls = "w-full img-banner-mode shadow-2xl";
+                    iCls = "w-full img-banner-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:scale-[1.02] transition-all duration-500";
                     tCls = "w-full max-w-4xl";
                     if (layout === 3) cCls += " flex-col-reverse";
                 }
 
+                const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
+
                 section.innerHTML = `
             <div class="max-w-7xl mx-auto px-6 w-full">
                 <div class="${cCls}">
-                    <img src="${sec.image}" class="${iCls} opacity-60 transition grayscale hover:grayscale-0">
+                    <img src="${sec.image}" class="${iCls}" ${clickAction}>
                     <div class="${tCls}">
-                        <div class="glass-panel text-left ${layout >= 2 ? 'text-center' : ''}">
+                        <div class="glass-panel cursor-pointer hover:bg-white/10 transition-colors text-left ${layout >= 2 ? 'text-center' : ''}" ${clickAction}>
                             <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
                             <p class="text-white/80 text-lg font-light mb-6 whitespace-pre-line leading-relaxed">${sec.description}</p>
-                            <div class="text-xl font-black text-[#ffd700] border-b border-[#ffd700] inline-block pb-1 mb-6">${sec.subtitle}</div><br>
-                            ${sec.btnText ? `<button class="btn-action" onclick="openIframe('${sec.btnLink}')">${sec.btnText}</button>` : ''}
+                            <div class="text-xl font-black text-[#ffd700] border-b-2 border-[#ffd700] inline-block pb-1 mb-6">${sec.subtitle}</div><br>
+                            ${sec.btnText ? `<button class="btn-action" onclick="event.stopPropagation(); openIframe('${sec.btnLink}')">${sec.btnText}</button>` : ''}
                         </div>
                     </div>
                 </div>
             </div>`;
-                mainContent.appendChild(section);
+
+                categorySectionGroup.appendChild(section);
             });
 
-            // Ensamblar Nav Mobile
+            mainContent.appendChild(categorySectionGroup);
             mobileCatWrapper.appendChild(mobileItemsContainer);
             mobileNavContainer.appendChild(mobileCatWrapper);
-
-            // Ensamblar Footer
             footerCatWrapper.appendChild(footerItemsList);
             footerLinksContainer.appendChild(footerCatWrapper);
         });
-
         // IFRAME
         function openIframe(url) {
             const viewer = document.getElementById('iframe-viewer');
