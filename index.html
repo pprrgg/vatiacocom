@@ -323,10 +323,12 @@
                 </div>
 
                 <!-- Texto alineado perfectamente -->
-                <span class="text-base font-black italic tracking-tighter text-[#003399] leading-none">VATIACO</span>
+                <span class="text-base font-black italic tracking-tighter leading-none">
+                    <span class="text-[#003399]">VATIA</span><span class="text-[#ffd700]">CO</span>
+                </span>
             </div>
-            <div id="nav-content" class="hidden md:flex items-center h-full ml-4"></div>
-
+            <!-- <div id="nav-content" class="hidden md:flex items-center h-full ml-4"></div> -->
+            <div id="nav-content" class="hidden sm:flex items-center h-full ml-2 gap-0.5"></div>
             <!-- Botones de la derecha reducidos -->
             <div class="flex items-center gap-2 ml-auto">
                 <!-- Botón Contacto ACHICADO -->
@@ -359,11 +361,26 @@
         <div id="mobile-nav-content" class="flex flex-col gap-6"></div>
     </div>
 
-    <header class="h-[75vh] flex items-center px-10">
-        <h1 class="text-6xl md:text-9xl font-black italic  leading-[0.8] tracking-tighter">
-            SoG <br><span class="text-[#ffd700]">Control</span>
-        </h1>
-    </header>
+<header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center ">
+    <h1 class="text-7xl md:text-9xl font-black italic  leading-[0.8] tracking-tighter mb-12 text-white">
+        <span class="text-[#ffd700]">μ</span>Redes <br>
+        Control
+    </h1>
+    
+    <div class="flex flex-col items-center">
+        <div class="bg-[#e74c3c] px-4 py-1 mb-4">
+            <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.2em]">
+                Gestión Avanzada de Micro Redes DC/AC
+            </span>
+        </div>
+        
+        <p class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] leading-loose">
+            Optimización de Activos y Estabilidad de Red en <br> Tiempo Real
+        </p>
+        
+        <div class="w-16 h-1 bg-[#ffd700] mt-6"></div>
+    </div>
+</header>
 
     <main id="main-content" class="space-y-16"></main>
 
