@@ -6,14 +6,15 @@
 <script>
     const appData = [
         {
-            category: "Software",
+            category: "Software Libre",
             items: [
-                { id: "roi", title: "PV Design", subtitle: "Calculadora Solar Profesional ( datos PVGis )", description: "plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
-                { id: "roi", title: "ROI Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
-                { id: "sog", title: "SoG Monitor", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
+                { id: "roi", title: "PV.Design", subtitle: "Calculadora Solar Profesional ( datos PVGis )", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
+                { id: "roi", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
+                { id: "roi", title: "ROI.Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
+                { id: "sog", title: "SoG.Monitor", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
             ]
         },
-        {
+    {
             category: "Ingeniería",
             items: [
                 { id: "microredes", title: "Microredes DC", subtitle: "Arquitectura 400V", description: "Sistemas de transporte directo en corriente continua. Eficiencia industrial sin precedentes.", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200", btnText: "Ver Esquema", btnLink: "https://vatiaco.com/tech" },
@@ -295,8 +296,7 @@
                 <i class="material-icons text-3xl">menu</i>
             </button>
 
-            <div class="flex items-center gap-2 cursor-pointer shrink-0"
-                onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <div class="flex items-center gap-2 cursor-pointer shrink-0" onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
                 <div class="bg-[#003399] p-1.5 rounded-sm"><i class="material-icons text-white text-xl">bolt</i></div>
                 <span class="text-xl font-black italic tracking-tighter text-[#003399]">VATIACO</span>
             </div>
@@ -408,102 +408,109 @@
         const subjectSelector = document.getElementById('subjectSelector');
 
         // BUSCA ESTA SECCIÓN EN TU SCRIPT Y SUSTITÚYELA:
-        appData.forEach((cat, index) => {
-            // 1. RENDER NAV DESKTOP
-            const navGroup = document.createElement('div');
-            navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
-            navGroup.innerHTML = `
+appData.forEach((cat, index) => {
+    // 1. RENDER NAV DESKTOP
+    const navGroup = document.createElement('div');
+    navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
+    navGroup.innerHTML = `
         <span class="nav-link-text">${cat.category}</span>
         <div class="mega-menu">
             <div class="max-w-7xl mx-auto px-12 grid grid-cols-${cat.items.length} gap-8">
                 ${cat.items.map(item => `
-                <a href="#${item.id}" class="submenu-card no-underline group/card" style="background-image: url('${item.image}')">
+                <a href="#${item.id}" class="submenu-card no-underline group/card" 
+                   onclick="closeIframe()" 
+                   style="background-image: url('${item.image}')">
                     <b class="text-white text-lg uppercase group-hover/card:text-[#ffd700] transition">${item.title}</b>
                     <p class="text-white/60 text-[9px] font-black uppercase tracking-widest">${item.subtitle}</p>
                 </a>`).join('')}
             </div>
         </div>`;
-            navContainer.appendChild(navGroup);
+    navContainer.appendChild(navGroup);
 
-            // 2. RENDER NAV MOBILE
-            const mobileCatWrapper = document.createElement('div');
-            mobileCatWrapper.className = "mb-6";
-            mobileCatWrapper.innerHTML = `
+    // 2. RENDER NAV MOBILE
+    const mobileCatWrapper = document.createElement('div');
+    mobileCatWrapper.className = "mb-6";
+    mobileCatWrapper.innerHTML = `
         <div class="text-[#003399] font-black uppercase text-xs border-b-2 border-slate-100 pb-2 mb-3 flex items-center gap-2">
             <i class="material-icons text-sm">account_tree</i> ${cat.category}
         </div>`;
-            const mobileItemsContainer = document.createElement('div');
-            mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
+    
+    const mobileItemsContainer = document.createElement('div');
+    mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
 
-            // 3. RENDER FOOTER
-            const footerCatWrapper = document.createElement('div');
-            footerCatWrapper.className = "mb-8";
-            footerCatWrapper.innerHTML = `
+    // 3. RENDER FOOTER & SECCIONES
+    const footerCatWrapper = document.createElement('div');
+    footerCatWrapper.className = "mb-8";
+    footerCatWrapper.innerHTML = `
         <h4 class="text-[10px] font-black uppercase text-[#003399] mb-4 tracking-[0.2em] flex items-center gap-2">
             <span class="w-1 h-3 bg-[#003399] inline-block"></span> ${cat.category}
         </h4>`;
-            const footerItemsList = document.createElement('div');
-            footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
+    
+    const footerItemsList = document.createElement('div');
+    footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
 
-            // --- SECCIÓN DE CATEGORÍA CON FONDO DIFERENCIADO ---
-            const categorySectionGroup = document.createElement('div');
-            // Aplicamos un fondo alterno: par e impar para dar ritmo visual
-            const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
-            categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
-            categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
-
-            categorySectionGroup.innerHTML = `
+    const categorySectionGroup = document.createElement('div');
+    const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
+    categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
+    categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
+    
+    categorySectionGroup.innerHTML = `
         <div class="max-w-7xl mx-auto px-6 mb-16">
             <div class="flex items-center gap-6">
-                <div class="flex flex-col">
+                <div class="flex flex-col text-white/90">
                     <span class="text-[#ffd700] font-black text-xs tracking-[0.8em] uppercase italic mb-2">Category Sector</span>
-                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic text-white/90">${cat.category}</h3>
+                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic">${cat.category}</h3>
                 </div>
                 <div class="h-px bg-gradient-to-r from-[#ffd700]/50 to-transparent flex-grow"></div>
             </div>
-        </div>
-    `;
+        </div>`;
 
-            // BUCLE DE ITEMS
-            cat.items.forEach(sec => {
-                const opt = document.createElement('option');
-                opt.value = sec.title; opt.textContent = sec.title;
-                subjectSelector.appendChild(opt);
+    cat.items.forEach(sec => {
+        // Selector contacto
+        const opt = document.createElement('option');
+        opt.value = sec.title; opt.textContent = sec.title;
+        subjectSelector.appendChild(opt);
 
-                const mobileLink = document.createElement('a');
-                mobileLink.href = `#${sec.id}`;
-                mobileLink.className = "group flex flex-col no-underline";
-                mobileLink.onclick = () => document.getElementById('mobile-menu').classList.remove('active');
-                mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px]">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px]">${sec.subtitle}</span>`;
-                mobileItemsContainer.appendChild(mobileLink);
+        // Mobile Link: Ahora cierra el Iframe y el Menú
+        const mobileLink = document.createElement('a');
+        mobileLink.href = `#${sec.id}`;
+        mobileLink.className = "group flex flex-col no-underline";
+        mobileLink.onclick = () => {
+            closeIframe();
+            document.getElementById('mobile-menu').classList.remove('active');
+        };
+        mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px] leading-none">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px] tracking-tighter">${sec.subtitle}</span>`;
+        mobileItemsContainer.appendChild(mobileLink);
 
-                const fLink = document.createElement('a');
-                fLink.href = `#${sec.id}`;
-                fLink.className = "footer-link !mb-0";
-                fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase">${sec.subtitle}</span>`;
-                footerItemsList.appendChild(fLink);
+        // Footer Link: Cierra el Iframe al clicar
+        const fLink = document.createElement('a');
+        fLink.href = `#${sec.id}`;
+        fLink.className = "footer-link !mb-0";
+        fLink.onclick = () => closeIframe();
+        fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase font-light">${sec.subtitle}</span>`;
+        footerItemsList.appendChild(fLink);
 
-                // Renderizado de la Sección con interactividad total
-                const section = document.createElement('section');
-                section.id = sec.id;
-                section.className = 'py-16 flex items-center scroll-mt-28';
+        // Renderizado de Sección
+        const section = document.createElement('section');
+        section.id = sec.id;
+        section.className = 'py-16 flex items-center scroll-mt-28';
+        
+        const layout = Math.floor(Math.random() * 4);
+        let cCls = "flex flex-col md:flex-row items-center gap-12", 
+            iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500", 
+            tCls = "w-full md:w-1/2";
+            
+        if (layout === 1) cCls += " md:flex-row-reverse";
+        if (layout >= 2) { 
+            cCls = "flex flex-col items-center text-center gap-8"; 
+            iCls = "w-full img-banner-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:scale-[1.02] transition-all duration-500"; 
+            tCls = "w-full max-w-4xl"; 
+            if (layout === 3) cCls += " flex-col-reverse"; 
+        }
 
-                const layout = Math.floor(Math.random() * 4);
-                let cCls = "flex flex-col md:flex-row items-center gap-12",
-                    iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500",
-                    tCls = "w-full md:w-1/2";
+        const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
 
-                if (layout === 1) cCls += " md:flex-row-reverse";
-                if (layout >= 2) {
-                    cCls = "flex flex-col items-center text-center gap-8";
-                    iCls = "w-full img-banner-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:scale-[1.02] transition-all duration-500";
-                    tCls = "w-full max-w-4xl";
-                    if (layout === 3) cCls += " flex-col-reverse";
-                }
-
-                const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
-
-                section.innerHTML = `
+        section.innerHTML = `
             <div class="max-w-7xl mx-auto px-6 w-full">
                 <div class="${cCls}">
                     <img src="${sec.image}" class="${iCls}" ${clickAction}>
@@ -517,17 +524,20 @@
                     </div>
                 </div>
             </div>`;
+        
+        categorySectionGroup.appendChild(section);
+    });
 
-                categorySectionGroup.appendChild(section);
-            });
+    mainContent.appendChild(categorySectionGroup);
+    mobileCatWrapper.appendChild(mobileItemsContainer);
+    mobileNavContainer.appendChild(mobileCatWrapper);
+    footerCatWrapper.appendChild(footerItemsList);
+    footerLinksContainer.appendChild(footerCatWrapper);
+});
 
-            mainContent.appendChild(categorySectionGroup);
-            mobileCatWrapper.appendChild(mobileItemsContainer);
-            mobileNavContainer.appendChild(mobileCatWrapper);
-            footerCatWrapper.appendChild(footerItemsList);
-            footerLinksContainer.appendChild(footerCatWrapper);
-        });
-        // IFRAME
+// IFRAME
+
+
         function openIframe(url) {
             const viewer = document.getElementById('iframe-viewer');
             document.getElementById('main-iframe').src = url;
