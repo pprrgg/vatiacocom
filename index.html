@@ -8,10 +8,10 @@
         {
             category: "Software Libre",
             items: [
-                { id: "roi", title: "PV.Design", subtitle: "Calculadora Solar Profesional ( datos PVGis )", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
-                { id: "roi", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
-                { id: "roi", title: "ROI.Simulator", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
-                { id: "sog", title: "SoG.Monitor", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
+                { id: "pv", title: "PV.Design", subtitle: "Diseño Solar Profesional ( datos PVGis )", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
+                { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
+                { id: "roi", title: "ROI.Sim", subtitle: "Financial Energy", description: "El ROI Simulator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "Screenshot from 2026-05-07 13-00-26.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
+                { id: "sog", title: "SoG.Mon", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "https://thingsboard.io/" }
             ]
         },
     {
@@ -79,7 +79,7 @@
         #iframe-viewer {
             display: none;
             position: fixed;
-            top: 70px;
+            top: 40px;
             left: 0;
             width: 100%;
             height: calc(100vh - 70px);
@@ -320,9 +320,9 @@
 
     <div id="iframe-viewer">
         <div class="absolute top-4 right-6 z-[100002]">
-            <button onclick="closeIframe()"
+            <!-- <button onclick="closeIframe()"
                 class="bg-red-600 text-white px-6 py-2 rounded-full font-black text-xs uppercase shadow-2xl">Cerrar
-                Visor</button>
+                Visor</button> -->
         </div>
         <iframe id="main-iframe" class="w-full h-full border-none bg-white"></iframe>
     </div>
