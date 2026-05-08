@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 
-
-
 <script>
     const appData = [
         {
-            category: "Software Libre",
+            category: "Herramientas de Acceso Libre",
             items: [
-                { id: "pv", title: "PV.Design", subtitle: "Diseño Solar Profesional ( datos PVGis )", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
+                { id: "pv", title: "PV.Design", isNew: true, subtitle: "Simulación fotovoltaica basada en el modelo de radiación satelital PVGIS", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "fvdesign.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
                 { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
                 { id: "roi", title: "ROI.Calc", subtitle: "Cálculo del Retorno de una inversión", description: "El ROI calculator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "roi.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
             ]
@@ -21,24 +19,18 @@
                 { id: "comunidades", title: "Comunidades", subtitle: "Gestión CEL / IDAE", description: "Protocolos de intercambio energético entre pares. Legalidad y técnica unificadas.", image: "comunidad.png", btnText: "Info IDAE", btnLink: "https://www.idae.es" },
             ]
         },
-
     ];
-
 </script>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VATIACO - Perspectiva Energética Global</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-
 
     <style>
         body {
@@ -58,7 +50,6 @@
             object-fit: cover;
             z-index: -1;
             filter: brightness(0.7) contrast(1.05) saturate(1.1);
-            /* Antes estaba en 0.4 */
         }
 
         /* NAVBAR */
@@ -67,7 +58,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 30px;
+            height: 35px;
             z-index: 100000 !important;
             background-color: white !important;
             border-bottom: 2px solid #003399;
@@ -75,42 +66,27 @@
             align-items: center;
         }
 
-        /* IFRAME VIEWER SUPERPUESTO */
-        #iframe-viewer {
-            display: none;
-            position: fixed;
-            top: -5px;
-            left: 0;
-            width: 100%;
-            height: calc(100vh + 2px);
-            background: white;
-            z-index: 99990;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        /* DROPDOWN SIMPLE */
+        .nav-item-group {
+            position: relative;
+            height: 100%;
         }
 
-        /* MEGA MENU */
-        .mega-menu {
-            opacity: 0;
-            visibility: hidden;
+        .dropdown-menu {
+            display: none;
             position: absolute;
-            top: 30px;
+            top: 100%;
             left: 0;
-            width: 100vw;
+            min-width: 220px;
             background: white;
-            padding: 2.5rem 0;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border-bottom: 5px solid #003399;
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.6);
+            border: 1px solid #e2e8f0;
+            border-top: 3px solid #003399;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             z-index: 100001;
         }
 
-        .nav-item-group {
-            position: static !important;
-        }
-
-        .nav-item-group:hover .mega-menu {
-            opacity: 1;
-            visibility: visible;
+        .nav-item-group:hover .dropdown-menu {
+            display: block;
         }
 
         .nav-link-text {
@@ -118,59 +94,62 @@
             font-weight: 900;
             text-transform: uppercase;
             font-size: 10px !important;
-            /* Tamaño ultra-compacto */
             letter-spacing: 0.05em;
-            padding: 4px 10px !important;
-            /* Padding reducido para el botón */
-            height: auto !important;
-            /* Quitamos el height fijo para que sea un botón real */
+            padding: 0 12px !important;
+            height: 100%;
             display: flex;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-            /* Bordes ligeramente suaves */
+            transition: all 0.2s;
         }
 
-        /* Efecto Hover similar a los botones de la derecha */
         .nav-item-group:hover .nav-link-text {
-            background-color: #f1f5f9;
-            /* Gris muy suave (slate-100) */
+            background: #f8fafc;
             color: #003399 !important;
-            /* Cambia a azul al pasar el ratón */
         }
 
-        /* CARDS SUBMENÚ */
-        .submenu-card {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-            border-radius: 6px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 1.5rem;
-            transition: 0.4s;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+        .dropdown-item {
+            display: block;
+            padding: 12px 16px;
+            color: #1e293b;
             text-decoration: none !important;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s;
         }
 
-        .submenu-card::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 51, 153, 0.95) 0%, rgba(0, 0, 0, 0.2) 100%);
-            z-index: 1;
+        .dropdown-item:hover {
+            background: #f1f5f9;
+            padding-left: 20px;
+            color: #003399;
         }
 
-        .submenu-card * {
-            z-index: 2;
-            position: relative;
+        .dropdown-item b {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
         }
 
-        /* GLASS PANEL */
+        .dropdown-item span {
+            display: block;
+            font-size: 9px;
+            opacity: 0.6;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Otros Estilos */
+        #iframe-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: white;
+            z-index: 99990;
+        }
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -205,17 +184,17 @@
             transform: translateY(0);
         }
 
-        /* MOBILE MENU */
         #mobile-menu {
             display: none;
             position: fixed;
-            top: 30px;
+            top: 35px;
             left: 0;
-            width: 320px;
+            width: 300px;
             background: white;
             z-index: 99998;
             padding: 2rem;
             border-bottom: 4px solid #003399;
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
         }
 
         #mobile-menu.active {
@@ -239,17 +218,6 @@
             cursor: pointer;
             border-radius: 4px;
             border: none;
-        }
-
-        section {
-            scroll-margin-top: 100px;
-        }
-
-        .img-banner-mode {
-            height: 280px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 8px;
         }
 
         .img-side-mode {
@@ -278,7 +246,6 @@
 </head>
 
 <body>
-
     <video autoplay muted loop playsinline class="fixed-video-bg">
         <source src="mp_.mp4" type="video/mp4">
     </video>
@@ -289,55 +256,49 @@
                 <i class="material-icons text-[#003399]">security</i>
                 <h2 class="font-black uppercase text-xl italic tracking-tighter">Terminal Access</h2>
             </div>
-            <form onsubmit="simulateAuth(event)" class="space-y-4 text-slate-900">
+            <form onsubmit="autenticacion(event)" class="space-y-4 text-slate-900">
                 <input type="text" id="auth-user" placeholder="Operator ID"
                     class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm">
                 <input type="password" placeholder="Passkey"
                     class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm">
+
                 <button type="submit" id="auth-btn"
-                    class="w-full bg-[#003399] text-white py-4 font-black uppercase tracking-widest hover:bg-slate-900 transition">Establish
-                    Link</button>
-                <p id="auth-status" class="hidden text-center text-red-500 text-[10px] font-black uppercase mt-2"></p>
+                    class="w-full bg-[#003399] text-white py-4 font-black uppercase tracking-widest hover:bg-slate-900 transition">
+                    Establish Link
+                </button>
+
+                <!-- El mensaje aparecerá aquí debajo -->
+                <p id="auth-status" class="hidden text-center text-red-600 text-[10px] font-black uppercase mt-2">
+                    Error: Credenciales no reconocidas en el sistema
+                </p>
             </form>
         </div>
     </div>
 
     <nav>
         <div class="flex items-center w-full max-w-7xl mx-auto px-6 h-full relative">
-
-            <!-- Menú Hamburguesa más pequeño -->
             <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition"
                 onclick="document.getElementById('mobile-menu').classList.toggle('active')">
-                <!-- Icono de menú: bajado a 20px -->
                 <i class="material-icons text-[20px]">menu</i>
             </button>
 
-            <!-- Logo VATIACO con recuadro ultra-fino -->
             <div class="flex items-center gap-1.5 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
-
-                <!-- Recuadro: altura fija (h-4 = 16px), ancho fijo (w-5 = 20px) para que sea rectangular -->
                 <div class="bg-[#003399] h-4 w-5 rounded-[2px] flex items-center justify-center overflow-hidden">
-                    <!-- Icono: un poco más pequeño para que no toque los bordes -->
                     <i class="material-icons text-white text-[13px]">bolt</i>
                 </div>
-
-                <!-- Texto alineado perfectamente -->
                 <span class="text-base font-black italic tracking-tighter leading-none">
                     <span class="text-[#003399]">VATIA</span><span class="text-[#ffd700]">CO</span>
                 </span>
             </div>
-            <!-- <div id="nav-content" class="hidden md:flex items-center h-full ml-4"></div> -->
-            <div id="nav-content" class="hidden sm:flex items-center h-full ml-2 gap-0.5"></div>
-            <!-- Botones de la derecha reducidos -->
+
+            <div id="nav-content" class="hidden sm:flex items-center h-full ml-6"></div>
+
             <div class="flex items-center gap-2 ml-auto">
-                <!-- Botón Contacto ACHICADO -->
                 <button onclick="document.getElementById('contacto').scrollIntoView()"
                     class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
                     <i class="material-icons text-[15px]">send</i>
                 </button>
-
-                <!-- Botón Login ACHICADO -->
                 <button onclick="openLogin()"
                     class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
                     <i class="material-icons text-[15px]">person</i>
@@ -346,14 +307,8 @@
         </div>
     </nav>
 
-
-
     <div id="iframe-viewer">
-        <div class="absolute top-4 right-6 z-[100002]">
-            <!-- <button onclick="closeIframe()"
-                class="bg-red-600 text-white px-6 py-2 rounded-full font-black text-xs uppercase shadow-2xl">Cerrar
-                Visor</button> -->
-        </div>
+
         <iframe id="main-iframe" class="w-full h-full border-none bg-white"></iframe>
     </div>
 
@@ -362,22 +317,16 @@
     </div>
 
     <header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center ">
-        <h1 class="text-7xl md:text-9xl font-black italic  leading-[0.8] tracking-tighter mb-12 text-white">
-            <span class="text-[#ffd700]">μ</span>Redes <br>
-            Control
+        <h1 class="text-7xl md:text-9xl font-black italic leading-[0.8] tracking-tighter mb-12 text-white">
+            <span class="text-[#ffd700]">μ</span>Redes <br> Control
         </h1>
-
         <div class="flex flex-col items-center">
             <div class="bg-[#e74c3c] px-4 py-1 mb-4">
-                <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.2em]">
-                    Gestión Avanzada de Micro Redes DC/AC
-                </span>
+                <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.2em]">Gestión Avanzada de
+                    Micro Redes DC/AC</span>
             </div>
-
-            <p class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] leading-loose">
-                Optimización de Activos y Estabilidad de Red en <br> Tiempo Real
-            </p>
-
+            <p class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] leading-loose">Optimización
+                de Activos y Estabilidad de Red en <br> Tiempo Real</p>
             <div class="w-16 h-1 bg-[#ffd700] mt-6"></div>
         </div>
     </header>
@@ -386,37 +335,59 @@
 
     <section id="contacto" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="glass-panel grid lg:grid-cols-1 gap-12">
-                <div>
-                    <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
+            <div class="glass-panel">
+                <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
 
-                    <div
-                        class="flex flex-col justify-end border-l border-white/10 pl-10 text-white/30 text-[10px] uppercase font-bold tracking-widest leading-loose">
-                        VATIACO ENGINEERING • MMXXVI <br> ANDALUCÍA TECH PARK
-                    </div>
-                    <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre" placeholder="Nombre" required
-                            class="bg-white/10 p-4 outline-none border border-white/10">
-                        <input type="tel" name="telefono" placeholder="Teléfono" required
-                            class="bg-white/10 p-4 outline-none border border-white/10">
-                        <input type="text" name="organismo" placeholder="Empresa"
-                            class="bg-white/10 p-4 outline-none border border-white/10">
-                        <input type="text" name="cargo" placeholder="Cargo"
-                            class="bg-white/10 p-4 outline-none border border-white/10">
-                        <input type="email" name="email" placeholder="Email"
-                            class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10" required>
+                <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Identidad -->
+                    <input type="text" name="nombre" placeholder="Nombre Completo" required
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+
+                    <input type="tel" name="telefono" placeholder="Teléfono de Contacto" required
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+
+                    <!-- Profesional -->
+                    <input type="text" name="empresa" placeholder="Empresa / Institución"
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+
+                    <input type="text" name="cargo" placeholder="Cargo / Departamento"
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+
+                    <!-- Comunicación -->
+                    <input type="email" name="email" placeholder="Email Corporativo" required
+                        class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+
+                    <!-- El Selector (Modificado en CSS para ser legible) -->
+                    <div class="md:col-span-2 flex flex-col gap-2">
+                        <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">Motivo de la
+                            consulta</label>
                         <select name="asunto" id="subjectSelector"
-                            class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10" required></select>
-                        <div class="md:col-span-2">
-                            <div id="map"></div>
-                        </div>
-                        <input type="hidden" name="lat" id="lat"><input type="hidden" name="lng" id="lng">
-                        <button type="submit" class="btn-action md:col-span-2 py-5 text-lg">Transmitir
-                            Solicitud</button>
-                        <p id="formStatus" class="md:col-span-2 text-center text-xs font-bold uppercase mt-4"></p>
-                    </form>
-                </div>
+                            class="w-full bg-white p-4 outline-none border-none text-slate-900 font-bold appearance-none cursor-pointer">
+                        </select>
+                    </div>
 
+                    <!-- Campo de Texto Libre -->
+                    <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4"
+                        class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
+
+                    <!-- Ubicación -->
+                    <div class="md:col-span-2">
+                        <label
+                            class="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">Seleccione
+                            ubicación del proyecto (Opcional)</label>
+                        <div id="map" style="height: 300px;"></div>
+                    </div>
+
+                    <!-- Campos Ocultos y Acción -->
+                    <input type="hidden" name="lat" id="lat">
+                    <input type="hidden" name="lng" id="lng">
+
+                    <button type="submit" class="btn-action md:col-span-2 py-5 text-xl tracking-[0.2em]">
+                        Transmitir Solicitud Técnica
+                    </button>
+
+                    <p id="formStatus" class="md:col-span-2 text-center text-xs font-black uppercase mt-4"></p>
+                </form>
             </div>
         </div>
     </section>
@@ -428,173 +399,124 @@
                 <p class="text-white/20 text-[9px] uppercase font-bold mt-4 tracking-widest leading-relaxed">Control
                     avanzado de microredes y activos energéticos.</p>
             </div>
+            <div id="footer-links-dynamic" class="md:col-span-2 grid grid-cols-2 gap-8"></div>
             <div>
-                <h4 class="text-[10px] font-black uppercase text-[#003399] mb-6 tracking-widest">Ecosistema</h4>
-                <div id="footer-links-dynamic"></div>
-            </div>
-            <div>
-                <h4 class="text-[10px] font-black uppercase text-[#003399] mb-6 tracking-widest">Corporativo</h4><a
-                    href="#" class="footer-link">Sede Málaga</a>
-            </div>
-            <div>
-                <h4 class="text-[10px] font-black uppercase text-[#003399] mb-6 tracking-widest">Support</h4><a
-                    href="mailto:info@vatiaco.com" class="footer-link">info@vatiaco.com</a>
+                <h4 class="text-[10px] font-black uppercase text-[#003399] mb-6 tracking-widest">Support</h4>
+                <a href="mailto:info@vatiaco.com" class="footer-link">info@vatiaco.com</a>
             </div>
         </div>
     </footer>
 
     <script>
-
-
         const navContainer = document.getElementById('nav-content');
         const mobileNavContainer = document.getElementById('mobile-nav-content');
         const footerLinksContainer = document.getElementById('footer-links-dynamic');
         const mainContent = document.getElementById('main-content');
         const subjectSelector = document.getElementById('subjectSelector');
 
-        // BUSCA ESTA SECCIÓN EN TU SCRIPT Y SUSTITÚYELA:
-        appData.forEach((cat, index) => {
-            // 1. RENDER NAV DESKTOP
-            const navGroup = document.createElement('div');
-            navGroup.className = 'group nav-item-group h-full flex items-center static cursor-pointer';
-            navGroup.innerHTML = `
+  appData.forEach((cat, index) => {
+    // 1. RENDER NAV DESKTOP (Corregido para mostrar el badge "NEW")
+    const navGroup = document.createElement('div');
+    navGroup.className = 'nav-item-group';
+    navGroup.innerHTML = `
         <span class="nav-link-text">${cat.category}</span>
-        <div class="mega-menu">
-            <div class="max-w-7xl mx-auto px-12 grid grid-cols-${cat.items.length} gap-8">
-                ${cat.items.map(item => `
-                <a href="#${item.id}" class="submenu-card no-underline group/card" 
-                   onclick="closeIframe()" 
-                   style="background-image: url('${item.image}')">
-                    <b class="text-white text-lg uppercase group-hover/card:text-[#ffd700] transition">${item.title}</b>
-                    <p class="text-white/60 text-[9px] font-black uppercase tracking-widest">${item.subtitle}</p>
-                </a>`).join('')}
-            </div>
+        <div class="dropdown-menu">
+            ${cat.items.map(item => {
+                // Generamos el badge solo si isNew es true
+                const badgeHtml = item.isNew ? 
+                    `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` 
+                    : '';
+                
+                return `
+                    <a href="#${item.id}" class="dropdown-item flex items-center justify-between" onclick="closeIframe()">
+                        <div class="flex flex-col">
+                            <b class="flex items-center">${item.title} ${badgeHtml}</b>
+                            <span>${item.subtitle}</span>
+                        </div>
+                    </a>`;
+            }).join('')}
         </div>`;
-            navContainer.appendChild(navGroup);
+    navContainer.appendChild(navGroup);
 
-            // 2. RENDER NAV MOBILE
-            const mobileCatWrapper = document.createElement('div');
-            mobileCatWrapper.className = "mb-6";
-            mobileCatWrapper.innerHTML = `
-        <div class="text-[#003399] font-black uppercase text-xs border-b-2 border-slate-100 pb-2 mb-3 flex items-center gap-2">
-            <i class="material-icons text-sm">account_tree</i> ${cat.category}
+    // 2. RENDER NAV MOBILE (Preparación de contenedores)
+    const mobileCatWrapper = document.createElement('div');
+    mobileCatWrapper.innerHTML = `<div class="text-[#003399] font-black uppercase text-xs border-b pb-2 mb-3">${cat.category}</div>`;
+    const mobileItems = document.createElement('div');
+    mobileItems.className = "flex flex-col gap-3 pl-4 border-l";
+    
+    // 3. SECCIÓN Y FOOTER (Preparación de contenedores)
+    const categorySectionGroup = document.createElement('div');
+    categorySectionGroup.className = "pt-24 pb-10";
+    categorySectionGroup.innerHTML = `
+        <div class="max-w-7xl mx-auto px-6 mb-10">
+            <h3 class="text-3xl font-black uppercase italic text-white/40">${cat.category}</h3>
         </div>`;
 
-            const mobileItemsContainer = document.createElement('div');
-            mobileItemsContainer.className = "flex flex-col gap-3 pl-6 border-l-2 border-slate-50";
+    const footerCatWrapper = document.createElement('div');
+    footerCatWrapper.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${cat.category}</h4>`;
 
-            // 3. RENDER FOOTER & SECCIONES
-            const footerCatWrapper = document.createElement('div');
-            footerCatWrapper.className = "mb-8";
-            footerCatWrapper.innerHTML = `
-        <h4 class="text-[10px] font-black uppercase text-[#003399] mb-4 tracking-[0.2em] flex items-center gap-2">
-            <span class="w-1 h-3 bg-[#003399] inline-block"></span> ${cat.category}
-        </h4>`;
+    // 4. BUCLE DE ITEMS (Donde generas Mobile, Footer y Secciones)
+    cat.items.forEach((sec, secIndex) => {
+        // Badge pequeño para Mobile y Footer
+        const miniBadge = sec.isNew ? `<span class="ml-2 bg-[#e74c3c] text-white text-[8px] px-1 rounded-sm animate-pulse">NEW</span>` : '';
 
-            const footerItemsList = document.createElement('div');
-            footerItemsList.className = "flex flex-col gap-2 pl-3 border-l border-white/5";
+        // Opción en selector
+        const opt = document.createElement('option');
+        opt.value = sec.title; opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
+        subjectSelector.appendChild(opt);
 
-            const categorySectionGroup = document.createElement('div');
-            const bgColor = index % 2 === 0 ? 'rgba(0, 51, 153, 0.15)' : 'rgba(5, 10, 24, 0.3)';
-            categorySectionGroup.style.background = `linear-gradient(180deg, ${bgColor} 0%, rgba(5,10,24,0) 100%)`;
-            categorySectionGroup.className = "pt-32 pb-20 border-t border-white/5 backdrop-blur-[2px]";
+        // Link Mobile
+        const mLink = document.createElement('a');
+        mLink.href = `#${sec.id}`;
+        mLink.className = "flex items-center text-slate-800 font-bold uppercase text-[10px]";
+        mLink.onclick = () => {
+            closeIframe();
+            document.getElementById('mobile-menu').classList.remove('active');
+        };
+        mLink.innerHTML = `${sec.title} ${miniBadge}`;
+        mobileItems.appendChild(mLink);
 
-            categorySectionGroup.innerHTML = `
-        <div class="max-w-7xl mx-auto px-6 mb-16">
-            <div class="flex items-center gap-6">
-                <div class="flex flex-col text-white/90">
-                    <span class="text-[#ffd700] font-black text-xs tracking-[0.8em] uppercase italic mb-2">Category Sector</span>
-                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic">${cat.category}</h3>
+        // Link Footer
+        const fLink = document.createElement('a');
+        fLink.href = `#${sec.id}`;
+        fLink.className = "footer-link flex items-center";
+        fLink.onclick = () => closeIframe();
+        fLink.innerHTML = `<span>${sec.title}</span> ${miniBadge}`;
+        footerCatWrapper.appendChild(fLink);
+
+        // --- RENDER DE LA SECCIÓN (IDÉNTICO AL ANTERIOR) ---
+        const section = document.createElement('section');
+        section.id = sec.id;
+        section.className = 'py-16 scroll-mt-24';
+        const layout = secIndex % 2 === 0 ? '' : 'md:flex-row-reverse';
+        const newBadge = sec.isNew ? `<div class="inline-flex items-center gap-2 bg-[#e74c3c] text-white text-[10px] font-black px-2 py-1 mb-4 rounded-sm shadow-lg animate-pulse-slow"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span></span>NUEVA HERRAMIENTA</div>` : '';
+        const imageLabel = sec.isNew ? `<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg] tracking-tighter">NEW</div>` : '';
+
+        section.innerHTML = `
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12 ${layout}">
+                <div class="w-full md:w-1/2 relative group">
+                    ${imageLabel}
+                    <img src="${sec.image}" class="w-full img-side-mode border-4 border-white shadow-2xl cursor-pointer group-hover:scale-[1.01] transition" onclick="openIframe('${sec.btnLink}')">
                 </div>
-                <div class="h-px bg-gradient-to-r from-[#ffd700]/50 to-transparent flex-grow"></div>
-            </div>
-        </div>`;
-
-            cat.items.forEach((sec, secIndex) => { // Añadimos secIndex aquí                // Selector contacto
-                const opt = document.createElement('option');
-                opt.value = sec.title; opt.textContent = sec.title;
-                subjectSelector.appendChild(opt);
-
-                // Mobile Link: Ahora cierra el Iframe y el Menú
-                const mobileLink = document.createElement('a');
-                mobileLink.href = `#${sec.id}`;
-                mobileLink.className = "group flex flex-col no-underline";
-                mobileLink.onclick = () => {
-                    closeIframe();
-                    document.getElementById('mobile-menu').classList.remove('active');
-                };
-                mobileLink.innerHTML = `<span class="text-slate-800 font-bold uppercase text-[11px] leading-none">${sec.title}</span><span class="text-slate-400 font-medium uppercase text-[8px] tracking-tighter">${sec.subtitle}</span>`;
-                mobileItemsContainer.appendChild(mobileLink);
-
-                // Footer Link: Cierra el Iframe al clicar
-                const fLink = document.createElement('a');
-                fLink.href = `#${sec.id}`;
-                fLink.className = "footer-link !mb-0";
-                fLink.onclick = () => closeIframe();
-                fLink.innerHTML = `<span>${sec.title}</span><br><span class="text-[8px] opacity-40 lowercase font-light">${sec.subtitle}</span>`;
-                footerItemsList.appendChild(fLink);
-
-                // Renderizado de Sección
-
-
-
-
-                // Renderizado de Sección
-                const section = document.createElement('section');
-                section.id = sec.id;
-                section.className = 'py-16 flex items-center scroll-mt-28';
-
-                // CAMBIO CLAVE: Usamos el índice para alternar (0 = Izquierda, 1 = Derecha)
-                // secIndex % 2 devolverá 0 para el primer item, 1 para el segundo, 0 para el tercero...
-                const layout = secIndex % 2;
-
-                let cCls = "flex flex-col md:flex-row items-center gap-12",
-                    iCls = "w-full md:w-1/2 img-side-mode shadow-2xl opacity-100 border-4 border-white p-1 bg-white cursor-pointer hover:rotate-1 transition-all duration-500",
-                    tCls = "w-full md:w-1/2";
-
-                // Si el índice es impar (1, 3, 5...), ponemos la imagen a la derecha
-                if (layout === 1) {
-                    cCls += " md:flex-row-reverse";
-                }
-
-                const clickAction = sec.btnText ? `onclick="openIframe('${sec.btnLink}')"` : "";
-
-                section.innerHTML = `
-    <div class="max-w-7xl mx-auto px-6 w-full">
-        <div class="${cCls}">
-            <img src="${sec.image}" class="${iCls}" ${clickAction}>
-            <div class="${tCls}">
-                <div class="glass-panel cursor-pointer hover:bg-white/10 transition-colors text-left" ${clickAction}>
-                    <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase italic tracking-tighter">${sec.title}</h2>
-                    <p class="text-white/80 text-lg font-light mb-6 whitespace-pre-line leading-relaxed">${sec.description}</p>
-                    <div class="text-xl font-black text-[#ffd700] border-b-2 border-[#ffd700] inline-block pb-1 mb-6">${sec.subtitle}</div><br>
-                    ${sec.btnText ? `<button class="btn-action" onclick="event.stopPropagation(); openIframe('${sec.btnLink}')">${sec.btnText}</button>` : ''}
+                <div class="w-full md:w-1/2">
+                    ${newBadge}
+                    <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase tracking-tighter">${sec.title}</h2>
+                    <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
+                    <p class="text-white/70 text-lg mb-8 font-light leading-relaxed">${sec.description}</p>
+                    ${sec.btnText ? `<button class="btn-action flex items-center gap-3" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span><i class="material-icons text-sm">open_in_new</i></button>` : ''}
                 </div>
             </div>
-        </div>
-    </div>`;
+        </div>`;
+        categorySectionGroup.appendChild(section);
+    });
 
-                categorySectionGroup.appendChild(section);
-
-
-            });
-
-
-
-
-
-
-
-            mainContent.appendChild(categorySectionGroup);
-            mobileCatWrapper.appendChild(mobileItemsContainer);
-            mobileNavContainer.appendChild(mobileCatWrapper);
-            footerCatWrapper.appendChild(footerItemsList);
-            footerLinksContainer.appendChild(footerCatWrapper);
-        });
-
-        // IFRAME
-
-
+    // Añadir al DOM
+    mobileCatWrapper.appendChild(mobileItems);
+    mobileNavContainer.appendChild(mobileCatWrapper);
+    mainContent.appendChild(categorySectionGroup);
+    footerLinksContainer.appendChild(footerCatWrapper);
+});
         function openIframe(url) {
             const viewer = document.getElementById('iframe-viewer');
             document.getElementById('main-iframe').src = url;
@@ -607,27 +529,25 @@
             document.getElementById('main-iframe').src = "";
             document.body.style.overflow = 'auto';
         }
-
-        // LOGIN
         function openLogin() { const m = document.getElementById('login-modal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('active'), 10); }
-        function closeLogin(e) { if (!e || e.target.id === 'login-modal') { const m = document.getElementById('login-modal'); m.classList.remove('active'); setTimeout(() => m.style.display = 'none', 300); document.body.style.overflow = ''; } }
-        function simulateAuth(e) { e.preventDefault(); const b = document.getElementById('auth-btn'); const s = document.getElementById('auth-status'); b.textContent = "Verifying..."; b.disabled = true; setTimeout(() => { s.textContent = "Error: Access Key Mismatch"; s.classList.remove('hidden'); b.textContent = "Establish Link"; b.disabled = false; }, 1500); }
+        function closeLogin(e) { if (!e || e.target.id === 'login-modal') { const m = document.getElementById('login-modal'); m.classList.remove('active'); setTimeout(() => m.style.display = 'none', 300); } }
+        function autenticacion(e) { e.preventDefault(); const b = document.getElementById('auth-btn'); b.textContent = "Verifying..."; setTimeout(() => { document.getElementById('auth-status').classList.remove('hidden'); b.textContent = "Establish Link"; }, 1500); }
 
-        // CONTACTO
-        document.getElementById('mainContactForm').onsubmit = async function (e) {
-            e.preventDefault();
-            const status = document.getElementById('formStatus');
-            status.textContent = "ENVIANDO TRANSMISIÓN...";
-            try {
-                const response = await fetch("https://doctec.duckdns.org/fast/contacto", { method: "POST", body: new URLSearchParams(new FormData(this)) });
-                if (response.ok) { status.textContent = "✓ RECIBIDO"; status.style.color = "#22c55e"; this.reset(); if (marker) map.removeLayer(marker); }
-                else { status.textContent = "SERVER ERROR"; status.style.color = "#ef4444"; }
-            } catch (error) { status.textContent = "CONNECTION ERROR"; status.style.color = "#ef4444"; }
-        };
+        // Inicialización del mapa con zoom desactivado inicialmente para permitir el scroll de la página
+        var map = L.map('map', {
+            scrollWheelZoom: false
+        }).setView([36.7213, -4.4214], 16);
 
-        // MAPA
-        var map = L.map('map', { scrollWheelZoom: false }).setView([36.7213, -4.4214], 16);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Esri' }).addTo(map);
+        // ACTIVAR ZOOM AL HACER CLIC
+        map.on('focus', function () {
+            map.scrollWheelZoom.enable();
+        });
+
+        // DESACTIVAR ZOOM AL SALIR DEL MAPA
+        map.on('blur', function () {
+            map.scrollWheelZoom.disable();
+        });
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
         var marker;
         map.on('click', function (e) {
             if (marker) marker.setLatLng(e.latlng);
@@ -635,7 +555,42 @@
             document.getElementById('lat').value = e.latlng.lat;
             document.getElementById('lng').value = e.latlng.lng;
         });
-        window.onload = function () { setTimeout(() => { map.invalidateSize(); }, 500); };
+
+
+        // LÓGICA DE ENVÍO DE FORMULARIO RESTAURADA
+        document.getElementById('mainContactForm').onsubmit = async function (e) {
+            e.preventDefault();
+            const status = document.getElementById('formStatus');
+            const btn = this.querySelector('button[type="submit"]');
+
+            status.textContent = "TRANSMITIENDO SOLICITUD...";
+            status.style.color = "#ffd700"; // Color ámbar/oro
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+
+            try {
+                const response = await fetch("https://doctec.duckdns.org/fast/contacto", {
+                    method: "POST",
+                    body: new URLSearchParams(new FormData(this))
+                });
+
+                if (response.ok) {
+                    status.textContent = "✓ TRANSMISIÓN COMPLETADA CON ÉXITO";
+                    status.style.color = "#22c55e"; // Verde
+                    this.reset();
+                    if (marker) map.removeLayer(marker);
+                } else {
+                    status.textContent = "ERROR DE SERVIDOR (HTTP " + response.status + ")";
+                    status.style.color = "#ef4444";
+                }
+            } catch (error) {
+                status.textContent = "ERROR DE CONEXIÓN: VERIFIQUE SU ENLACE";
+                status.style.color = "#ef4444";
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
+        };
     </script>
 </body>
 
