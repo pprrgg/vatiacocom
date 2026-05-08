@@ -244,59 +244,55 @@
         }
 
         /* Cinta de Noticias Estilo TV */
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            overflow: hidden;
-            height: 30px;
-            background-color: #e74c3c;
-            /* Rojo informativo */
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            z-index: 100002;
-            display: flex;
-            align-items: center;
-        }
 
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 30s linear infinite;
-        }
 
-        .ticker-item {
-            display: inline-block;
-            padding: 0 2rem;
-            font-size: 11px;
-            font-weight: 900;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+/* Cinta de Noticias Estilo "Ticker" Minimalista */
+.ticker-wrap {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 15px; /* Más estrecha */
+    background-color: #e74c3c;
+    border-top: 0px solid rgba(255,255,255,0.2);
+    z-index: 100002;
+    display: flex;
+    align-items: center;
+}
 
-        .ticker-label {
-            background: white;
-            color: #e74c3c;
-            padding: 0 10px;
-            margin-right: 10px;
-            font-style: italic;
-        }
+.ticker-move {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 100%;
+    animation: ticker 40s linear infinite; /* Un poco más lento para lectura fácil */
+}
 
-        @keyframes ticker {
-            0% {
-                transform: translate3d(0, 0, 0);
-            }
+.ticker-item {
+    display: inline-block;
+    padding: 0 1.5rem;
+    font-size: 9px; /* Texto más pequeño */
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-            100% {
-                transform: translate3d(-100%, 0, 0);
-            }
-        }
+.ticker-label {
+    background: white;
+    color: #e74c3c;
+    padding: 0 6px;
+    margin-right: 8px;
+    font-weight: 900;
+    font-size: 8px; /* Etiqueta aún más pequeña */
+}
 
-        /* Ajuste para que el footer no tape la cinta o viceversa */
-        body {
-            padding-bottom: 30px;
-        }
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* Ajuste del body para que el footer no se solape */
+body { padding-bottom: 15px; }
     </style>
 </head>
 
