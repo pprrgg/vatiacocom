@@ -373,7 +373,7 @@
 const graphDefinitiong = `
 graph LR
 
-EMS_B((<div style='font-size:40px;'>🦉<sub>local</sub></div>)) -.-> ASSETS_B[<div style='font-size:40px;'>Prosumidor<sub>i</sub></br> ⚡ ☀️ 🔋 🚗</div>]
+EMS_B((<div style='font-size:40px;'>🦉<sub>local</sub></div>)) -.-> ASSETS_B[<div style='font-size:40px;'>🏘️ Prosumidor<sub>i</sub></br> ⚡ ☀️ 🔋 🚗</div>]
 EMS_D( ) -.-> ASSETS_Cs[<div style='font-size:40px;'>☀️ Planta FV<sub>i</sub></div>]
 EMS_E( ) -.-> ASSETS_Css[<div style='font-size:40px;'>🔋 Batería BESS<sub>i</sub></div>]
 EMS_F( ) -.-> ASSETS_Csss[<div style='font-size:40px;'>🚗 Cargador EV<sub>i</sub></div>]
@@ -410,13 +410,11 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
             style.textContent = `
                 /* Animación para TODAS las líneas */
                 .animatedEdge {
-                    stroke-dasharray: 8;
                     animation: flowForward 0.5s linear infinite;
                 }
 
                 @keyframes flowForward {
                     from { stroke-dashoffset: 16; }
-                    to { stroke-dashoffset: 0; }
                 }
             `;
             svgElement.appendChild(style);
