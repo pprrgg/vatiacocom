@@ -498,19 +498,19 @@
         
         graph LR
     %% Bloque de Comunidades
-    subgraph IZQUIERDA ["Prosumidores"]
+    subgraph IZQUIERDA ["<div style='font-size:30px;'>🏠 Prosumidores</div>"]
         direction TB
         subgraph AREA_A ["P1"]
             direction LR
-            EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
+            EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
         end
         subgraph AREA_B ["..."]
             direction LR
-            EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
+            EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
         end
         subgraph AREA_C ["Pn"]
             direction LR
-            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
+            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
         end
     end
 
@@ -522,7 +522,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
     end
 
     %% Bloque de Activos Directos
-    subgraph DERECHA ["Activos Directos"]
+    subgraph DERECHA ["<div style='font-size:30px;'>☀️ Activos Directos</div>"]
         direction TB
         FV_DIRECTO["<div style='font-size:20px;'>☀️ Planta FV</div>"]
         BAT_DIRECTO["<div style='font-size:20px;'>🔋Batería BESS</div>"]
