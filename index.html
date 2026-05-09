@@ -507,19 +507,19 @@ graph LR
     subgraph IZQUIERDA ["Prosumidores"]
         direction TB
         %% Área A
-        subgraph AREA_A ["1"]
+        subgraph AREA_A ["P1"]
             direction LR
             EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
         end
         %% Área B
-        subgraph AREA_B ["n"]
+        subgraph AREA_B ["..."]
             direction LR
             EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
         end
         %% Área B
-        subgraph AREA_C ["n"]
+        subgraph AREA_C ["Pn"]
             direction LR
-            EMS_C((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
+            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
         end
     end
 
@@ -532,9 +532,9 @@ graph LR
     %% Bloque de Activos Directos (A LA DERECHA del Master)
     subgraph DERECHA ["Activos Directos"]
         direction TB
-        FV_DIRECTO["<div style='font-size:30px;'>☀️</div><br/>Planta FV"]
-        BAT_DIRECTO["<div style='font-size:30px;'>🔋</div><br/>Batería BESS"]
-        EV_DIRECTO["<div style='font-size:30px;'>🚗</div><br/>Cargador EV"]
+        FV_DIRECTO["<div style='font-size:20px;'>☀️ Planta FV"</div>]
+        BAT_DIRECTO["<div style='font-size:20px;'>🔋Batería BESS"</div>]
+        EV_DIRECTO["<div style='font-size:20px;'>🚗 Cargador EV"</div>]
     end
 
     %% --- FLUJO SIEMPRE DESDE EL MASTER ---
@@ -557,16 +557,13 @@ graph LR
     style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px,color:#fff
     style EMS_A fill:#e74c3c,stroke:#c0392b,color:#fff
     style EMS_B fill:#e74c3c,stroke:#c0392b,color:#fff
+    style EMS_C fill:#e74c3c,stroke:#c0392b,color:#fff
 
-    style ASSETS_A fill:#fff,stroke:#333,stroke-width:2px
-    style ASSETS_B fill:#fff,stroke:#333,stroke-width:2px
-    style FV_DIRECTO fill:#fff,stroke:#eab308,stroke-width:2px
-    style BAT_DIRECTO fill:#fff,stroke:#10b981,stroke-width:2px
-    style EV_DIRECTO fill:#fff,stroke:#06b6d4,stroke-width:2px
+
+
 
     %% Estilos de los Edges (Similares a tu original)
-    linkStyle 2,3 stroke:#f97316,stroke-width:4px
-    linkStyle 4,5,6 stroke:#f97316,stroke-width:2px,stroke-dasharray: 8
+    linkStyle 0,1,2,3,4,5,6 stroke:#f97316,stroke-width:5px,stroke-dasharray: 8
     linkStyle 0,1 stroke:#f97316,stroke-width:2px,stroke-dasharray: 5
 `;
 
