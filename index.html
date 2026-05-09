@@ -331,18 +331,14 @@
         <!-- Título Principal -->
         <h1 class="text-7xl md:text-5xl font-black italic leading-[0.8] tracking-tighter mb-12 text-white">
             <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">
-                Control y Gestión
+                Gestión y Control </br> de
             </span>
             Micro Redes DC/AC
         </h1>
 
         <div class="flex flex-col items-center">
             <!-- El DIV que querías agrandar -->
-            <div class="bg-[#e74c3c] px-8 py-4 mb-6 shadow-2xl">
-                <p class="text-lg md:text-2xl font-bold uppercase tracking-tight text-white">
-                    <span class="text-[#ffd700]">El cerebro de </span> Comunidades Energéticas
-                </p>
-            </div>
+
 
             <!-- Subtítulo inferior -->
             <p class="text-white text-[10px] md:text-sm font-bold uppercase tracking-[0.4em] leading-loose max-w-2xl">
@@ -355,16 +351,6 @@
     </header>
 
 
-    <!-- Contenedor Principal con Estilos de Aislamiento -->
-    <div id="vatiaco-master-wrapper"
-        style="width: 100%; clear: both; display: block; position: relative; margin: 10px 0; padding: 0; min-height: 500px;">
-        <div id="eng-graph-viewport"
-            style="width: 85%; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-            <!-- Indicador de carga -->
-            <div id="loading-status" style="font-family: sans-serif; color: #64748b; font-size: 14px;">Iniciando sistema
-                energético...</div>
-        </div>
-    </div>
 
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
@@ -489,6 +475,10 @@
     <!-- Contenedor Principal con Estilos de Aislamiento -->
     <div id="vatiaco-master-wrapper"
         style="width: 100%; clear: both; display: block; position: relative; margin: 40px 0; padding: 0; min-height: 500px;">
+        <div class="max-w-7xl mx-auto px-6 mb-10">
+            <h3 class="text-3xl font-black uppercase italic text-white/40">Gestión de Comunidades Energéticas </h3>
+        </div>
+
         <div id="eng-graph-viewport2"
             style="width: 85%; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
             <!-- Indicador de carga -->
@@ -501,75 +491,80 @@
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
         // 1. Definición del Gráfico (Sin cambios en la estructura)
-const graphDefinitiong = `
-graph LR
-    %% Bloque de Comunidades (A LA IZQUIERDA del Master)
+
+
+        const graphDefinitiong = `
+
+        
+        graph LR
+    %% Bloque de Comunidades
     subgraph IZQUIERDA ["Prosumidores"]
         direction TB
-        %% Área A
         subgraph AREA_A ["P1"]
             direction LR
-            EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
+            EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
         end
-        %% Área B
         subgraph AREA_B ["..."]
             direction LR
-            EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
+            EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
         end
-        %% Área B
         subgraph AREA_C ["Pn"]
             direction LR
-            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️ 🔋 🚗</div>"]
+            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️ 🏠 🔋 🚗</div>"]
         end
     end
 
-    %% Nodo Central (Cerebro Global)
-    subgraph GLOBAL [" "]
-        direction LR
-        EMS_GLOBAL(( <span style='font-size:40px;'>🦉</span><br/>VatiaCO<br/>Master ))
+%% Nodo Central
+subgraph GLOBAL [" "]
+    direction LR
+
+EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vatia</span><span style='font-size:70px;font-weight:bold;color:#fbbf24;'>CO</span>"]
     end
 
-    %% Bloque de Activos Directos (A LA DERECHA del Master)
+    %% Bloque de Activos Directos
     subgraph DERECHA ["Activos Directos"]
         direction TB
-        FV_DIRECTO["<div style='font-size:20px;'>☀️ Planta FV"</div>]
-        BAT_DIRECTO["<div style='font-size:20px;'>🔋Batería BESS"</div>]
-        EV_DIRECTO["<div style='font-size:20px;'>🚗 Cargador EV"</div>]
+        FV_DIRECTO["<div style='font-size:20px;'>☀️ Planta FV</div>"]
+        BAT_DIRECTO["<div style='font-size:20px;'>🔋Batería BESS</div>"]
+        EV_DIRECTO["<div style='font-size:20px;'>🚗 Cargador EV</div>"]
     end
 
-    %% --- FLUJO SIEMPRE DESDE EL MASTER ---
+    %% --- FLUJO UNIFICADO ---
+    %% Se usa el mismo tipo de flecha (-->) para asegurar consistencia visual
 
-    %% Hacia la Izquierda (Comunidades)
-    EMS_GLOBAL ===> EMS_A
-    EMS_GLOBAL ===> EMS_B
-    EMS_GLOBAL ===> EMS_C
+    %% Hacia la Izquierda (Índices 0, 1, 2)
+    EMS_GLOBAL --> EMS_A
+    EMS_GLOBAL --> EMS_B
+    EMS_GLOBAL --> EMS_C
 
-    %% Hacia la Derecha (Activos)
-    EMS_GLOBAL -.-> FV_DIRECTO
-    EMS_GLOBAL -.-> BAT_DIRECTO
-    EMS_GLOBAL -.-> EV_DIRECTO
+    %% Hacia la Derecha (Índices 3, 4, 5)
+    EMS_GLOBAL --> FV_DIRECTO
+    EMS_GLOBAL --> BAT_DIRECTO
+    EMS_GLOBAL --> EV_DIRECTO
 
     %% Estilos de Nodos
     style GLOBAL fill:transparent,stroke:transparent
     style IZQUIERDA fill:transparent,stroke:transparent
     style DERECHA fill:transparent,stroke:transparent
+    style AREA_A fill:transparent,stroke:transparent
+    style AREA_B fill:transparent,stroke:transparent
+    style AREA_C fill:transparent,stroke:transparent
     
     style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px,color:#fff
-    style EMS_A fill:#e74c3c,stroke:#c0392b,color:#fff
+    style EMS_A fill:#e74c3c,stroke:transparent
     style EMS_B fill:#e74c3c,stroke:#c0392b,color:#fff
     style EMS_C fill:#e74c3c,stroke:#c0392b,color:#fff
 
+    %% Estilo de Edges: Aplicado a todos del 0 al 5
+    linkStyle 0,1,2,3,4,5 stroke:#f97316,stroke-width:5px,stroke-dasharray: 8
+    
+
+    
+    `;
 
 
 
-    %% Estilos de los Edges (Similares a tu original)
-    linkStyle 0,1,2,3,4,5,6 stroke:#f97316,stroke-width:5px,stroke-dasharray: 8
-    linkStyle 0,1 stroke:#f97316,stroke-width:2px,stroke-dasharray: 5
-`;
-
-
-
-mermaid.initialize({
+        mermaid.initialize({
             startOnLoad: false,
             theme: 'dark',
             flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
@@ -640,7 +635,7 @@ mermaid.initialize({
 
     <div id="vatiaco-contact-root"></div>
 
-    <script type="module">
+<script type="module">
         /****************************************************************
          * 1. CARGA DINÁMICA DE DEPENDENCIAS (LEAFLET)
          *****************************************************************/
@@ -751,9 +746,20 @@ mermaid.initialize({
             // Cargar Leaflet y luego inicializar mapa
             await loadLeaflet();
 
-            const map = L.map('map', { scrollWheelZoom: false }).setView([36.7213, -4.4214], 16);
+            // MODIFICACIÓN: Permitir zoom con scroll del ratón
+            const map = L.map('map', {
+                scrollWheelZoom: true,  // Habilitar zoom con rueda del ratón
+                zoomControl: true,       // Mantener controles de zoom UI
+                doubleClickZoom: true,   // Mantener zoom con doble clic
+                boxZoom: true,          // Mantener zoom con selección de área
+                touchZoom: true,        // Mantener zoom táctil
+                dragging: true          // Mantener arrastre del mapa
+            }).setView([36.7213, -4.4214], 6);
+            
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Esri', maxZoom: 19
+                attribution: 'Esri', 
+                maxZoom: 18,            // Aumentar el zoom máximo disponible
+                minZoom: 3              // Establecer zoom mínimo para mejor navegación
             }).addTo(map);
 
             let marker = null;
@@ -801,7 +807,6 @@ mermaid.initialize({
 
         init();
     </script>
-
     <footer class="bg-black/90 border-t border-white/5 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-10 grid md:grid-cols-4 gap-12">
             <div>
