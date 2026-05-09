@@ -77,7 +77,7 @@
             position: absolute;
             top: 100%;
             left: 0;
-            min-width: 220px;
+            min-width: 250px;
             background: white;
             border: 1px solid #e2e8f0;
             border-top: 3px solid #003399;
@@ -119,7 +119,7 @@
 
         .dropdown-item:hover {
             background: #f1f5f9;
-            padding-left: 20px;
+            padding-left: 50px;
             color: #003399;
         }
 
@@ -167,7 +167,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 50px;
         }
 
         .login-card {
@@ -176,7 +176,7 @@
             max-width: 400px;
             padding: 40px;
             border-radius: 4px;
-            transform: translateY(20px);
+            transform: translateY(50px);
             transition: 0.3s;
         }
 
@@ -194,7 +194,7 @@
             z-index: 99998;
             padding: 2rem;
             border-bottom: 4px solid #003399;
-            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 50px 0 50px rgba(0, 0, 0, 0.3);
         }
 
         #mobile-menu.active {
@@ -288,7 +288,7 @@
         <div class="flex items-center w-full max-w-7xl mx-auto px-6 h-full relative">
             <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition"
                 onclick="document.getElementById('mobile-menu').classList.toggle('active')">
-                <i class="material-icons text-[20px]">menu</i>
+                <i class="material-icons text-[50px]">menu</i>
             </button>
 
             <div class="flex items-center gap-2 cursor-pointer shrink-0"
@@ -352,131 +352,11 @@
 
 
 
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
-        // 1. Definición del Gráfico (Sin cambios en la estructura)
-        const graphDefinition = `
-        graph LR
-            subgraph CONTROL [" "]
-                direction LR
-                EMS(( <span style='font-size:40px;'>🦉</span><br/>VatiaCO ))
-            end
-            subgraph FUENTES [" FUENTES "]
-                direction TB
-                Grid[⚡ RED]
-                FV[☀️ SOLAR]
-            end
-            subgraph BUS_SISTEMA [" "]
-                BusLine["<div style='height:350px; width:15px;'></div>"]
-            end
-            subgraph CARGAS [" CONSUMOS "]
-                direction TB
-                Base[🏠 BASE]
-                Smart[🚗 SMART]
-                AERO[❄️ CLIMA]
-            end
-            BAT[🔋 BATERÍA]
-
-            Grid === BusLine
-            FV === BusLine
-            BusLine ===> Base
-            BusLine ===> Smart
-            BusLine ===> AERO
-            BusLine <===> BAT
-
-            EMS -.-> Grid
-            EMS -.-> FV
-            EMS -.-> BusLine
-            EMS -.-> Smart
-            EMS -.-> BAT
-
-            style CONTROL fill:transparent,stroke:transparent
-            style BUS_SISTEMA fill:transparent,stroke:transparent
-            style BusLine fill:#cbd5e1,stroke:#64748b,stroke-width:2px
-            style EMS fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px,color:#fff
-            style Grid fill:#334155,stroke:#94a3b8,color:#fff
-            style FV fill:#854d0e,stroke:#eab308,color:#fff
-            style Base fill:#7f1d1d,stroke:#ef4444,color:#fff
-            style BAT fill:#064e3b,stroke:#10b981,color:#fff
-            style Smart fill:#164e63,stroke:#06b6d4,color:#fff
-            style AERO fill:#4c1d95,stroke:#8b5cf6,color:#fff
-
-            linkStyle 0,1,2,3,4,5 stroke:#cbd5e1,stroke-width:5px
-            linkStyle 6,7,8,9,10 stroke:#f97316,stroke-width:3px,stroke-dasharray: 8
-    `;
-
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
-        });
-
-        const renderDiagram = async () => {
-            const viewport = document.getElementById('eng-graph-viewport');
-            const id = 'svg-' + Math.floor(Math.random() * 10000);
-
-            try {
-                const { svg } = await mermaid.render(id, graphDefinition);
-                viewport.innerHTML = svg;
-
-                const svgElement = viewport.querySelector('svg');
-
-                // --- INYECCIÓN DE ANIMACIÓN CSS ---
-                const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-                style.textContent = `
-                /* Animación para las líneas de control (naranjas) */
-                .edgeDash {
-                    stroke-dasharray: 8;
-                    animation: flowControl 0.5s linear infinite;
-                }
-
-                /* Animación para las líneas de potencia (grises) */
-                /* Usamos un degradado simulado con dash */
-                .edgeThickness {
-                    stroke-dasharray: 10, 30;
-                    animation: flowPower 2s linear infinite;
-                }
-
-                @keyframes flowControl {
-                    from { stroke-dashoffset: 16; }
-                    to { stroke-dashoffset: 0; }
-                }
-
-                @keyframes flowPower {
-                    from { stroke-dashoffset: 80; }
-                    to { stroke-dashoffset: 0; }
-                }
-            `;
-                svgElement.appendChild(style);
-
-                // Aplicar clases de animación a los caminos (paths) generados
-                // Mermaid usa clases como .edge-thickness-normal o .edge-dashtype-dashed
-                const paths = svgElement.querySelectorAll('.edgePaths path');
-                paths.forEach((path, index) => {
-                    if (index <= 5) {
-                        path.classList.add('edgeThickness'); // Potencia
-                    } else {
-                        path.classList.add('edgeDash'); // Control
-                    }
-                });
-
-                svgElement.style.maxWidth = '100%';
-                svgElement.style.height = 'auto';
-
-            } catch (error) {
-                console.error("Error Mermaid:", error);
-            }
-        };
-
-        renderDiagram();
-    </script>
-
     <!-- Contenedor Principal con Estilos de Aislamiento -->
     <div id="vatiaco-master-wrapper"
         style="width: 100%; clear: both; display: block; position: relative; margin: 40px 0; padding: 0; min-height: 500px;">
         <div class="max-w-7xl mx-auto px-6 mb-10">
-            <h3 class="text-3xl font-black uppercase italic text-white/40">Gestión de Comunidades Energéticas </h3>
+            <h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">Gestión de Comunidades Energéticas </h3>
         </div>
 
         <div id="eng-graph-viewport2"
@@ -486,156 +366,82 @@
                 energético...</div>
         </div>
     </div>
-
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
-        // 1. Definición del Gráfico (Sin cambios en la estructura)
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
 
-        const graphDefinitiong = `
+const graphDefinitiong = `
+graph LR
 
-        
-        graph LR
-    %% Bloque de Comunidades
-    subgraph IZQUIERDA ["<div style='font-size:30px;'>🏠 Prosumidores</div>"]
-        direction TB
-        subgraph AREA_A ["P1"]
-            direction LR
-            EMS_A((🦉)) -.-> ASSETS_A["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
-        end
-        subgraph AREA_B ["..."]
-            direction LR
-            EMS_B((🦉)) -.-> ASSETS_B["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
-        end
-        subgraph AREA_C ["Pn"]
-            direction LR
-            EMS_C((🦉)) -.-> ASSETS_C["<div style='font-size:20px;'>⚡ ☀️  🔋 🚗</div>"]
-        end
-    end
+EMS_B((<div style='font-size:40px;'>🦉<sub>local</sub></div>)) -.-> ASSETS_B[<div style='font-size:40px;'>Prosumidor<sub>i</sub></br> ⚡ ☀️ 🔋 🚗</div>]
+EMS_D( ) -.-> ASSETS_Cs[<div style='font-size:40px;'>☀️ Planta FV<sub>i</sub></div>]
+EMS_E( ) -.-> ASSETS_Css[<div style='font-size:40px;'>🔋 Batería BESS<sub>i</sub></div>]
+EMS_F( ) -.-> ASSETS_Csss[<div style='font-size:40px;'>🚗 Cargador EV<sub>i</sub></div>]
 
-%% Nodo Central
-subgraph GLOBAL [" "]
-    direction LR
 
 EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vatia</span><span style='font-size:70px;font-weight:bold;color:#fbbf24;'>CO</span>"]
-    end
 
-    %% Bloque de Activos Directos
-    subgraph DERECHA ["<div style='font-size:30px;'>☀️ Activos Directos</div>"]
-        direction TB
-        FV_DIRECTO["<div style='font-size:20px;'>☀️ Planta FV</div>"]
-        BAT_DIRECTO["<div style='font-size:20px;'>🔋Batería BESS</div>"]
-        EV_DIRECTO["<div style='font-size:20px;'>🚗 Cargador EV</div>"]
-    end
 
-    %% --- FLUJO UNIFICADO ---
-    %% Se usa el mismo tipo de flecha (-->) para asegurar consistencia visual
 
-    %% Hacia la Izquierda (Índices 0, 1, 2)
-    EMS_GLOBAL --> EMS_A
-    EMS_GLOBAL --> EMS_B
-    EMS_GLOBAL --> EMS_C
+EMS_GLOBAL -.->  EMS_B & EMS_D & EMS_E & EMS_F 
 
-    %% Hacia la Derecha (Índices 3, 4, 5)
-    EMS_GLOBAL --> FV_DIRECTO
-    EMS_GLOBAL --> BAT_DIRECTO
-    EMS_GLOBAL --> EV_DIRECTO
-
-    %% Estilos de Nodos
-    style GLOBAL fill:transparent,stroke:transparent
-    style IZQUIERDA fill:transparent,stroke:transparent
-    style DERECHA fill:transparent,stroke:transparent
-    style AREA_A fill:transparent,stroke:transparent
-    style AREA_B fill:transparent,stroke:transparent
-    style AREA_C fill:transparent,stroke:transparent
-    
-    style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px,color:#fff
-    style EMS_A fill:#e74c3c,stroke:transparent
-    style EMS_B fill:#e74c3c,stroke:#c0392b,color:#fff
-    style EMS_C fill:#e74c3c,stroke:#c0392b,color:#fff
-
-    %% Estilo de Edges: Aplicado a todos del 0 al 5
-    linkStyle 0,1,2,3,4,5 stroke:#f97316,stroke-width:5px,stroke-dasharray: 8
-    
-
-    
+style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px
+linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
     `;
 
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'dark',
+        flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+    });
 
+    const renderDiagram2 = async () => {
+        const viewport = document.getElementById('eng-graph-viewport2');
+        const id = 'svg-' + Math.floor(Math.random() * 10000);
 
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
-        });
+        try {
+            const { svg } = await mermaid.render(id, graphDefinitiong);
+            viewport.innerHTML = svg;
 
-        const renderDiagram2 = async () => {
-            const viewport = document.getElementById('eng-graph-viewport2');
-            const id = 'svg-' + Math.floor(Math.random() * 10000);
+            const svgElement = viewport.querySelector('svg');
 
-            try {
-                const { svg } = await mermaid.render(id, graphDefinitiong);
-                viewport.innerHTML = svg;
-
-                const svgElement = viewport.querySelector('svg');
-
-                // --- INYECCIÓN DE ANIMACIÓN CSS ---
-                const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-                style.textContent = `
-                /* Animación para las líneas de control (naranjas) */
-                .edgeDash {
+            // --- INYECCIÓN DE ANIMACIÓN CSS ---
+            const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
+            style.textContent = `
+                /* Animación para TODAS las líneas */
+                .animatedEdge {
                     stroke-dasharray: 8;
-                    animation: flowControl 0.5s linear infinite;
+                    animation: flowForward 0.5s linear infinite;
                 }
 
-                /* Animación para las líneas de potencia (grises) */
-                /* Usamos un degradado simulado con dash */
-                .edgeThickness {
-                    stroke-dasharray: 10, 30;
-                    animation: flowPower 2s linear infinite;
-                }
-
-                @keyframes flowControl {
+                @keyframes flowForward {
                     from { stroke-dashoffset: 16; }
                     to { stroke-dashoffset: 0; }
                 }
-
-                @keyframes flowPower {
-                    from { stroke-dashoffset: 80; }
-                    to { stroke-dashoffset: 0; }
-                }
             `;
-                svgElement.appendChild(style);
+            svgElement.appendChild(style);
 
-                // Aplicar clases de animación a los caminos (paths) generados
-                // Mermaid usa clases como .edge-thickness-normal o .edge-dashtype-dashed
-                const paths = svgElement.querySelectorAll('.edgePaths path');
-                paths.forEach((path, index) => {
-                    if (index <= 5) {
-                        path.classList.add('edgeThickness'); // Potencia
-                    } else {
-                        path.classList.add('edgeDash'); // Control
-                    }
-                });
+            // Aplicar la misma animación a TODOS los paths
+            const paths = svgElement.querySelectorAll('.edgePaths path');
+            paths.forEach((path) => {
+                path.classList.add('animatedEdge');
+            });
 
-                svgElement.style.maxWidth = '100%';
-                svgElement.style.height = 'auto';
+            svgElement.style.maxWidth = '100%';
+            svgElement.style.height = 'auto';
 
-            } catch (error) {
-                console.error("Error Mermaid:", error);
-            }
-        };
+        } catch (error) {
+            console.error("Error Mermaid:", error);
+        }
+    };
 
-        renderDiagram2();
-    </script>
-
-
+    renderDiagram2();
+</script>
     <main id="main-content" class="space-y-16"></main>
 
     <div id="vatiaco-contact-root"></div>
 
-  <script type="module">
+    <script type="module">
         /****************************************************************
          * 1. CARGA DINÁMICA DE DEPENDENCIAS (LEAFLET)
          *****************************************************************/
@@ -665,7 +471,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
         #contacto { background: transparent; }
         .glass-panel {
             background: rgba(10, 15, 30, 0.7);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(50px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 3rem;
             border-radius: 4px;
@@ -689,7 +495,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
         .btn-action:hover {
             background: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 50px rgba(255, 215, 0, 0.2);
         }
         select#subjectSelector {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
@@ -714,9 +520,9 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
         const generateSubjectOptions = () => {
             const subjectSelector = document.getElementById('subjectSelector');
             if (!subjectSelector || typeof appData === 'undefined') return;
-            
+
             let optionsHtml = '';
-            
+
             appData.forEach(category => {
                 optionsHtml += `<optgroup label="${category.category}">`;
                 category.items.forEach(item => {
@@ -725,7 +531,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
                 });
                 optionsHtml += `</optgroup>`;
             });
-            
+
             subjectSelector.innerHTML = optionsHtml;
         };
 
@@ -756,7 +562,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
                             </div>
                             <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4" class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
                             <div class="md:col-span-2">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">Ubicación del proyecto (Opcional - Haga clic en el mapa)</label>
+                                <label class="text-[10px] uppercase font-black tracking-widest text-white/4 colo:orange mb-2 block">Ubicación del proyecto (Opcional - Haga clic en el mapa)</label>
                                 <div id="map"></div>
                             </div>
                             <input type="hidden" name="lat" id="lat">
@@ -784,9 +590,9 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
                 touchZoom: true,
                 dragging: true
             }).setView([38.7213, -4.4214], 6);
-            
+
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Esri', 
+                attribution: 'Esri',
                 maxZoom: 18,
                 minZoom: 3
             }).addTo(map);
@@ -838,6 +644,9 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
 
         init();
     </script>
+
+
+
     <footer class="bg-black/90 border-t border-white/5 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-10 grid md:grid-cols-4 gap-12">
             <div>
@@ -910,7 +719,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
 
             const categorySectionGroup = document.createElement('div');
             categorySectionGroup.className = "pt-24 pb-10";
-            categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/40">${cat.category}</h3></div>`;
+            categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">${cat.category}</h3></div>`;
 
             const footerCatWrapper = document.createElement('div');
             footerCatWrapper.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${cat.category}</h4>`;
