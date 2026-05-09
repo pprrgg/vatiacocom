@@ -246,11 +246,53 @@
         /* Cinta de Noticias Estilo TV */
 
 
+/* Cinta de Noticias Estilo "Ticker" Minimalista */
+.ticker-wrap {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 15px; /* Más estrecha */
+    background-color: #e74c3c;
+    border-top: 0px solid rgba(255,255,255,0.2);
+    z-index: 100002;
+    display: flex;
+    align-items: center;
+}
 
-        /* Ajuste del body para que el footer no se solape */
-        body {
-            padding-bottom: 15px;
-        }
+.ticker-move {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 100%;
+    animation: ticker 40s linear infinite; /* Un poco más lento para lectura fácil */
+}
+
+.ticker-item {
+    display: inline-block;
+    padding: 0 1.5rem;
+    font-size: 9px; /* Texto más pequeño */
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ticker-label {
+    background: white;
+    color: #e74c3c;
+    padding: 0 6px;
+    margin-right: 8px;
+    font-weight: 900;
+    font-size: 8px; /* Etiqueta aún más pequeña */
+}
+
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* Ajuste del body para que el footer no se solape */
+body { padding-bottom: 15px; }
     </style>
 </head>
 
@@ -291,15 +333,13 @@
                 <i class="material-icons text-[20px]">menu</i>
             </button>
 
-            <div class="flex items-center gap-2 cursor-pointer shrink-0"
+            <div class="flex items-center gap-1.5 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
-
-                <!-- Búho más grande y sin fondo -->
-                <span class="text-2xl leading-none select-none">🦉</span>
-
-                <!-- Texto del Logo -->
+                <div class="bg-[#003399] h-4 w-5 rounded-[2px] flex items-center justify-center overflow-hidden">
+                    <i class="material-icons text-white text-[13px]">bolt</i>
+                </div>
                 <span class="text-base font-black italic tracking-tighter leading-none">
-                    <span class="text-[#003399]">Vatia</span><span class="text-[#ffd700]">CO</span>
+                    <span class="text-[#003399]">VATIA</span><span class="text-[#ffd700]">CO</span>
                 </span>
             </div>
 
@@ -329,7 +369,7 @@
 
     <header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center ">
         <h1 class="text-7xl md:text-9xl font-black italic leading-[0.8] tracking-tighter mb-12 text-white">
-            <span class="text-[#ffd700]">El cerebro de tu</span>omunidad energética. <br> Control
+            <span class="text-[#ffd700]">El cerebro de tu</span> comunidad energética. 
         </h1>
         <div class="flex flex-col items-center">
             <div class="bg-[#e74c3c] px-4 py-1 mb-4">
@@ -340,309 +380,68 @@
                 de Activos y Estabilidad de Red en <br> Tiempo Real</p>
             <div class="w-16 h-1 bg-[#ffd700] mt-6"></div>
         </div>
-
-
-
-
     </header>
-
-
-    <!-- Contenedor Principal con Estilos de Aislamiento -->
-    <div id="vatiaco-master-wrapper"
-        style="width: 100%; clear: both; display: block; position: relative; margin: 40px 0; padding: 0; min-height: 500px;">
-        <div id="eng-graph-viewport"
-            style="width: 85%; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-            <!-- Indicador de carga -->
-            <div id="loading-status" style="font-family: sans-serif; color: #64748b; font-size: 14px;">Iniciando sistema
-                energético...</div>
-        </div>
-    </div>
-
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
-    // 1. Definición del Gráfico (Sin cambios en la estructura)
-    const graphDefinition = `
-        graph LR
-            subgraph CONTROL [" "]
-                direction LR
-                EMS(( <span style='font-size:40px;'>🦉</span><br/>VatiaCO ))
-            end
-            subgraph FUENTES [" FUENTES "]
-                direction TB
-                Grid[⚡ RED]
-                FV[☀️ SOLAR]
-            end
-            subgraph BUS_SISTEMA [" "]
-                BusLine["<div style='height:350px; width:15px;'></div>"]
-            end
-            subgraph CARGAS [" CONSUMOS "]
-                direction TB
-                Base[🏠 BASE]
-                Smart[🚗 SMART]
-                AERO[❄️ CLIMA]
-            end
-            BAT[🔋 BATERÍA]
-
-            Grid === BusLine
-            FV === BusLine
-            BusLine ===> Base
-            BusLine ===> Smart
-            BusLine ===> AERO
-            BusLine <===> BAT
-
-            EMS -.-> Grid
-            EMS -.-> FV
-            EMS -.-> BusLine
-            EMS -.-> Smart
-            EMS -.-> BAT
-
-            style CONTROL fill:transparent,stroke:transparent
-            style BUS_SISTEMA fill:transparent,stroke:transparent
-            style BusLine fill:#cbd5e1,stroke:#64748b,stroke-width:2px
-            style EMS fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px,color:#fff
-            style Grid fill:#334155,stroke:#94a3b8,color:#fff
-            style FV fill:#854d0e,stroke:#eab308,color:#fff
-            style Base fill:#7f1d1d,stroke:#ef4444,color:#fff
-            style BAT fill:#064e3b,stroke:#10b981,color:#fff
-            style Smart fill:#164e63,stroke:#06b6d4,color:#fff
-            style AERO fill:#4c1d95,stroke:#8b5cf6,color:#fff
-
-            linkStyle 0,1,2,3,4,5 stroke:#cbd5e1,stroke-width:5px
-            linkStyle 6,7,8,9,10 stroke:#f97316,stroke-width:3px,stroke-dasharray: 8
-    `;
-
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'dark',
-        flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
-    });
-
-    const renderDiagram = async () => {
-        const viewport = document.getElementById('eng-graph-viewport');
-        const id = 'svg-' + Math.floor(Math.random() * 10000);
-
-        try {
-            const { svg } = await mermaid.render(id, graphDefinition);
-            viewport.innerHTML = svg;
-
-            const svgElement = viewport.querySelector('svg');
-            
-            // --- INYECCIÓN DE ANIMACIÓN CSS ---
-            const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-            style.textContent = `
-                /* Animación para las líneas de control (naranjas) */
-                .edgeDash {
-                    stroke-dasharray: 8;
-                    animation: flowControl 0.5s linear infinite;
-                }
-
-                /* Animación para las líneas de potencia (grises) */
-                /* Usamos un degradado simulado con dash */
-                .edgeThickness {
-                    stroke-dasharray: 10, 30;
-                    animation: flowPower 2s linear infinite;
-                }
-
-                @keyframes flowControl {
-                    from { stroke-dashoffset: 16; }
-                    to { stroke-dashoffset: 0; }
-                }
-
-                @keyframes flowPower {
-                    from { stroke-dashoffset: 80; }
-                    to { stroke-dashoffset: 0; }
-                }
-            `;
-            svgElement.appendChild(style);
-
-            // Aplicar clases de animación a los caminos (paths) generados
-            // Mermaid usa clases como .edge-thickness-normal o .edge-dashtype-dashed
-            const paths = svgElement.querySelectorAll('.edgePaths path');
-            paths.forEach((path, index) => {
-                if (index <= 5) {
-                    path.classList.add('edgeThickness'); // Potencia
-                } else {
-                    path.classList.add('edgeDash'); // Control
-                }
-            });
-
-            svgElement.style.maxWidth = '100%';
-            svgElement.style.height = 'auto';
-
-        } catch (error) {
-            console.error("Error Mermaid:", error);
-        }
-    };
-
-    renderDiagram();
-</script>
 
     <main id="main-content" class="space-y-16"></main>
 
-    <div id="vatiaco-contact-root"></div>
+    <section id="contacto" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glass-panel">
+                <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
 
-    <script type="module">
-        /****************************************************************
-         * 1. CARGA DINÁMICA DE DEPENDENCIAS (LEAFLET)
-         *****************************************************************/
-        const loadLeaflet = () => {
-            return new Promise((resolve) => {
-                if (window.L) return resolve(); // Ya cargado
+                <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Identidad -->
+                    <input type="text" name="nombre" placeholder="Nombre Completo" required
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
 
-                // Inyectar CSS
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-                document.head.appendChild(link);
+                    <input type="tel" name="telefono" placeholder="Teléfono de Contacto" required
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
 
-                // Inyectar JS
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-                script.onload = resolve;
-                document.head.appendChild(script);
-            });
-        };
+                    <!-- Profesional -->
+                    <input type="text" name="empresa" placeholder="Empresa / Institución"
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
 
-        /****************************************************************
-         * 2. ESTILOS DE CONTACTO (CSS)
-         *****************************************************************/
-        const contactStyles = document.createElement('style');
-        contactStyles.textContent = `
-        #contacto { background: transparent; }
-        .glass-panel {
-            background: rgba(10, 15, 30, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3rem;
-            border-radius: 4px;
-        }
-        #map { 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            filter: grayscale(0.5) brightness(0.8) contrast(1.2);
-            height: 350px; width: 100%; border-radius: 4px;
-        }
-        #map:hover { filter: none; transition: all 0.5s ease; }
-        .btn-action {
-            background: #ffd700;
-            color: #0a0f1e;
-            font-weight: 900;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        .btn-action:hover {
-            background: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
-        }
-        select#subjectSelector {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.5em;
-        }
-    `;
-        document.head.appendChild(contactStyles);
+                    <input type="text" name="cargo" placeholder="Cargo / Departamento"
+                        class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
 
-        /****************************************************************
-         * 3. ESTRUCTURA E INICIALIZACIÓN
-         *****************************************************************/
-        const init = async () => {
-            const contactRoot = document.getElementById('vatiaco-contact-root');
-            if (!contactRoot) return;
+                    <!-- Comunicación -->
+                    <input type="email" name="email" placeholder="Email Corporativo" required
+                        class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
 
-            // Inyectar HTML
-            contactRoot.innerHTML = `
-            <section id="contacto" class="py-24">
-                <div class="max-w-7xl mx-auto px-6">
-                    <div class="glass-panel">
-                        <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
-                        <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="text" name="nombre" placeholder="Nombre Completo" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="tel" name="telefono" placeholder="Teléfono de Contacto" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="text" name="empresa" placeholder="Empresa / Institución" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="text" name="cargo" placeholder="Cargo / Departamento" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="email" name="email" placeholder="Email Corporativo" required class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <div class="md:col-span-2 flex flex-col gap-2">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">Motivo de la consulta</label>
-                                <select name="asunto" id="subjectSelector" class="w-full bg-white p-4 outline-none border-none text-slate-900 font-bold appearance-none cursor-pointer">
-                                    <option value="Consultoría Técnica">Consultoría Técnica</option>
-                                    <option value="Microredes">Diseño de Microredes</option>
-                                    <option value="OpenEMS">Soporte OpenEMS</option>
-                                    <option value="Demo Sistemas">Solicitud de Demo</option>
-                                </select>
-                            </div>
-                            <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4" class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
-                            <div class="md:col-span-2">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">Ubicación del proyecto (Opcional - Haga clic en el mapa)</label>
-                                <div id="map"></div>
-                            </div>
-                            <input type="hidden" name="lat" id="lat">
-                            <input type="hidden" name="lng" id="lng">
-                            <button type="submit" class="btn-action md:col-span-2 py-5 text-xl tracking-[0.2em]">Transmitir Solicitud Técnica</button>
-                            <p id="formStatus" class="md:col-span-2 text-center text-xs font-black uppercase mt-4"></p>
-                        </form>
+                    <!-- El Selector (Modificado en CSS para ser legible) -->
+                    <div class="md:col-span-2 flex flex-col gap-2">
+                        <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">Motivo de la
+                            consulta</label>
+                        <select name="asunto" id="subjectSelector"
+                            class="w-full bg-white p-4 outline-none border-none text-slate-900 font-bold appearance-none cursor-pointer">
+                        </select>
                     </div>
-                </div>
-            </section>
-        `;
 
-            // Cargar Leaflet y luego inicializar mapa
-            await loadLeaflet();
+                    <!-- Campo de Texto Libre -->
+                    <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4"
+                        class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
 
-            const map = L.map('map', { scrollWheelZoom: false }).setView([36.7213, -4.4214], 16);
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Esri', maxZoom: 19
-            }).addTo(map);
+                    <!-- Ubicación -->
+                    <div class="md:col-span-2">
+                        <label
+                            class="text-[10px] uppercase font-black tracking-widest text-white/40 mb-2 block">Seleccione
+                            ubicación del proyecto (Opcional)</label>
+                        <div id="map" style="height: 350px; width: 100%; border-radius: 4px;"></div>
+                    </div>
 
-            let marker = null;
-            map.on('click', (e) => {
-                if (marker) marker.setLatLng(e.latlng);
-                else marker = L.marker(e.latlng, { draggable: true }).addTo(map);
-                document.getElementById('lat').value = e.latlng.lat;
-                document.getElementById('lng').value = e.latlng.lng;
-            });
+                    <!-- Campos Ocultos y Acción -->
+                    <input type="hidden" name="lat" id="lat">
+                    <input type="hidden" name="lng" id="lng">
 
-            // Lógica de Formulario
-            const form = document.getElementById('mainContactForm');
-            form.onsubmit = async (e) => {
-                e.preventDefault();
-                const status = document.getElementById('formStatus');
-                const email = form.email.value.toLowerCase();
-                const forbidden = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com", "icloud.com"];
+                    <button type="submit" class="btn-action md:col-span-2 py-5 text-xl tracking-[0.2em]">
+                        Transmitir Solicitud Técnica
+                    </button>
 
-                if (forbidden.some(d => email.endsWith(d))) {
-                    status.textContent = "SE REQUIERE CORREO CORPORATIVO";
-                    status.style.color = "#ef4444";
-                    return;
-                }
-
-                status.textContent = "TRANSMITIENDO...";
-                status.style.color = "#ffd700";
-
-                try {
-                    const res = await fetch("https://doctec.duckdns.org/fast/contacto", {
-                        method: "POST",
-                        body: new URLSearchParams(new FormData(form))
-                    });
-                    if (res.ok) {
-                        status.textContent = "✓ TRANSMISIÓN COMPLETADA";
-                        status.style.color = "#22c55e";
-                        form.reset();
-                        if (marker) { map.removeLayer(marker); marker = null; }
-                    }
-                } catch (err) {
-                    status.textContent = "ERROR DE CONEXIÓN";
-                    status.style.color = "#ef4444";
-                }
-            };
-        };
-
-        init();
-    </script>
+                    <p id="formStatus" class="md:col-span-2 text-center text-xs font-black uppercase mt-4"></p>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <footer class="bg-black/90 border-t border-white/5 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-10 grid md:grid-cols-4 gap-12">
@@ -658,55 +457,45 @@
             </div>
         </div>
     </footer>
-
     <div class="ticker-wrap" id="news-ticker">
         <div class="ticker-move" id="ticker-content">
             <!-- Se rellena dinámicamente -->
         </div>
     </div>
-
     <script>
-        // Referencias al DOM con protección
+        // Referencias al DOM
         const navContainer = document.getElementById('nav-content');
         const mobileNavContainer = document.getElementById('mobile-nav-content');
         const footerLinksContainer = document.getElementById('footer-links-dynamic');
         const mainContent = document.getElementById('main-content');
-
-        // IMPORTANTE: Buscamos el selector pero no asumimos que existe
         const subjectSelector = document.getElementById('subjectSelector');
 
-        // Limpieza segura
-        if (navContainer) navContainer.innerHTML = '';
-        if (mobileNavContainer) mobileNavContainer.innerHTML = '';
-        if (footerLinksContainer) footerLinksContainer.innerHTML = '';
-        if (mainContent) mainContent.innerHTML = '';
-
-        // Solo reseteamos el selector si existe en el DOM
-        if (subjectSelector) {
-            subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
-        }
+        // Limpieza de contenedores para evitar duplicados
+        navContainer.innerHTML = '';
+        mobileNavContainer.innerHTML = '';
+        footerLinksContainer.innerHTML = '';
+        mainContent.innerHTML = '';
+        subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
 
         appData.forEach((cat, index) => {
             // --- RENDER NAV DESKTOP ---
-            if (navContainer) {
-                const navGroup = document.createElement('div');
-                navGroup.className = 'nav-item-group';
-                navGroup.innerHTML = `
+            const navGroup = document.createElement('div');
+            navGroup.className = 'nav-item-group';
+            navGroup.innerHTML = `
             <span class="nav-link-text">${cat.category}</span>
             <div class="dropdown-menu">
                 ${cat.items.map(item => {
-                    const badgeHtml = item.isNew ? `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` : '';
-                    return `
+                const badgeHtml = item.isNew ? `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` : '';
+                return `
                         <a href="#${item.id}" class="dropdown-item flex items-center justify-between" onclick="closeIframe()">
                             <div class="flex flex-col">
                                 <b class="flex items-center">${item.title} ${badgeHtml}</b>
                                 <span>${item.subtitle}</span>
                             </div>
                         </a>`;
-                }).join('')}
+            }).join('')}
             </div>`;
-                navContainer.appendChild(navGroup);
-            }
+            navContainer.appendChild(navGroup);
 
             // --- PREPARAR MÓVIL Y FOOTER ---
             const mobileCatWrapper = document.createElement('div');
@@ -725,13 +514,10 @@
             cat.items.forEach((sec, secIndex) => {
                 const miniBadge = sec.isNew ? `<span class="ml-2 bg-[#e74c3c] text-white text-[8px] px-1 rounded-sm animate-pulse">NEW</span>` : '';
 
-                // Solo añadimos la opción si el selector existe en el DOM
-                if (subjectSelector) {
-                    const opt = document.createElement('option');
-                    opt.value = sec.title;
-                    opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
-                    subjectSelector.appendChild(opt);
-                }
+                // Selector
+                const opt = document.createElement('option');
+                opt.value = sec.title; opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
+                subjectSelector.appendChild(opt);
 
                 // Link Mobile
                 const mLink = document.createElement('a');
@@ -776,12 +562,10 @@
                 categorySectionGroup.appendChild(section);
             });
 
-            if (mobileNavContainer) {
-                mobileCatWrapper.appendChild(mobileItems);
-                mobileNavContainer.appendChild(mobileCatWrapper);
-            }
-            if (mainContent) mainContent.appendChild(categorySectionGroup);
-            if (footerLinksContainer) footerLinksContainer.appendChild(footerCatWrapper);
+            mobileCatWrapper.appendChild(mobileItems);
+            mobileNavContainer.appendChild(mobileCatWrapper);
+            mainContent.appendChild(categorySectionGroup);
+            footerLinksContainer.appendChild(footerCatWrapper);
         });
     </script>
 
@@ -828,105 +612,166 @@
         }
     </script>
 
+    <script>
+        (function initVatiacoMap() {
+            // 1. Limpieza radical: eliminamos cualquier instancia previa
+            if (window.vatiacoMap) {
+                window.vatiacoMap.remove();
+                window.vatiacoMap = null;
+            }
 
-    <script type="module">
-        /****************************************************************
-         * 1. ESTILOS DE LA CINTA (CSS INYECTADO)
-         *****************************************************************/
-        const tickerStyles = document.createElement('style');
-        tickerStyles.textContent = `
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            height: 15px;
-            background-color: #e74c3c;
-            z-index: 100002;
-            display: flex;
-            align-items: center;
-            pointer-events: none; /* No interfiere con clics */
-        }
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 45s linear infinite;
-        }
-        .ticker-item {
-            display: inline-block;
-            padding: 0 1.5rem;
-            font-size: 9px;
-            font-weight: 700;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 15px;
-        }
-        .ticker-label {
-            background: white;
-            color: #e74c3c;
-            padding: 0 6px;
-            margin-right: 8px;
-            font-weight: 900;
-            font-size: 8px;
-        }
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
-    `;
-        document.head.appendChild(tickerStyles);
+            const mapContainer = document.getElementById('map');
+            if (!mapContainer) return;
 
-        /****************************************************************
-         * 2. ESTRUCTURA Y LÓGICA (HTML + JS)
-         *****************************************************************/
-        const initTicker = () => {
-            // Creamos el contenedor principal
-            const tickerContainer = document.createElement('div');
-            tickerContainer.className = 'ticker-wrap';
+            // 2. Inicialización
+            window.vatiacoMap = L.map('map', {
+                scrollWheelZoom: false,
+                // Importante: forzamos el refresco del layout
+                trackResize: true
+            }).setView([36.7213, -4.4214], 16);
 
-            // Creamos el área de movimiento
-            const tickerMove = document.createElement('div');
-            tickerMove.className = 'ticker-move';
-            tickerMove.id = 'ticker-content';
+            // 3. Capa Satelital
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Esri',
+                maxZoom: 19
+            }).addTo(window.vatiacoMap);
 
-            let newsItems = "";
+            // 4. Variable para el marcador clásico
+            window.currentMarker = null;
 
-            // Procesamos los datos de appData (asumiendo que está disponible globalmente)
-            if (typeof appData !== 'undefined') {
-                appData.forEach(cat => {
-                    cat.items.forEach(item => {
-                        if (item.isNew) {
-                            newsItems += `
-                            <div class="ticker-item">
-                                <span class="ticker-label">NUEVA HERRAMIENTA</span> 
-                                SISTEMA ${item.title} DISPONIBLE: ${item.subtitle} — ACCESO INMEDIATO —
-                            </div>`;
-                        }
+            // 5. Evento de clic para el marcador típico
+            window.vatiacoMap.on('click', function (e) {
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+
+                if (window.currentMarker) {
+                    // Si ya existe, simplemente lo movemos
+                    window.currentMarker.setLatLng(e.latlng);
+                } else {
+                    // Si no existe, creamos el marcador azul estándar de Leaflet
+                    window.currentMarker = L.marker(e.latlng, {
+                        draggable: true // Permitimos que el usuario lo ajuste arrastrando
+                    }).addTo(window.vatiacoMap);
+
+                    // Si el usuario lo arrastra, actualizamos las coordenadas
+                    window.currentMarker.on('dragend', function (event) {
+                        const position = event.target.getLatLng();
+                        document.getElementById('lat').value = position.lat;
+                        document.getElementById('lng').value = position.lng;
                     });
+                }
+
+                // Actualizar inputs del formulario
+                const latInput = document.getElementById('lat');
+                const lngInput = document.getElementById('lng');
+                if (latInput) latInput.value = lat;
+                if (lngInput) lngInput.value = lng;
+            });
+
+            // 6. Zoom inteligente (Foco)
+            window.vatiacoMap.on('focus', () => window.vatiacoMap.scrollWheelZoom.enable());
+            window.vatiacoMap.on('blur', () => window.vatiacoMap.scrollWheelZoom.disable());
+
+            // 7. Corrección de tamaño (Crucial)
+            // Ejecutamos varias veces para asegurar que el mapa se "despierte" correctamente
+            setTimeout(() => window.vatiacoMap.invalidateSize(), 200);
+            setTimeout(() => window.vatiacoMap.invalidateSize(), 800);
+        })();
+    </script>
+
+    <script>
+        document.getElementById('mainContactForm').onsubmit = async function (e) {
+            // Detenemos el envío automático siempre para validar primero
+            e.preventDefault();
+
+            const status = document.getElementById('formStatus');
+            const btn = this.querySelector('button[type="submit"]');
+            const emailInput = this.querySelector('input[name="email"]');
+            const formData = new FormData(this);
+
+            // 1. DEFINICIÓN DE DOMINIOS NO PERMITIDOS
+            const emailValue = emailInput.value.toLowerCase();
+            const forbiddenDomains = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com", "icloud.com"];
+
+            // Comprobamos si el email termina en alguno de los dominios prohibidos
+            const isForbidden = forbiddenDomains.some(domain => emailValue.endsWith(domain));
+
+            if (isForbidden) {
+                // Error crítico: No se transmite nada
+                status.textContent = "SE REQUIERE CORREO CORPORATIVO (@empresa.com)";
+                status.style.color = "#ef4444"; // Rojo de error
+
+                // Efecto visual de error en el input
+                emailInput.style.border = "1px solid #ef4444";
+                emailInput.focus();
+
+                return; // FINALIZA LA FUNCIÓN AQUÍ (No hay transmisión)
+            }
+
+            // 2. PROCEDIMIENTO DE ENVÍO (Solo si pasa la validación)
+            status.textContent = "ESTABLECIENDO ENLACE TÉCNICO...";
+            status.style.color = "#ffd700";
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+
+            try {
+                const response = await fetch("https://doctec.duckdns.org/fast/contacto", {
+                    method: "POST",
+                    body: new URLSearchParams(formData)
                 });
-            }
 
-            // Si no hay noticias, ponemos un mensaje por defecto o lo ocultamos
-            if (newsItems === "") {
-                newsItems = `<div class="ticker-item"><span class="ticker-label">VATIACO</span> CONTROL AVANZADO DE ACTIVOS ENERGÉTICOS — SOLUCIONES DE INGENIERÍA DISPONIBLES —</div>`;
-            }
+                if (response.ok) {
+                    status.textContent = "✓ TRANSMISIÓN COMPLETADA CON ÉXITO";
+                    status.style.color = "#22c55e";
+                    this.reset();
+                    emailInput.style.border = "1px solid rgba(255, 255, 255, 0.1)"; // Reset borde
 
-            // Inyectamos el contenido duplicado para el loop infinito
-            tickerMove.innerHTML = newsItems + newsItems;
-            tickerContainer.appendChild(tickerMove);
-            document.body.appendChild(tickerContainer);
+                    if (window.currentMarker && window.vatiacoMap) {
+                        window.vatiacoMap.removeLayer(window.currentMarker);
+                        window.currentMarker = null;
+                    }
+                } else {
+                    status.textContent = `ERROR DE CANAL: ESTADO ${response.status}`;
+                    status.style.color = "#ef4444";
+                }
+            } catch (error) {
+                status.textContent = "ERROR DE CONEXIÓN CON EL SERVIDOR";
+                status.style.color = "#ef4444";
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
         };
 
-        // Ejecutamos la creación cuando el DOM esté listo
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            initTicker();
-        } else {
-            document.addEventListener('DOMContentLoaded', initTicker);
-        }
+        // Limpiar el error visual cuando el usuario empiece a corregir el email
+        document.querySelector('input[name="email"]').addEventListener('input', function () {
+            this.style.border = "1px solid rgba(255, 255, 255, 0.1)";
+            document.getElementById('formStatus').textContent = "";
+        });
     </script>
+
+    <script>
+        // Lógica para la cinta de noticias
+        const tickerContent = document.getElementById('ticker-content');
+        let newsItems = "";
+
+        appData.forEach(cat => {
+            cat.items.forEach(item => {
+                if (item.isNew) {
+                    newsItems += `
+                <div class="ticker-item">
+                    <span class="ticker-label">NUEVA HERRAMIENTA</span> 
+                    SISTEMA ${item.title} DISPONIBLE: ${item.subtitle} — ACCESO INMEDIATO HABILITADO —
+                </div>`;
+                }
+            });
+        });
+
+        // Duplicamos el contenido para que el loop sea fluido y no deje huecos
+        tickerContent.innerHTML = newsItems + newsItems;
+    </script>
+
+
 </body>
 
 </html>
