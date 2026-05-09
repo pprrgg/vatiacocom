@@ -635,7 +635,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
 
     <div id="vatiaco-contact-root"></div>
 
-<script type="module">
+  <script type="module">
         /****************************************************************
          * 1. CARGA DINÁMICA DE DEPENDENCIAS (LEAFLET)
          *****************************************************************/
@@ -697,11 +697,40 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
             background-position: right 1rem center;
             background-size: 1.5em;
         }
-    `;
+        optgroup {
+            font-weight: bold;
+            color: #ffd700;
+        }
+        optgroup option {
+            color: #0a0f1e;
+            font-weight: normal;
+        }
+        `;
         document.head.appendChild(contactStyles);
 
         /****************************************************************
-         * 3. ESTRUCTURA E INICIALIZACIÓN
+         * 3. FUNCIÓN PARA GENERAR SELECT DINÁMICAMENTE
+         *****************************************************************/
+        const generateSubjectOptions = () => {
+            const subjectSelector = document.getElementById('subjectSelector');
+            if (!subjectSelector || typeof appData === 'undefined') return;
+            
+            let optionsHtml = '';
+            
+            appData.forEach(category => {
+                optionsHtml += `<optgroup label="${category.category}">`;
+                category.items.forEach(item => {
+                    const optionValue = `${item.title} - ${item.subtitle}`;
+                    optionsHtml += `<option value="${optionValue}">${optionValue}</option>`;
+                });
+                optionsHtml += `</optgroup>`;
+            });
+            
+            subjectSelector.innerHTML = optionsHtml;
+        };
+
+        /****************************************************************
+         * 4. ESTRUCTURA E INICIALIZACIÓN
          *****************************************************************/
         const init = async () => {
             const contactRoot = document.getElementById('vatiaco-contact-root');
@@ -722,10 +751,7 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
                             <div class="md:col-span-2 flex flex-col gap-2">
                                 <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">Motivo de la consulta</label>
                                 <select name="asunto" id="subjectSelector" class="w-full bg-white p-4 outline-none border-none text-slate-900 font-bold appearance-none cursor-pointer">
-                                    <option value="Consultoría Técnica">Consultoría Técnica</option>
-                                    <option value="Microredes">Diseño de Microredes</option>
-                                    <option value="OpenEMS">Soporte OpenEMS</option>
-                                    <option value="Demo Sistemas">Solicitud de Demo</option>
+                                    <option value="">Cargando opciones...</option>
                                 </select>
                             </div>
                             <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4" class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
@@ -743,23 +769,26 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
             </section>
         `;
 
+            // Generar opciones del select desde appData
+            generateSubjectOptions();
+
             // Cargar Leaflet y luego inicializar mapa
             await loadLeaflet();
 
-            // MODIFICACIÓN: Permitir zoom con scroll del ratón
+            // Configurar mapa con zoom libre con scroll del ratón
             const map = L.map('map', {
-                scrollWheelZoom: true,  // Habilitar zoom con rueda del ratón
-                zoomControl: true,       // Mantener controles de zoom UI
-                doubleClickZoom: true,   // Mantener zoom con doble clic
-                boxZoom: true,          // Mantener zoom con selección de área
-                touchZoom: true,        // Mantener zoom táctil
-                dragging: true          // Mantener arrastre del mapa
-            }).setView([36.7213, -4.4214], 6);
+                scrollWheelZoom: true,
+                zoomControl: true,
+                doubleClickZoom: true,
+                boxZoom: true,
+                touchZoom: true,
+                dragging: true
+            }).setView([38.7213, -4.4214], 6);
             
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: 'Esri', 
-                maxZoom: 18,            // Aumentar el zoom máximo disponible
-                minZoom: 3              // Establecer zoom mínimo para mejor navegación
+                maxZoom: 18,
+                minZoom: 3
             }).addTo(map);
 
             let marker = null;
@@ -797,6 +826,8 @@ EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vat
                         status.style.color = "#22c55e";
                         form.reset();
                         if (marker) { map.removeLayer(marker); marker = null; }
+                        // Resetear mapa al punto inicial
+                        map.setView([36.7213, -4.4214], 16);
                     }
                 } catch (err) {
                     status.textContent = "ERROR DE CONEXIÓN";
