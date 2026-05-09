@@ -288,7 +288,7 @@
         <div class="flex items-center w-full max-w-7xl mx-auto px-6 h-full relative">
             <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition"
                 onclick="document.getElementById('mobile-menu').classList.toggle('active')">
-                <i class="material-icons text-[50px]">menu</i>
+                <i class="material-icons text-[20px]">menu</i>
             </button>
 
             <div class="flex items-center gap-2 cursor-pointer shrink-0"
@@ -356,7 +356,8 @@
     <div id="vatiaco-master-wrapper"
         style="width: 100%; clear: both; display: block; position: relative; margin: 40px 0; padding: 0; min-height: 500px;">
         <div class="max-w-7xl mx-auto px-6 mb-10">
-            <h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">Gestión de Comunidades Energéticas </h3>
+            <h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">Gestión de Comunidades Energéticas
+            </h3>
         </div>
 
         <div id="eng-graph-viewport2"
@@ -366,11 +367,11 @@
                 energético...</div>
         </div>
     </div>
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
 
-const graphDefinitiong = `
+        const graphDefinitiong = `
 graph LR
 
 EMS_B((<div style='font-size:40px;'>🦉<sub>local</sub></div>)) -.-> ASSETS_B[<div style='font-size:40px;'>🏘️ Prosumidor<sub>i</sub></br> ⚡ ☀️ 🔋 🚗</div>]
@@ -389,25 +390,25 @@ style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px
 linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
     `;
 
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'dark',
-        flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
-    });
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+        });
 
-    const renderDiagram2 = async () => {
-        const viewport = document.getElementById('eng-graph-viewport2');
-        const id = 'svg-' + Math.floor(Math.random() * 10000);
+        const renderDiagram2 = async () => {
+            const viewport = document.getElementById('eng-graph-viewport2');
+            const id = 'svg-' + Math.floor(Math.random() * 10000);
 
-        try {
-            const { svg } = await mermaid.render(id, graphDefinitiong);
-            viewport.innerHTML = svg;
+            try {
+                const { svg } = await mermaid.render(id, graphDefinitiong);
+                viewport.innerHTML = svg;
 
-            const svgElement = viewport.querySelector('svg');
+                const svgElement = viewport.querySelector('svg');
 
-            // --- INYECCIÓN DE ANIMACIÓN CSS ---
-            const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-            style.textContent = `
+                // --- INYECCIÓN DE ANIMACIÓN CSS ---
+                const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
+                style.textContent = `
                 /* Animación para TODAS las líneas */
                 .animatedEdge {
                     animation: flowForward 0.5s linear infinite;
@@ -417,24 +418,24 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
                     from { stroke-dashoffset: 16; }
                 }
             `;
-            svgElement.appendChild(style);
+                svgElement.appendChild(style);
 
-            // Aplicar la misma animación a TODOS los paths
-            const paths = svgElement.querySelectorAll('.edgePaths path');
-            paths.forEach((path) => {
-                path.classList.add('animatedEdge');
-            });
+                // Aplicar la misma animación a TODOS los paths
+                const paths = svgElement.querySelectorAll('.edgePaths path');
+                paths.forEach((path) => {
+                    path.classList.add('animatedEdge');
+                });
 
-            svgElement.style.maxWidth = '100%';
-            svgElement.style.height = 'auto';
+                svgElement.style.maxWidth = '100%';
+                svgElement.style.height = 'auto';
 
-        } catch (error) {
-            console.error("Error Mermaid:", error);
-        }
-    };
+            } catch (error) {
+                console.error("Error Mermaid:", error);
+            }
+        };
 
-    renderDiagram2();
-</script>
+        renderDiagram2();
+    </script>
     <main id="main-content" class="space-y-16"></main>
 
     <div id="vatiaco-contact-root"></div>
