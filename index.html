@@ -243,13 +243,39 @@
             transform: translateX(5px);
         }
 
-        /* Cinta de Noticias Estilo TV */
-
 
 
         /* Ajuste del body para que el footer no se solape */
         body {
             padding-bottom: 15px;
+        }
+    </style>
+
+
+    <style>
+        /* Estilos para el aspecto de móvil vertical */
+        .mobile-frame {
+            aspect-ratio: 9 / 16;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            object-fit: cover;
+            border-radius: 2.5rem;
+            border: 8px solid #1a1a1a;
+            background-color: #000;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .group:hover .mobile-frame {
+            transform: scale(1.02);
+        }
+
+        .img-container-mobile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
     </style>
 </head>
@@ -294,13 +320,19 @@
             <div class="flex items-center gap-2 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
 
-                <!-- Búho más grande y sin fondo -->
+                <!-- Búho -->
                 <span class="text-2xl leading-none select-none">🦉</span>
 
-                <!-- Texto del Logo -->
-                <span class="text-base font-black italic tracking-tighter leading-none">
-                    <span class="text-[#003399]">Vatia</span><span class="text-[#ffd700]">CO</span>
-                </span>
+                <!-- Contenedor de Texto -->
+                <div class="flex flex-col justify-center">
+                    <div class="text-base font-black tracking-tighter leading-none">
+                        <span class="text-[#003399]">OWL</span><span class="text-[#D4AF37]">ERGY</span>
+                    </div>
+                    <!-- Subtítulo: Alto y muy espaciado -->
+                    <div class="text-[7px] uppercase tracking-[0.35em] font-bold text-slate-400 mt-1 leading-none">
+                        Smart Energy
+                    </div>
+                </div>
             </div>
 
             <div id="nav-content" class="hidden sm:flex items-center h-full ml-6"></div>
@@ -319,8 +351,9 @@
     </nav>
 
     <div id="iframe-viewer">
-
+        <main style="padding-top: 30px;"></main>
         <iframe id="main-iframe" class="w-full h-full border-none bg-white"></iframe>
+        </main>
     </div>
 
     <div id="mobile-menu">
@@ -670,150 +703,157 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
         </div>
     </div>
 
+
+    <!-- Estilos para el Frame de Móvil -->
+    <style>
+        .mobile-frame {
+            aspect-ratio: 9 / 16;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            object-fit: cover;
+            border-radius: 2.5rem;
+            border: 8px solid #1a1a1a;
+            background-color: #000;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-frame:hover {
+            transform: scale(1.01);
+        }
+
+        .img-container-mobile {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+    </style>
+
     <script>
-        // Referencias al DOM con protección
+        // 1. Referencias al DOM
         const navContainer = document.getElementById('nav-content');
         const mobileNavContainer = document.getElementById('mobile-nav-content');
         const footerLinksContainer = document.getElementById('footer-links-dynamic');
         const mainContent = document.getElementById('main-content');
-
-        // IMPORTANTE: Buscamos el selector pero no asumimos que existe
         const subjectSelector = document.getElementById('subjectSelector');
 
-        // Limpieza segura
+        // 2. Limpieza de contenedores
         if (navContainer) navContainer.innerHTML = '';
         if (mobileNavContainer) mobileNavContainer.innerHTML = '';
         if (footerLinksContainer) footerLinksContainer.innerHTML = '';
         if (mainContent) mainContent.innerHTML = '';
-
-        // Solo reseteamos el selector si existe en el DOM
         if (subjectSelector) {
             subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
         }
 
-        appData.forEach((cat, index) => {
-            // --- RENDER NAV DESKTOP ---
+        // 3. Renderizado de Datos
+        appData.forEach((cat) => {
+            // Render Nav Desktop
             if (navContainer) {
                 const navGroup = document.createElement('div');
                 navGroup.className = 'nav-item-group';
                 navGroup.innerHTML = `
-            <span class="nav-link-text">${cat.category}</span>
-            <div class="dropdown-menu">
-                ${cat.items.map(item => {
-                    const badgeHtml = item.isNew ? `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` : '';
-                    return `
-                        <a href="#${item.id}" class="dropdown-item flex items-center justify-between" onclick="closeIframe()">
+                <span class="nav-link-text">${cat.category}</span>
+                <div class="dropdown-menu">
+                    ${cat.items.map(item => `
+                        <a href="#${item.id}" class="dropdown-item" onclick="closeIframe()">
                             <div class="flex flex-col">
-                                <b class="flex items-center">${item.title} ${badgeHtml}</b>
+                                <b>${item.title}</b>
                                 <span>${item.subtitle}</span>
                             </div>
-                        </a>`;
-                }).join('')}
-            </div>`;
+                        </a>`).join('')}
+                </div>`;
                 navContainer.appendChild(navGroup);
             }
 
-            // --- PREPARAR MÓVIL Y FOOTER ---
-            const mobileCatWrapper = document.createElement('div');
-            mobileCatWrapper.innerHTML = `<div class="text-[#003399] font-black uppercase text-xs border-b pb-2 mb-3">${cat.category}</div>`;
-            const mobileItems = document.createElement('div');
-            mobileItems.className = "flex flex-col gap-3 pl-4 border-l";
-
+            // Grupo de Secciones
             const categorySectionGroup = document.createElement('div');
             categorySectionGroup.className = "pt-24 pb-10";
-            categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">${cat.category}</h3></div>`;
+            categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/10">${cat.category}</h3></div>`;
 
-            const footerCatWrapper = document.createElement('div');
-            footerCatWrapper.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${cat.category}</h4>`;
-
-            // --- RENDER ITEMS ---
             cat.items.forEach((sec, secIndex) => {
-                const miniBadge = sec.isNew ? `<span class="ml-2 bg-[#e74c3c] text-white text-[8px] px-1 rounded-sm animate-pulse">NEW</span>` : '';
-
-                // Solo añadimos la opción si el selector existe en el DOM
+                // Llenar selector de contacto
                 if (subjectSelector) {
                     const opt = document.createElement('option');
                     opt.value = sec.title;
-                    opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
+                    opt.textContent = sec.title;
                     subjectSelector.appendChild(opt);
                 }
 
-                // Link Mobile
-                const mLink = document.createElement('a');
-                mLink.href = `#${sec.id}`;
-                mLink.className = "flex items-center text-slate-800 font-bold uppercase text-[10px]";
-                mLink.onclick = () => { closeIframe(); document.getElementById('mobile-menu').classList.remove('active'); };
-                mLink.innerHTML = `${sec.title} ${miniBadge}`;
-                mobileItems.appendChild(mLink);
-
-                // Link Footer
-                const fLink = document.createElement('a');
-                fLink.href = `#${sec.id}`;
-                fLink.className = "footer-link flex items-center";
-                fLink.onclick = () => closeIframe();
-                fLink.innerHTML = `<span>${sec.title}</span> ${miniBadge}`;
-                footerCatWrapper.appendChild(fLink);
-
-                // Sección
+                const layout = secIndex % 2 === 0 ? '' : 'md:flex-row-reverse';
                 const section = document.createElement('section');
                 section.id = sec.id;
                 section.className = 'py-16 scroll-mt-24';
-                const layout = secIndex % 2 === 0 ? '' : 'md:flex-row-reverse';
-                const newBadge = sec.isNew ? `<div class="inline-flex items-center gap-2 bg-[#e74c3c] text-white text-[10px] font-black px-2 py-1 mb-4 rounded-sm shadow-lg animate-pulse-slow"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span></span>NUEVA HERRAMIENTA</div>` : '';
-                const imageLabel = sec.isNew ? `<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg] tracking-tighter">NEW</div>` : '';
 
+                // FORZAMOS SIEMPRE ESTRUCTURA DE VIDEO
                 section.innerHTML = `
             <div class="max-w-7xl mx-auto px-6">
                 <div class="flex flex-col md:flex-row items-center gap-12 ${layout}">
-                    <div class="w-full md:w-1/2 relative group">
-                        ${imageLabel}
-
-${sec.image.endsWith('.webm') || sec.image.endsWith('.mp4')
-    ? `
-<video
-    class="w-full img-side-mode border-4 border-white shadow-2xl cursor-pointer"
-    autoplay
-    muted
-    playsinline
-    preload="auto"
-    onclick="openIframe('${sec.btnLink}')"
-    onended="this.src=''; this.src='${sec.image}'; this.play();"
-    style="background: black;" 
-        onloadeddata="this.playbackRate = 6.0;"
-
->
-    <source src="${sec.image}" type="video/webm">
-</video>
-    `
-    : `
-    <img
-        src="${sec.image}"
-        class="w-full img-side-mode border-4 border-white shadow-2xl cursor-pointer group-hover:scale-[1.01] transition"
-        onclick="openIframe('${sec.btnLink}')"
-    >
-`}
-                   
-                   
-                        </div>
+                    <div class="w-full md:w-1/2 img-container-mobile group">
+                        <video
+                            class="mobile-frame video-strict-loop"
+                            autoplay
+                            muted
+                            playsinline
+                            preload="auto"
+                            onclick="openIframe('${sec.btnLink}')"
+                            onloadeddata="this.playbackRate = 8.0; this.play();"
+                        >
+                            <source src="${sec.image}" type="video/mp4">
+                            <source src="${sec.image}" type="video/webm">
+                        </video>
+                    </div>
                     <div class="w-full md:w-1/2">
-                        ${newBadge}
-                        <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase tracking-tighter text-white">${sec.title}</h2>
-                        <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
+                        <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase text-white">${sec.title}</h2>
+                        <div class="text-[#ffd700] font-black uppercase text-sm mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
                         <p class="text-white/70 text-lg mb-8 font-light leading-relaxed">${sec.description}</p>
-                        ${sec.btnText ? `<button class="btn-action flex items-center gap-3" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span><i class="material-icons text-sm">open_in_new</i></button>` : ''}
+                        ${sec.btnText ? `<button class="btn-action" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span></button>` : ''}
                     </div>
                 </div>
             </div>`;
                 categorySectionGroup.appendChild(section);
             });
 
-            if (mobileNavContainer) {
-                mobileCatWrapper.appendChild(mobileItems);
-                mobileNavContainer.appendChild(mobileCatWrapper);
-            }
             if (mainContent) mainContent.appendChild(categorySectionGroup);
-            if (footerLinksContainer) footerLinksContainer.appendChild(footerCatWrapper);
         });
+
+        // 4. LÓGICA DE REINICIO AGRESIVA (ANTI-CONGELACIÓN)
+        function initializeStrictLoop() {
+            const allVideos = document.querySelectorAll('.video-strict-loop');
+
+            allVideos.forEach(video => {
+                // Asegurar velocidad siempre que empiece
+                video.addEventListener('play', function () {
+                    this.playbackRate = 8.0;
+                });
+
+                // Reinicio forzado: Vaciar y recargar el src al terminar
+                video.addEventListener('ended', function () {
+                    const source = this.currentSrc;
+                    this.src = "";
+                    this.src = source;
+                    this.load();
+                    this.playbackRate = 8.0;
+                    this.play();
+                });
+            });
+        }
+
+        // Iniciar lógica de bucle
+        setTimeout(initializeStrictLoop, 300);
+
+        // Vigilante de seguridad: si un video se pausa (por scroll o batería), forzar play
+        setInterval(() => {
+            document.querySelectorAll('.video-strict-loop').forEach(v => {
+                if (v.paused) {
+                    v.play();
+                    v.playbackRate = 8.0;
+                }
+            });
+        }, 1000);
     </script>
 
     <script>
