@@ -7,7 +7,7 @@
             category: "Herramientas de Acceso Libre",
             items: [
                 { id: "pv", title: "PV.Design", isNew: true, subtitle: "Simulación fotovoltaica basada en el modelo de radiación satelital PVGIS", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "v1.webm", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
-                { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "powopt.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
+                { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "v2.webm", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
                 { id: "roi", title: "ROI.Calc", subtitle: "Cálculo del Retorno de una inversión", description: "El ROI calculator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "roi.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
             ]
         },
@@ -704,157 +704,175 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
     </div>
 
 
-    <!-- Estilos para el Frame de Móvil -->
-    <style>
-        .mobile-frame {
-            aspect-ratio: 9 / 16;
-            width: 100%;
-            max-width: 320px;
-            margin: 0 auto;
-            object-fit: cover;
-            border-radius: 2.5rem;
-            border: 8px solid #1a1a1a;
-            background-color: #000;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            display: block;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+<style>
+    /* Aspecto de Móvil Vertical 9:16 */
+    .mobile-frame {
+        aspect-ratio: 9 / 16;
+        width: 100%;
+        max-width: 320px; 
+        margin: 0 auto;
+        object-fit: cover;
+        border-radius: 2.5rem;
+        border: 8px solid #1a1a1a; 
+        background-color: #000;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        display: block;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    .mobile-frame:hover { transform: scale(1.01); }
+    .img-container-mobile { display: flex; justify-content: center; position: relative; }
+    
+    @keyframes pulse-slow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+    .animate-pulse-slow { animation: pulse-slow 3s infinite; }
+</style>
+
+<script>
+    const navContainer = document.getElementById('nav-content');
+    const mobileNavContainer = document.getElementById('mobile-nav-content');
+    const footerLinksContainer = document.getElementById('footer-links-dynamic');
+    const mainContent = document.getElementById('main-content');
+    const subjectSelector = document.getElementById('subjectSelector');
+
+    if (navContainer) navContainer.innerHTML = '';
+    if (mobileNavContainer) mobileNavContainer.innerHTML = '';
+    if (footerLinksContainer) footerLinksContainer.innerHTML = '';
+    if (mainContent) mainContent.innerHTML = '';
+    if (subjectSelector) subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
+
+    appData.forEach((cat) => {
+        // --- 1. NAV DESKTOP ---
+        if (navContainer) {
+            const navGroup = document.createElement('div');
+            navGroup.className = 'nav-item-group';
+            const itemsHtml = cat.items.map(item => {
+                const badgeHtml = item.isNew ? `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` : '';
+                return `
+                    <a href="#${item.id}" class="dropdown-item flex items-center justify-between" onclick="closeIframe()">
+                        <div class="flex flex-col">
+                            <b class="flex items-center uppercase text-[11px] tracking-tighter">${item.title} ${badgeHtml}</b>
+                            <span class="text-[10px] opacity-60">${item.subtitle}</span>
+                        </div>
+                    </a>`;
+            }).join('');
+            navGroup.innerHTML = `<span class="nav-link-text">${cat.category}</span><div class="dropdown-menu">${itemsHtml}</div>`;
+            navContainer.appendChild(navGroup);
         }
 
-        .mobile-frame:hover {
-            transform: scale(1.01);
-        }
+        // --- 2. PREPARAR CONTENEDORES ---
+        const mobileCatWrapper = document.createElement('div');
+        mobileCatWrapper.innerHTML = `<div class="text-[#003399] font-black uppercase text-xs border-b pb-2 mb-3">${cat.category}</div>`;
+        const mobileItems = document.createElement('div');
+        mobileItems.className = "flex flex-col gap-3 pl-4 border-l";
 
-        .img-container-mobile {
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-    </style>
+        const categorySectionGroup = document.createElement('div');
+        categorySectionGroup.className = "pt-24 pb-10";
+        categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/10">${cat.category}</h3></div>`;
 
-    <script>
-        // 1. Referencias al DOM
-        const navContainer = document.getElementById('nav-content');
-        const mobileNavContainer = document.getElementById('mobile-nav-content');
-        const footerLinksContainer = document.getElementById('footer-links-dynamic');
-        const mainContent = document.getElementById('main-content');
-        const subjectSelector = document.getElementById('subjectSelector');
+        const footerCatWrapper = document.createElement('div');
+        footerCatWrapper.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${cat.category}</h4>`;
 
-        // 2. Limpieza de contenedores
-        if (navContainer) navContainer.innerHTML = '';
-        if (mobileNavContainer) mobileNavContainer.innerHTML = '';
-        if (footerLinksContainer) footerLinksContainer.innerHTML = '';
-        if (mainContent) mainContent.innerHTML = '';
-        if (subjectSelector) {
-            subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
-        }
+        // --- 3. RENDER ITEMS ---
+        cat.items.forEach((sec, secIndex) => {
+            const miniBadge = sec.isNew ? `<span class="ml-2 bg-[#e74c3c] text-white text-[8px] px-1 rounded-sm animate-pulse">NEW</span>` : '';
 
-        // 3. Renderizado de Datos
-        appData.forEach((cat) => {
-            // Render Nav Desktop
-            if (navContainer) {
-                const navGroup = document.createElement('div');
-                navGroup.className = 'nav-item-group';
-                navGroup.innerHTML = `
-                <span class="nav-link-text">${cat.category}</span>
-                <div class="dropdown-menu">
-                    ${cat.items.map(item => `
-                        <a href="#${item.id}" class="dropdown-item" onclick="closeIframe()">
-                            <div class="flex flex-col">
-                                <b>${item.title}</b>
-                                <span>${item.subtitle}</span>
-                            </div>
-                        </a>`).join('')}
-                </div>`;
-                navContainer.appendChild(navGroup);
+            if (subjectSelector) {
+                const opt = document.createElement('option');
+                opt.value = sec.title;
+                opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
+                subjectSelector.appendChild(opt);
             }
 
-            // Grupo de Secciones
-            const categorySectionGroup = document.createElement('div');
-            categorySectionGroup.className = "pt-24 pb-10";
-            categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/10">${cat.category}</h3></div>`;
+            const mLink = document.createElement('a');
+            mLink.href = `#${sec.id}`;
+            mLink.className = "flex items-center text-slate-800 font-bold uppercase text-[10px]";
+            mLink.onclick = () => { closeIframe(); document.getElementById('mobile-menu').classList.remove('active'); };
+            mLink.innerHTML = `${sec.title} ${miniBadge}`;
+            mobileItems.appendChild(mLink);
 
-            cat.items.forEach((sec, secIndex) => {
-                // Llenar selector de contacto
-                if (subjectSelector) {
-                    const opt = document.createElement('option');
-                    opt.value = sec.title;
-                    opt.textContent = sec.title;
-                    subjectSelector.appendChild(opt);
-                }
+            const fLink = document.createElement('a');
+            fLink.href = `#${sec.id}`;
+            fLink.className = "footer-link flex items-center";
+            fLink.onclick = () => closeIframe();
+            fLink.innerHTML = `<span>${sec.title}</span> ${miniBadge}`;
+            footerCatWrapper.appendChild(fLink);
 
-                const layout = secIndex % 2 === 0 ? '' : 'md:flex-row-reverse';
-                const section = document.createElement('section');
-                section.id = sec.id;
-                section.className = 'py-16 scroll-mt-24';
+            // SECCIÓN CON ORDEN CORREGIDO
+            const section = document.createElement('section');
+            section.id = sec.id;
+            section.className = 'py-16 scroll-mt-24';
+            
+            // Clase clave: flex-col-reverse (en móvil el video que está primero en el HTML se va abajo)
+            const layout = secIndex % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse';
+            
+            const newBadgeHero = sec.isNew ? `<div class="inline-flex items-center gap-2 bg-[#e74c3c] text-white text-[10px] font-black px-2 py-1 mb-4 rounded-sm shadow-lg animate-pulse-slow"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span></span>NUEVA HERRAMIENTA</div>` : '';
+            const imageLabel = sec.isNew ? `<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg] tracking-tighter">NEW</div>` : '';
 
-                // FORZAMOS SIEMPRE ESTRUCTURA DE VIDEO
-                section.innerHTML = `
+            section.innerHTML = `
             <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col md:flex-row items-center gap-12 ${layout}">
+                <!-- flex-col-reverse hace que en móvil el texto (abajo en código) suba y el video (arriba en código) baje -->
+                <div class="flex flex-col-reverse ${layout} items-center gap-12">
+                    
+                    <!-- LADO VIDEO -->
                     <div class="w-full md:w-1/2 img-container-mobile group">
+                        ${imageLabel}
                         <video
                             class="mobile-frame video-strict-loop"
-                            autoplay
-                            muted
-                            playsinline
-                            preload="auto"
+                            autoplay muted playsinline preload="auto"
                             onclick="openIframe('${sec.btnLink}')"
                             onloadeddata="this.playbackRate = 8.0; this.play();"
                         >
                             <source src="${sec.image}" type="video/mp4">
-                            <source src="${sec.image}" type="video/webm">
                         </video>
                     </div>
+
+                    <!-- LADO TEXTO -->
                     <div class="w-full md:w-1/2">
-                        <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase text-white">${sec.title}</h2>
-                        <div class="text-[#ffd700] font-black uppercase text-sm mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
+                        ${newBadgeHero}
+                        <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase tracking-tighter text-white">${sec.title}</h2>
+                        <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
                         <p class="text-white/70 text-lg mb-8 font-light leading-relaxed">${sec.description}</p>
-                        ${sec.btnText ? `<button class="btn-action" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span></button>` : ''}
+                        ${sec.btnText ? `<button class="btn-action flex items-center gap-3" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span><i class="material-icons text-sm">open_in_new</i></button>` : ''}
                     </div>
+
                 </div>
             </div>`;
-                categorySectionGroup.appendChild(section);
-            });
-
-            if (mainContent) mainContent.appendChild(categorySectionGroup);
+            categorySectionGroup.appendChild(section);
         });
 
-        // 4. LÓGICA DE REINICIO AGRESIVA (ANTI-CONGELACIÓN)
-        function initializeStrictLoop() {
-            const allVideos = document.querySelectorAll('.video-strict-loop');
-
-            allVideos.forEach(video => {
-                // Asegurar velocidad siempre que empiece
-                video.addEventListener('play', function () {
-                    this.playbackRate = 8.0;
-                });
-
-                // Reinicio forzado: Vaciar y recargar el src al terminar
-                video.addEventListener('ended', function () {
-                    const source = this.currentSrc;
-                    this.src = "";
-                    this.src = source;
-                    this.load();
-                    this.playbackRate = 8.0;
-                    this.play();
-                });
-            });
+        if (mobileNavContainer) {
+            mobileCatWrapper.appendChild(mobileItems);
+            mobileNavContainer.appendChild(mobileCatWrapper);
         }
+        if (mainContent) mainContent.appendChild(categorySectionGroup);
+        if (footerLinksContainer) footerLinksContainer.appendChild(footerCatWrapper);
+    });
 
-        // Iniciar lógica de bucle
-        setTimeout(initializeStrictLoop, 300);
-
-        // Vigilante de seguridad: si un video se pausa (por scroll o batería), forzar play
-        setInterval(() => {
-            document.querySelectorAll('.video-strict-loop').forEach(v => {
-                if (v.paused) {
-                    v.play();
-                    v.playbackRate = 8.0;
-                }
+    // --- 4. LÓGICA DE BUCLE ---
+    function initVideoFix() {
+        document.querySelectorAll('.video-strict-loop').forEach(video => {
+            video.addEventListener('play', function() { this.playbackRate = 8.0; });
+            video.addEventListener('ended', function() {
+                const source = this.currentSrc;
+                this.src = "";
+                this.src = source;
+                this.load();
+                this.playbackRate = 8.0;
+                this.play();
             });
-        }, 1000);
-    </script>
+        });
+    }
+
+    setTimeout(initVideoFix, 300);
+    setInterval(() => {
+        document.querySelectorAll('.video-strict-loop').forEach(v => {
+            if (v.paused) { v.play(); v.playbackRate = 8.0; }
+        });
+    }, 1000);
+</script>
 
     <script>
         // Gestión del Visor Iframe
