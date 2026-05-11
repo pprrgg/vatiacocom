@@ -245,13 +245,7 @@
 
         /* Cinta de Noticias Estilo TV */
 
-        video.img-side-mode {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            object-position: center;
-            background: black;
-        }
+
 
         /* Ajuste del body para que el footer no se solape */
         body {
@@ -775,25 +769,23 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
                         ${imageLabel}
 
 ${sec.image.endsWith('.webm') || sec.image.endsWith('.mp4')
-                        ? `
+    ? `
 <video
     class="w-full img-side-mode border-4 border-white shadow-2xl cursor-pointer"
     autoplay
     muted
-    onloadeddata="this.playbackRate = 4.0;"
-
     playsinline
     preload="auto"
     onclick="openIframe('${sec.btnLink}')"
     onended="this.src=''; this.src='${sec.image}'; this.play();"
     style="background: black;" 
+        onloadeddata="this.playbackRate = 6.0;"
+
 >
     <source src="${sec.image}" type="video/webm">
 </video>
-
     `
-
-                        : `
+    : `
     <img
         src="${sec.image}"
         class="w-full img-side-mode border-4 border-white shadow-2xl cursor-pointer group-hover:scale-[1.01] transition"
