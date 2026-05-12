@@ -180,6 +180,39 @@
                     image: "vl2.webm",
                     btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore", fr: "Lancer le Simulateur", de: "Simulator Ausführen" },
                     btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada"
+                },
+                {
+                    id: "roi",
+                    title: {
+                        es: "ROI.Calc",
+                        en: "ROI.Calc",
+                        it: "ROI.Calc",
+                        fr: "ROI.Calc",
+                        de: "ROI.Calc"
+                    },
+                    subtitle: {
+                        es: "Cálculo del Retorno de una inversión",
+                        en: "Investment Return Calculation",
+                        it: "Calcolo del Ritorno dell'Investimento",
+                        fr: "Calcul du Retour sur Investissement",
+                        de: "Berechnung der Kapitalrendite"
+                    },
+                    description: {
+                        es: "El ROI calculator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.",
+                        en: "The ROI calculator integrates real-time daily energy pool fluctuations, allowing for investment return projections with unprecedented technical fidelity.",
+                        it: "Il calcolatore ROI integra in tempo reale le fluttuazioni del pool energetico giornaliero, permettendo di proiettare il ritorno sull'investimento con una fedeltà tecnica senza precedenti.",
+                        fr: "Le calculateur de ROI intègre en temps réel les fluctuations du pool énergétique quotidien, permettant de projeter le retour sur investissement avec une fidélité technique sans précédent.",
+                        de: "Der ROI-Rechner integriert die täglichen Schwankungen des Energiepools in Echtzeit und ermöglicht so Investitionsrentabilitätsprognosen mit beispielloser technischer Genauigkeit."
+                    },
+                    image: "vl3.webm",
+                    btnText: {
+                        es: "Ejecutar Simulador",
+                        en: "Run Simulator",
+                        it: "Esegui Simulatore",
+                        fr: "Lancer le Simulateur",
+                        de: "Simulator Ausführen"
+                    },
+                    btnLink: "https://informetecnicoeconomico.com/#/A5_Medida_de_ahorro_energ%C3%A9tico/A51_Sector_Industrial/IND260_Sustituci%C3%B3n_de_un_Sistema_de_Alimentaci%C3%B3n_Ininterrumpida_SAI"
                 }
             ]
         },
@@ -341,6 +374,7 @@
             ]
         }
     ];
+
 </script>
 
 <head>
@@ -1005,7 +1039,7 @@
                                                 muted 
                                                 playsinline 
                                                 preload="auto" 
-                                                onloadeddata="this.playbackRate = 6.0; this.play();" 
+                                                onloadeddata="this.playbackRate = 3.0; this.play();" 
                                                 onended="this.currentTime = 0; this.play();"
                                                 onclick="openIframe('${sec.btnLink}')">
                                                 <source src="${sec.image}" type="video/mp4">
