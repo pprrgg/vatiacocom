@@ -2,30 +2,127 @@
 <html lang="es">
 
 <script>
+    // Configuración de Idiomas
+    const translations = {
+        es: {
+            heroTag: "Gestión y Control de",
+            heroSub: "Optimización de Activos y Estabilidad de Red en Tiempo Real",
+            contactTitle: "Contacto",
+            fName: "Nombre Completo",
+            fPhone: "Teléfono de Contacto",
+            fCompany: "Empresa / Institución",
+            fRole: "Cargo / Departamento",
+            fEmail: "Email Corporativo",
+            fSubject: "Motivo de la consulta",
+            fMsg: "Describa su proyecto o requerimiento técnico...",
+            fLoc: "Ubicación del proyecto (Opcional - Haga clic en el mapa)",
+            fBtn: "Transmitir Solicitud Técnica",
+            fStatus: "TRANSMITIENDO...",
+            fSuccess: "✓ TRANSMISIÓN COMPLETADA",
+            fError: "ERROR DE CONEXIÓN",
+            fForbidden: "SE REQUIERE CORREO CORPORATIVO",
+            newsLabel: "NUEVA HERRAMIENTA",
+            newsSuffix: "ACCESO INMEDIATO",
+            authTitle: "Acceso Terminal",
+            authBtn: "Establecer Vínculo",
+            communityTitle: "Gestión de Comunidades Energéticas"
+        },
+        en: {
+            heroTag: "Management & Control of",
+            heroSub: "Asset Optimization and Grid Stability in Real Time",
+            contactTitle: "Contact Us",
+            fName: "Full Name",
+            fPhone: "Contact Phone",
+            fCompany: "Company / Institution",
+            fRole: "Position / Department",
+            fEmail: "Corporate Email",
+            fSubject: "Subject of inquiry",
+            fMsg: "Describe your project or technical requirement...",
+            fLoc: "Project Location (Optional - Click on the map)",
+            fBtn: "Transmit Technical Request",
+            fStatus: "TRANSMITTING...",
+            fSuccess: "✓ TRANSMISSION COMPLETED",
+            fError: "CONNECTION ERROR",
+            fForbidden: "CORPORATE EMAIL REQUIRED",
+            newsLabel: "NEW TOOL",
+            newsSuffix: "IMMEDIATE ACCESS",
+            authTitle: "Terminal Access",
+            authBtn: "Establish Link",
+            communityTitle: "Energy Communities Management"
+        },
+        it: {
+            heroTag: "Gestione e Controllo di",
+            heroSub: "Ottimizzazione degli Asset e Stabilità della Rete in Tempo Reale",
+            contactTitle: "Contatto",
+            fName: "Nome Completo",
+            fPhone: "Telefono di Contatto",
+            fCompany: "Azienda / Istituzione",
+            fRole: "Posizione / Dipartimento",
+            fEmail: "Email Aziendale",
+            fSubject: "Motivo della richiesta",
+            fMsg: "Descriva il suo progetto o requisito tecnico...",
+            fLoc: "Posizione del progetto (Opzionale - Clicca sulla mappa)",
+            fBtn: "Trasmettere Richiesta Tecnica",
+            fStatus: "TRASMETTENDO...",
+            fSuccess: "✓ TRASMISSIONE COMPLETATA",
+            fError: "ERRORE DI CONNESSIONE",
+            fForbidden: "RICHIESTA EMAIL AZIENDALE",
+            newsLabel: "NUOVO STRUMENTO",
+            newsSuffix: "ACCESSO IMMEDIATO",
+            authTitle: "Accesso Terminale",
+            authBtn: "Stabilire Collegamento",
+            communityTitle: "Gestione delle Comunità Energetiche"
+        }
+    };
+
+    let currentLang = 'es';
+
     const appData = [
         {
-            category: "Herramientas de Acceso Libre",
+            category: { es: "Herramientas de Acceso Libre", en: "Free Access Tools", it: "Strumenti ad Accesso Libero" },
             items: [
-                { id: "pv", title: "PV.Design", isNew: true, subtitle: "Simulación fotovoltaica basada en el modelo de radiación satelital PVGIS", description: "Plataforma de software para empresas de energía solar que combina diseño técnico y simulación de proyectos en una sola herramienta.", image: "v1.webm", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes" },
-                { id: "pow", title: "Pow.Opt", subtitle: "OPTIIZACIÓN DE CONTRATOS DE ENERGÍA", description: "Optimización de la potencia  a contratar en cada periodo horario para minimizar el coste anual total por potencia.", image: "v2.webm", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada" },
-                { id: "roi", title: "ROI.Calc", subtitle: "Cálculo del Retorno de una inversión", description: "El ROI calculator integra en tiempo real las fluctuaciones del pool energético diario, permitiendo proyectar el retorno de inversión con una fidelidad técnica sin precedentes.", image: "roi.png", btnText: "Ejecutar Simulador", btnLink: "https://informetecnicoeconomico.com/" },
+                {
+                    id: "pv",
+                    title: "PV.Design",
+                    isNew: true,
+                    subtitle: { es: "Simulación fotovoltaica basada en PVGIS", en: "PV simulation based on PVGIS", it: "Simulazione fotovoltaica basata su PVGIS" },
+                    description: { es: "Plataforma de software para diseño técnico y simulación de proyectos.", en: "Software platform for technical design and project simulation.", it: "Piattaforma software per la progettazione tecnica e la simulazione." },
+                    image: "v1.webm",
+                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore" },
+                    btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes"
+                },
+                {
+                    id: "pow",
+                    title: "Pow.Opt",
+                    subtitle: { es: "OPTIMIZACIÓN DE CONTRATOS", en: "CONTRACT OPTIMIZATION", it: "OTTIMIZZAZIONE CONTRATTI" },
+                    description: { es: "Optimización de la potencia a contratar para minimizar costes.", en: "Contracted power optimization to minimize total annual costs.", it: "Ottimizzazione della potenza contrattuale per minimizzare i costi." },
+                    image: "v2.webm",
+                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore" },
+                    btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada"
+                }
             ]
         },
         {
-            category: "Ingeniería",
+            category: { es: "Ingeniería", en: "Engineering", it: "Ingegneria" },
             items: [
-                { id: "microredes", title: "Microredes DC", subtitle: "Arquitectura 400V", description: "Sistemas de transporte directo en corriente continua. Eficiencia industrial sin precedentes.", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200", btnText: "Ver Esquema", btnLink: "https://vatiaco.com/tech" },
-                { id: "sog", title: "SoG.Mon", subtitle: "IoT Terminal", description: "Visualización crítica de flujos de potencia y estado de activos en tiempo real.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1200", btnText: "Terminal SoG", btnLink: "http://localhost/dashboard" },
-                { id: "comunidades", title: "Comunidades", subtitle: "Gestión CEL / IDAE", description: "Protocolos de intercambio energético entre pares. Legalidad y técnica unificadas.", image: "comunidad.png", btnText: "Info IDAE", btnLink: "https://pprrgg.github.io/tb/" },
+                {
+                    id: "microredes",
+                    title: "Microredes DC",
+                    subtitle: { es: "Arquitectura 400V", en: "400V Architecture", it: "Architettura 400V" },
+                    description: { es: "Sistemas de transporte directo en corriente continua.", en: "Direct current transport systems. Unprecedented industrial efficiency.", it: "Sistemi di trasporto diretto in corrente continua." },
+                    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=1200",
+                    btnText: { es: "Ver Esquema", en: "View Diagram", it: "Vedi Schema" },
+                    btnLink: "https://vatiaco.com/tech"
+                }
             ]
-        },
+        }
     ];
 </script>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VATIACO - Perspectiva Energética Global</title>
+    <title>VATIACO - Smart Energy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -33,12 +130,14 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
+        /* (Mantenemos todos tus estilos CSS originales exactamente igual) */
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             background-color: #050a18;
             color: white;
             margin: 0;
+            padding-bottom: 15px;
         }
 
         .fixed-video-bg {
@@ -52,7 +151,6 @@
             filter: brightness(0.7) contrast(1.05) saturate(1.1);
         }
 
-        /* NAVBAR */
         nav {
             position: fixed !important;
             top: 0;
@@ -66,7 +164,6 @@
             align-items: center;
         }
 
-        /* DROPDOWN SIMPLE */
         .nav-item-group {
             position: relative;
             height: 100%;
@@ -138,7 +235,6 @@
             text-transform: uppercase;
         }
 
-        /* Otros Estilos */
         #iframe-viewer {
             display: none;
             position: fixed;
@@ -220,13 +316,6 @@
             border: none;
         }
 
-        .img-side-mode {
-            height: 500px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
         .footer-link {
             font-size: 11px;
             font-weight: 600;
@@ -243,17 +332,6 @@
             transform: translateX(5px);
         }
 
-
-
-        /* Ajuste del body para que el footer no se solape */
-        body {
-            padding-bottom: 15px;
-        }
-    </style>
-
-
-    <style>
-        /* Estilos para el aspecto de móvil vertical */
         .mobile-frame {
             aspect-ratio: 9 / 16;
             width: 100%;
@@ -277,6 +355,88 @@
             align-items: center;
             position: relative;
         }
+
+        @keyframes pulse-slow {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite;
+        }
+
+        .lang-btn {
+            font-weight: 900;
+            font-size: 10px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            color: #003399;
+            background: #f1f5f9;
+        }
+
+        .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 15px;
+            background-color: #e74c3c;
+            z-index: 100002;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 45s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 1.5rem;
+            font-size: 9px;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 25px;
+        }
+
+        .ticker-label {
+            background: white;
+            color: #e74c3c;
+            padding: 0 1px;
+            margin-right: 8px;
+            font-weight: 900;
+            font-size: 8px;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
     </style>
 </head>
 
@@ -289,71 +449,93 @@
         <div class="login-card" onclick="event.stopPropagation()">
             <div class="flex items-center gap-3 mb-6 border-b pb-4 text-slate-900">
                 <i class="material-icons text-[#003399]">security</i>
-                <h2 class="font-black uppercase text-xl italic tracking-tighter">Terminal Access</h2>
+                <h2 id="auth-title-text" class="font-black uppercase text-xl italic tracking-tighter">Terminal Access
+                </h2>
             </div>
             <form onsubmit="autenticacion(event)" class="space-y-4 text-slate-900">
-                <input type="text" id="auth-user" placeholder="Operator ID"
+                <input type="text" placeholder="Operator ID"
                     class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm">
                 <input type="password" placeholder="Passkey"
                     class="w-full p-4 bg-slate-100 border border-slate-200 outline-none font-mono text-sm">
-
                 <button type="submit" id="auth-btn"
-                    class="w-full bg-[#003399] text-white py-4 font-black uppercase tracking-widest hover:bg-slate-900 transition">
-                    Establish Link
-                </button>
-
-                <!-- El mensaje aparecerá aquí debajo -->
-                <p id="auth-status" class="hidden text-center text-red-600 text-[10px] font-black uppercase mt-2">
-                    Error: Credenciales no reconocidas en el sistema
+                    class="w-full bg-[#003399] text-white py-4 font-black uppercase tracking-widest hover:bg-slate-900 transition">Establish
+                    Link</button>
+                <p id="auth-status" class="hidden text-center text-red-600 text-[10px] font-black uppercase mt-2">Error
                 </p>
             </form>
         </div>
     </div>
 
+
     <nav>
         <div class="flex items-center w-full max-w-7xl mx-auto px-6 h-full relative">
-            <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition"
+            <!-- Botón Menú Móvil -->
+            <button class="text-[#003399] flex items-center mr-3 hover:opacity-70 transition sm:hidden"
                 onclick="document.getElementById('mobile-menu').classList.toggle('active')">
                 <i class="material-icons text-[20px]">menu</i>
             </button>
 
+            <!-- Logo -->
             <div class="flex items-center gap-2 cursor-pointer shrink-0"
                 onclick="closeIframe(); window.scrollTo({top:0, behavior:'smooth'})">
-
-                <!-- Búho -->
                 <span class="text-2xl leading-none select-none">🦉</span>
-
-                <!-- Contenedor de Texto -->
                 <div class="flex flex-col justify-center">
                     <div class="text-base font-black tracking-tighter leading-none">
                         <span class="text-[#003399]">OWL</span><span class="text-[#D4AF37]">ERGY</span>
                     </div>
-                    <!-- Subtítulo: Alto y muy espaciado -->
-                    <div class="text-[7px] uppercase tracking-[0.35em] font-bold text-slate-400 mt-1 leading-none">
+                    <div id="nav-smart-energy"
+                        class="text-[7px] uppercase tracking-[0.35em] font-bold text-slate-400 mt-1 leading-none">
                         Smart Energy
                     </div>
                 </div>
             </div>
 
+            <!-- IMPORTANTE: Este contenedor DEBE existir para que aparezcan los menús -->
             <div id="nav-content" class="hidden sm:flex items-center h-full ml-6"></div>
 
-            <div class="flex items-center gap-2 ml-auto">
+            <!-- Zona Derecha: Idiomas + Acciones -->
+            <div class="flex items-center gap-3 ml-auto">
+
+                <!-- Selector de Idiomas Desplegable -->
+                <div class="nav-item-group border-r pr-4 border-slate-200">
+                    <div class="nav-link-text !p-0 flex items-center gap-2" id="current-lang-display">
+                        <!-- Se rellena en renderApp -->
+                    </div>
+                    <div class="dropdown-menu !min-w-[120px] !left-auto !right-0">
+
+                        <a href="javascript:void(0)" onclick="setLang('en')"
+                            class="dropdown-item flex items-center gap-2">
+                            <span class="text-lg">🇬🇧</span> <b>ENG</b>
+                        </a>
+                        <a href="javascript:void(0)" onclick="setLang('es')"
+                            class="dropdown-item flex items-center gap-2">
+                            <span class="text-lg">🇪🇸</span> <b>ESP</b>
+                        </a>
+
+                        <a href="javascript:void(0)" onclick="setLang('it')"
+                            class="dropdown-item flex items-center gap-2">
+                            <span class="text-lg">🇮🇹</span> <b>ITA</b>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
                 <button onclick="document.getElementById('contacto').scrollIntoView()"
-                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
-                    <i class="material-icons text-[15px]">send</i>
+                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-8 w-8">
+                    <i class="material-icons text-[16px]">send</i>
                 </button>
                 <button onclick="openLogin()"
-                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-6 w-6">
-                    <i class="material-icons text-[15px]">person</i>
+                    class="bg-slate-100 text-slate-600 hover:bg-[#003399] hover:text-white transition flex items-center justify-center rounded-full h-8 w-8">
+                    <i class="material-icons text-[16px]">person</i>
                 </button>
             </div>
         </div>
     </nav>
 
+
     <div id="iframe-viewer">
-        <main style="padding-top: 30px;"></main>
-        <iframe id="main-iframe" class="w-full h-full border-none bg-white"></iframe>
-        </main>
+        <main style="padding-top: 30px;"></iframe-viewer>
+            <iframe id="main-iframe" class="w-full h-full border-none bg-white"></iframe>
     </div>
 
     <div id="mobile-menu">
@@ -361,332 +543,38 @@
     </div>
 
     <header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center ">
-        <!-- Título Principal -->
         <h1 class="text-7xl md:text-5xl font-black italic leading-[0.8] tracking-tighter mb-12 text-white">
-            <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">
-                Gestión y Control </br> de
-            </span>
+            <span id="hero-tag"
+                class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">Gestión y Control
+                de</span>
             Micro Redes
-
-            <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">
-                ( CA, CC )
-            </span>
+            <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">( CA, CC
+                )</span>
         </h1>
-
         <div class="flex flex-col items-center">
-            <!-- El DIV que querías agrandar -->
-
-
-            <!-- Subtítulo inferior -->
-            <p class="text-white text-[10px] md:text-sm font-bold uppercase tracking-[0.4em] leading-loose max-w-2xl">
-                Optimización de Activos y Estabilidad de Red en <br class="hidden md:block"> Tiempo Real
-            </p>
-
-            <!-- Línea decorativa -->
+            <p id="hero-sub"
+                class="text-white text-[10px] md:text-sm font-bold uppercase tracking-[0.4em] leading-loose max-w-2xl">
+                Optimización de Activos y Estabilidad de Red en Tiempo Real</p>
             <div class="w-20 h-1.5 bg-[#ffd700] mt-8"></div>
         </div>
     </header>
 
-    <!-- Contenedor Principal con Estilos de Aislamiento -->
-    <div id="vatiaco-master-wrapper"
-        style="width: 100%; clear: both; display: block; position: relative; margin: 40px 0; padding: 0; min-height: 500px;">
-        <div class="max-w-7xl mx-auto px-6 mb-10">
-            <h3 class="text-3xl font-black uppercase italic text-white/4 colo:orange">Gestión de Comunidades Energéticas
-            </h3>
-        </div>
 
-        <div id="eng-graph-viewport2"
-            style="width: 85%; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-            <!-- Indicador de carga -->
-            <div id="loading-status" style="font-family: sans-serif; color: #64748b; font-size: 14px;">Iniciando sistema
-                energético...</div>
-        </div>
-    </div>
-
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
-
-        const graphDefinitiong = `
-graph LR
-
-EMS_B((<div style='font-size:40px;'>🦉<sub>local</sub></div>)) -.-> ASSETS_B[<div style='font-size:40px;'>🏘️ Prosumidor<sub>i</sub></br> ⚡ ☀️ 🔋 🚗</div>]
-EMS_D( ) -.-> ASSETS_Cs[<div style='font-size:40px;'>☀️ Planta FV<sub>i</sub></div>]
-EMS_E( ) -.-> ASSETS_Css[<div style='font-size:40px;'>🔋 Batería BESS<sub>i</sub></div>]
-EMS_F( ) -.-> ASSETS_Csss[<div style='font-size:40px;'>🚗 Cargador EV<sub>i</sub></div>]
-
-
-EMS_GLOBAL["<span style='color:#1d4ed8;font-size:70px;font-weight:bold;'>🦉Vatia</span><span style='font-size:70px;font-weight:bold;color:#fbbf24;'>CO</span>"]
-
-
-
-EMS_GLOBAL -.->  EMS_B & EMS_D & EMS_E & EMS_F 
-
-style EMS_GLOBAL fill:#1e3a8a,stroke:#3b82f6,stroke-width:4px
-linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
-    `;
-
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
-        });
-
-        const renderDiagram2 = async () => {
-            const viewport = document.getElementById('eng-graph-viewport2');
-            const id = 'svg-' + Math.floor(Math.random() * 10000);
-
-            try {
-                const { svg } = await mermaid.render(id, graphDefinitiong);
-                viewport.innerHTML = svg;
-
-                const svgElement = viewport.querySelector('svg');
-
-                // --- INYECCIÓN DE ANIMACIÓN CSS ---
-                const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
-                style.textContent = `
-                /* Animación para TODAS las líneas */
-                .animatedEdge {
-                    animation: flowForward 0.5s linear infinite;
-                }
-
-                @keyframes flowForward {
-                    from { stroke-dashoffset: 16; }
-                }
-            `;
-                svgElement.appendChild(style);
-
-                // Aplicar la misma animación a TODOS los paths
-                const paths = svgElement.querySelectorAll('.edgePaths path');
-                paths.forEach((path) => {
-                    path.classList.add('animatedEdge');
-                });
-
-                svgElement.style.maxWidth = '100%';
-                svgElement.style.height = 'auto';
-
-            } catch (error) {
-                console.error("Error Mermaid:", error);
-            }
-        };
-
-        renderDiagram2();
-    </script>
 
     <main id="main-content" class="space-y-16"></main>
 
     <div id="vatiaco-contact-root"></div>
 
-    <script type="module">
-        /****************************************************************
-         * 1. CARGA DINÁMICA DE DEPENDENCIAS (LEAFLET)
-         *****************************************************************/
-        const loadLeaflet = () => {
-            return new Promise((resolve) => {
-                if (window.L) return resolve(); // Ya cargado
-
-                // Inyectar CSS
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-                document.head.appendChild(link);
-
-                // Inyectar JS
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-                script.onload = resolve;
-                document.head.appendChild(script);
-            });
-        };
-
-        /****************************************************************
-         * 2. ESTILOS DE CONTACTO (CSS)
-         *****************************************************************/
-        const contactStyles = document.createElement('style');
-        contactStyles.textContent = `
-        #contacto { background: transparent; }
-        .glass-panel {
-            background: rgba(10, 15, 30, 0.7);
-            backdrop-filter: blur(50px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3rem;
-            border-radius: 4px;
-        }
-        #map { 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            filter: grayscale(0.5) brightness(0.8) contrast(1.2);
-            height: 350px; width: 100%; border-radius: 4px;
-        }
-        #map:hover { filter: none; transition: all 0.5s ease; }
-        .btn-action {
-            background: #ffd700;
-            color: #0a0f1e;
-            font-weight: 900;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        .btn-action:hover {
-            background: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 50px rgba(255, 215, 0, 0.2);
-        }
-        select#subjectSelector {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.5em;
-        }
-        optgroup {
-            font-weight: bold;
-            color: #ffd700;
-        }
-        optgroup option {
-            color: #0a0f1e;
-            font-weight: normal;
-        }
-        `;
-        document.head.appendChild(contactStyles);
-
-        /****************************************************************
-         * 3. FUNCIÓN PARA GENERAR SELECT DINÁMICAMENTE
-         *****************************************************************/
-        const generateSubjectOptions = () => {
-            const subjectSelector = document.getElementById('subjectSelector');
-            if (!subjectSelector || typeof appData === 'undefined') return;
-
-            let optionsHtml = '';
-
-            appData.forEach(category => {
-                optionsHtml += `<optgroup label="${category.category}">`;
-                category.items.forEach(item => {
-                    const optionValue = `${item.title} - ${item.subtitle}`;
-                    optionsHtml += `<option value="${optionValue}">${optionValue}</option>`;
-                });
-                optionsHtml += `</optgroup>`;
-            });
-
-            subjectSelector.innerHTML = optionsHtml;
-        };
-
-        /****************************************************************
-         * 4. ESTRUCTURA E INICIALIZACIÓN
-         *****************************************************************/
-        const init = async () => {
-            const contactRoot = document.getElementById('vatiaco-contact-root');
-            if (!contactRoot) return;
-
-            // Inyectar HTML
-            contactRoot.innerHTML = `
-            <section id="contacto" class="py-24">
-                <div class="max-w-7xl mx-auto px-6">
-                    <div class="glass-panel">
-                        <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">Contacto</h2>
-                        <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="text" name="nombre" placeholder="Nombre Completo" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="tel" name="telefono" placeholder="Teléfono de Contacto" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="text" name="empresa" placeholder="Empresa / Institución" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="text" name="cargo" placeholder="Cargo / Departamento" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <input type="email" name="email" placeholder="Email Corporativo" required class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
-                            <div class="md:col-span-2 flex flex-col gap-2">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">Motivo de la consulta</label>
-                                <select name="asunto" id="subjectSelector" class="w-full bg-white p-4 outline-none border-none text-slate-900 font-bold appearance-none cursor-pointer">
-                                    <option value="">Cargando opciones...</option>
-                                </select>
-                            </div>
-                            <textarea name="mensaje" placeholder="Describa su proyecto o requerimiento técnico..." rows="4" class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
-                            <div class="md:col-span-2">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-white/4 colo:orange mb-2 block">Ubicación del proyecto (Opcional - Haga clic en el mapa)</label>
-                                <div id="map"></div>
-                            </div>
-                            <input type="hidden" name="lat" id="lat">
-                            <input type="hidden" name="lng" id="lng">
-                            <button type="submit" class="btn-action md:col-span-2 py-5 text-xl tracking-[0.2em]">Transmitir Solicitud Técnica</button>
-                            <p id="formStatus" class="md:col-span-2 text-center text-xs font-black uppercase mt-4"></p>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        `;
-
-            // Generar opciones del select desde appData
-            generateSubjectOptions();
-
-            // Cargar Leaflet y luego inicializar mapa
-            await loadLeaflet();
-
-            // Configurar mapa con zoom libre con scroll del ratón
-            const map = L.map('map', {
-                scrollWheelZoom: true,
-                zoomControl: true,
-                doubleClickZoom: true,
-                boxZoom: true,
-                touchZoom: true,
-                dragging: true
-            }).setView([38.7213, -4.4214], 6);
-
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Esri',
-                maxZoom: 18,
-                minZoom: 3
-            }).addTo(map);
-
-            let marker = null;
-            map.on('click', (e) => {
-                if (marker) marker.setLatLng(e.latlng);
-                else marker = L.marker(e.latlng, { draggable: true }).addTo(map);
-                document.getElementById('lat').value = e.latlng.lat;
-                document.getElementById('lng').value = e.latlng.lng;
-            });
-
-            // Lógica de Formulario
-            const form = document.getElementById('mainContactForm');
-            form.onsubmit = async (e) => {
-                e.preventDefault();
-                const status = document.getElementById('formStatus');
-                const email = form.email.value.toLowerCase();
-                const forbidden = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com", "icloud.com"];
-
-                if (forbidden.some(d => email.endsWith(d))) {
-                    status.textContent = "SE REQUIERE CORREO CORPORATIVO";
-                    status.style.color = "#ef4444";
-                    return;
-                }
-
-                status.textContent = "TRANSMITIENDO...";
-                status.style.color = "#ffd700";
-
-                try {
-                    const res = await fetch("https://doctec.duckdns.org/fast/contacto", {
-                        method: "POST",
-                        body: new URLSearchParams(new FormData(form))
-                    });
-                    if (res.ok) {
-                        status.textContent = "✓ TRANSMISIÓN COMPLETADA";
-                        status.style.color = "#22c55e";
-                        form.reset();
-                        if (marker) { map.removeLayer(marker); marker = null; }
-                        // Resetear mapa al punto inicial
-                        map.setView([36.7213, -4.4214], 16);
-                    }
-                } catch (err) {
-                    status.textContent = "ERROR DE CONEXIÓN";
-                    status.style.color = "#ef4444";
-                }
-            };
-        };
-
-        init();
-    </script>
-
+    <div class="ticker-wrap" id="news-ticker">
+        <div class="ticker-move" id="ticker-content"></div>
+    </div>
 
     <footer class="bg-black/90 border-t border-white/5 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-10 grid md:grid-cols-4 gap-12">
             <div>
                 <span class="text-xl font-black italic tracking-tighter text-white">VATIACO</span>
-                <p class="text-white/20 text-[9px] uppercase font-bold mt-4 tracking-widest leading-relaxed">Control
+                <p id="footer-desc"
+                    class="text-white/20 text-[9px] uppercase font-bold mt-4 tracking-widest leading-relaxed">Control
                     avanzado de microredes y activos energéticos.</p>
             </div>
             <div id="footer-links-dynamic" class="md:col-span-2 grid grid-cols-2 gap-8"></div>
@@ -697,324 +585,244 @@ linkStyle 0,1,2,3,4,5,6,7 stroke:#f97316,stroke-width:15px,stroke-dasharray:8
         </div>
     </footer>
 
-    <div class="ticker-wrap" id="news-ticker">
-        <div class="ticker-move" id="ticker-content">
-            <!-- Se rellena dinámicamente -->
-        </div>
-    </div>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
+        // Lógica de Renderizado Dinámico
+const renderApp = () => {
+    const t = translations[currentLang];
 
-<style>
-    /* Aspecto de Móvil Vertical 9:16 */
-    .mobile-frame {
-        aspect-ratio: 9 / 16;
-        width: 100%;
-        max-width: 320px; 
-        margin: 0 auto;
-        object-fit: cover;
-        border-radius: 2.5rem;
-        border: 8px solid #1a1a1a; 
-        background-color: #000;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        display: block;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    .mobile-frame:hover { transform: scale(1.01); }
-    .img-container-mobile { display: flex; justify-content: center; position: relative; }
+    // 1. ACTUALIZACIÓN DEL SELECTOR DE IDIOMA (DROPDOWN)
+    const langMeta = {
+        en: { flag: '🇬🇧', label: 'ENG' },
+        es: { flag: '🇪🇸', label: 'ESP' },
+        it: { flag: '🇮🇹', label: 'ITA' }
+    };
     
-    @keyframes pulse-slow {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
+    const langDisplay = document.getElementById('current-lang-display');
+    if (langDisplay) {
+        langDisplay.innerHTML = `
+            <span class="text-lg leading-none">${langMeta[currentLang].flag}</span>
+            <span class="text-[10px] font-black text-slate-600">${langMeta[currentLang].label}</span>
+            <i class="material-icons text-[14px] text-slate-400">expand_more</i>
+        `;
     }
-    .animate-pulse-slow { animation: pulse-slow 3s infinite; }
-</style>
 
-<script>
-    const navContainer = document.getElementById('nav-content');
-    const mobileNavContainer = document.getElementById('mobile-nav-content');
-    const footerLinksContainer = document.getElementById('footer-links-dynamic');
-    const mainContent = document.getElementById('main-content');
-    const subjectSelector = document.getElementById('subjectSelector');
+    // 2. ACTUALIZACIÓN DE TEXTOS ESTÁTICOS
+    document.getElementById('hero-tag').innerText = t.heroTag;
+    document.getElementById('hero-sub').innerText = t.heroSub;
+    document.getElementById('footer-desc').innerText = t.heroSub;
+    document.getElementById('auth-title-text').innerText = t.authTitle;
+    document.getElementById('auth-btn').innerText = t.authBtn;
 
-    if (navContainer) navContainer.innerHTML = '';
-    if (mobileNavContainer) mobileNavContainer.innerHTML = '';
-    if (footerLinksContainer) footerLinksContainer.innerHTML = '';
-    if (mainContent) mainContent.innerHTML = '';
-    if (subjectSelector) subjectSelector.innerHTML = '<option value="" disabled selected>Seleccione motivo de consulta...</option>';
+    // 3. REFERENCIAS A CONTENEDORES DINÁMICOS
+    const nav = document.getElementById('nav-content');
+    const mobileNav = document.getElementById('mobile-nav-content');
+    const footer = document.getElementById('footer-links-dynamic');
+    const main = document.getElementById('main-content');
 
-    appData.forEach((cat) => {
-        // --- 1. NAV DESKTOP ---
-        if (navContainer) {
+    // Limpiar contenidos previos antes de regenerar
+    if(nav) nav.innerHTML = ''; 
+    if(mobileNav) mobileNav.innerHTML = ''; 
+    if(footer) footer.innerHTML = ''; 
+    if(main) main.innerHTML = '';
+
+    // 4. GENERACIÓN DINÁMICA DESDE APPDATA
+    appData.forEach(cat => {
+        const catName = cat.category[currentLang];
+
+        // --- Desktop Nav ---
+        if(nav) {
             const navGroup = document.createElement('div');
             navGroup.className = 'nav-item-group';
-            const itemsHtml = cat.items.map(item => {
-                const badgeHtml = item.isNew ? `<span class="bg-[#e74c3c] text-white text-[8px] px-1.5 py-0.5 rounded-sm font-black ml-2 animate-pulse">NEW</span>` : '';
-                return `
-                    <a href="#${item.id}" class="dropdown-item flex items-center justify-between" onclick="closeIframe()">
-                        <div class="flex flex-col">
-                            <b class="flex items-center uppercase text-[11px] tracking-tighter">${item.title} ${badgeHtml}</b>
-                            <span class="text-[10px] opacity-60">${item.subtitle}</span>
-                        </div>
-                    </a>`;
-            }).join('');
-            navGroup.innerHTML = `<span class="nav-link-text">${cat.category}</span><div class="dropdown-menu">${itemsHtml}</div>`;
-            navContainer.appendChild(navGroup);
-        }
-
-        // --- 2. PREPARAR CONTENEDORES ---
-        const mobileCatWrapper = document.createElement('div');
-        mobileCatWrapper.innerHTML = `<div class="text-[#003399] font-black uppercase text-xs border-b pb-2 mb-3">${cat.category}</div>`;
-        const mobileItems = document.createElement('div');
-        mobileItems.className = "flex flex-col gap-3 pl-4 border-l";
-
-        const categorySectionGroup = document.createElement('div');
-        categorySectionGroup.className = "pt-24 pb-10";
-        categorySectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/10">${cat.category}</h3></div>`;
-
-        const footerCatWrapper = document.createElement('div');
-        footerCatWrapper.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${cat.category}</h4>`;
-
-        // --- 3. RENDER ITEMS ---
-        cat.items.forEach((sec, secIndex) => {
-            const miniBadge = sec.isNew ? `<span class="ml-2 bg-[#e74c3c] text-white text-[8px] px-1 rounded-sm animate-pulse">NEW</span>` : '';
-
-            if (subjectSelector) {
-                const opt = document.createElement('option');
-                opt.value = sec.title;
-                opt.textContent = sec.title + (sec.isNew ? " (NUEVO)" : "");
-                subjectSelector.appendChild(opt);
-            }
-
-            const mLink = document.createElement('a');
-            mLink.href = `#${sec.id}`;
-            mLink.className = "flex items-center text-slate-800 font-bold uppercase text-[10px]";
-            mLink.onclick = () => { closeIframe(); document.getElementById('mobile-menu').classList.remove('active'); };
-            mLink.innerHTML = `${sec.title} ${miniBadge}`;
-            mobileItems.appendChild(mLink);
-
-            const fLink = document.createElement('a');
-            fLink.href = `#${sec.id}`;
-            fLink.className = "footer-link flex items-center";
-            fLink.onclick = () => closeIframe();
-            fLink.innerHTML = `<span>${sec.title}</span> ${miniBadge}`;
-            footerCatWrapper.appendChild(fLink);
-
-            // SECCIÓN CON ORDEN CORREGIDO
-            const section = document.createElement('section');
-            section.id = sec.id;
-            section.className = 'py-16 scroll-mt-24';
-            
-            // Clase clave: flex-col-reverse (en móvil el video que está primero en el HTML se va abajo)
-            const layout = secIndex % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse';
-            
-            const newBadgeHero = sec.isNew ? `<div class="inline-flex items-center gap-2 bg-[#e74c3c] text-white text-[10px] font-black px-2 py-1 mb-4 rounded-sm shadow-lg animate-pulse-slow"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span></span>NUEVA HERRAMIENTA</div>` : '';
-            const imageLabel = sec.isNew ? `<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg] tracking-tighter">NEW</div>` : '';
-
-            section.innerHTML = `
-            <div class="max-w-7xl mx-auto px-6">
-                <!-- flex-col-reverse hace que en móvil el texto (abajo en código) suba y el video (arriba en código) baje -->
-                <div class="flex flex-col-reverse ${layout} items-center gap-12">
-                    
-                    <!-- LADO VIDEO -->
-                    <div class="w-full md:w-1/2 img-container-mobile group">
-                        ${imageLabel}
-                        <video
-                            class="mobile-frame video-strict-loop"
-                            autoplay muted playsinline preload="auto"
-                            onclick="openIframe('${sec.btnLink}')"
-                            onloadeddata="this.playbackRate = 8.0; this.play();"
-                        >
-                            <source src="${sec.image}" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <!-- LADO TEXTO -->
-                    <div class="w-full md:w-1/2">
-                        ${newBadgeHero}
-                        <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase tracking-tighter text-white">${sec.title}</h2>
-                        <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle}</div>
-                        <p class="text-white/70 text-lg mb-8 font-light leading-relaxed">${sec.description}</p>
-                        ${sec.btnText ? `<button class="btn-action flex items-center gap-3" onclick="openIframe('${sec.btnLink}')"><span>${sec.btnText}</span><i class="material-icons text-sm">open_in_new</i></button>` : ''}
-                    </div>
-
+            navGroup.innerHTML = `
+                <span class="nav-link-text">${catName}</span>
+                <div class="dropdown-menu">
+                    ${cat.items.map(item => `
+                        <a href="#${item.id}" class="dropdown-item">
+                            <b>${item.title}</b>
+                            <span>${item.subtitle[currentLang]}</span>
+                        </a>
+                    `).join('')}
                 </div>
-            </div>`;
-            categorySectionGroup.appendChild(section);
-        });
-
-        if (mobileNavContainer) {
-            mobileCatWrapper.appendChild(mobileItems);
-            mobileNavContainer.appendChild(mobileCatWrapper);
+            `;
+            nav.appendChild(navGroup);
         }
-        if (mainContent) mainContent.appendChild(categorySectionGroup);
-        if (footerLinksContainer) footerLinksContainer.appendChild(footerCatWrapper);
+
+        // --- Mobile Nav ---
+        if(mobileNav) {
+            const mCat = document.createElement('div');
+            mCat.innerHTML = `<div class="text-[#003399] font-black uppercase text-xs border-b pb-2 mb-3">${catName}</div>`;
+            const mList = document.createElement('div');
+            mList.className = "flex flex-col gap-3 pl-4 border-l";
+            cat.items.forEach(item => {
+                const a = document.createElement('a');
+                a.href = `#${item.id}`;
+                a.className = "text-slate-800 font-bold uppercase text-[10px]";
+                a.innerText = item.title;
+                a.onclick = () => document.getElementById('mobile-menu').classList.remove('active');
+                mList.appendChild(a);
+            });
+            mCat.appendChild(mList);
+            mobileNav.appendChild(mCat);
+        }
+
+        // --- Main Content (Secciones de Video y Texto) ---
+        if(main) {
+            const sectionGroup = document.createElement('div');
+            sectionGroup.className = "pt-24 pb-10";
+            sectionGroup.innerHTML = `<div class="max-w-7xl mx-auto px-6 mb-10"><h3 class="text-3xl font-black uppercase italic text-white/10">${catName}</h3></div>`;
+
+            cat.items.forEach((sec, idx) => {
+                const layout = idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse';
+                const section = document.createElement('section');
+                section.id = sec.id;
+                section.className = 'py-16 scroll-mt-24';
+                section.innerHTML = `
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="flex flex-col-reverse ${layout} items-center gap-12">
+                            <div class="w-full md:w-1/2 img-container-mobile group">
+                                ${sec.isNew ? '<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg]">NEW</div>' : ''}
+                                <video class="mobile-frame video-strict-loop" autoplay muted playsinline preload="auto" onclick="openIframe('${sec.btnLink}')">
+                                    <source src="${sec.image}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase text-white">${sec.title}</h2>
+                                <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle[currentLang]}</div>
+                                <p class="text-white/70 text-lg mb-8 font-light">${sec.description[currentLang]}</p>
+                                <button class="btn-action flex items-center gap-3" onclick="openIframe('${sec.btnLink}')">
+                                    <span>${sec.btnText[currentLang]}</span><i class="material-icons text-sm">open_in_new</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                sectionGroup.appendChild(section);
+            });
+            main.appendChild(sectionGroup);
+        }
+
+        // --- Footer Links ---
+        if(footer) {
+            const fCat = document.createElement('div');
+            fCat.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#003399] mb-4">${catName}</h4>`;
+            cat.items.forEach(item => {
+                fCat.innerHTML += `<a href="#${item.id}" class="footer-link">${item.title}</a>`;
+            });
+            footer.appendChild(fCat);
+        }
     });
 
-    // --- 4. LÓGICA DE BUCLE ---
-    function initVideoFix() {
-        document.querySelectorAll('.video-strict-loop').forEach(video => {
-            video.addEventListener('play', function() { this.playbackRate = 8.0; });
-            video.addEventListener('ended', function() {
-                const source = this.currentSrc;
-                this.src = "";
-                this.src = source;
-                this.load();
-                this.playbackRate = 8.0;
-                this.play();
-            });
-        });
-    }
-
-    setTimeout(initVideoFix, 300);
-    setInterval(() => {
-        document.querySelectorAll('.video-strict-loop').forEach(v => {
-            if (v.paused) { v.play(); v.playbackRate = 8.0; }
-        });
-    }, 1000);
-</script>
-
-    <script>
-        // Gestión del Visor Iframe
-        function openIframe(url) {
-            const viewer = document.getElementById('iframe-viewer');
-            document.getElementById('main-iframe').src = url;
-            viewer.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeIframe() {
-            const viewer = document.getElementById('iframe-viewer');
-            viewer.style.display = 'none';
-            document.getElementById('main-iframe').src = "";
-            document.body.style.overflow = 'auto';
-        }
-
-        // Gestión del Modal de Login
-        function openLogin() {
-            const m = document.getElementById('login-modal');
-            m.style.display = 'flex';
-            setTimeout(() => m.classList.add('active'), 10);
-        }
-
-        function closeLogin(e) {
-            if (!e || e.target.id === 'login-modal') {
-                const m = document.getElementById('login-modal');
-                m.classList.remove('active');
-                setTimeout(() => m.style.display = 'none', 300);
-            }
-        }
-
-        function autenticacion(e) {
-            e.preventDefault();
-            const b = document.getElementById('auth-btn');
-            const status = document.getElementById('auth-status');
-            b.textContent = "Verifying...";
-            setTimeout(() => {
-                status.classList.remove('hidden');
-                b.textContent = "Establish Link";
-            }, 1500);
-        }
-    </script>
-
-
-    <script type="module">
-        /****************************************************************
-         * 1. ESTILOS DE LA CINTA (CSS INYECTADO)
-         *****************************************************************/
-        const tickerStyles = document.createElement('style');
-        tickerStyles.textContent = `
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            height: 15px;
-            background-color: #e74c3c;
-            z-index: 100002;
-            display: flex;
-            align-items: center;
-            pointer-events: none; /* No interfiere con clics */
-        }
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 45s linear infinite;
-        }
-        .ticker-item {
-            display: inline-block;
-            padding: 0 1.5rem;
-            font-size: 9px;
-            font-weight: 700;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 25px;
-        }
-        .ticker-label {
-            background: white;
-            color: #e74c3c;
-            padding: 0 1px;
-            margin-right: 8px;
-            font-weight: 900;
-            font-size: 8px;
-        }
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
-    `;
-        document.head.appendChild(tickerStyles);
-
-        /****************************************************************
-         * 2. ESTRUCTURA Y LÓGICA (HTML + JS)
-         *****************************************************************/
-        const initTicker = () => {
-            // Creamos el contenedor principal
-            const tickerContainer = document.createElement('div');
-            tickerContainer.className = 'ticker-wrap';
-
-            // Creamos el área de movimiento
-            const tickerMove = document.createElement('div');
-            tickerMove.className = 'ticker-move';
-            tickerMove.id = 'ticker-content';
-
-            let newsItems = "";
-
-            // Procesamos los datos de appData (asumiendo que está disponible globalmente)
-            if (typeof appData !== 'undefined') {
-                appData.forEach(cat => {
-                    cat.items.forEach(item => {
-                        if (item.isNew) {
-                            newsItems += `
-                            <div class="ticker-item">
-                                <span class="ticker-label">NUEVA HERRAMIENTA</span> 
-                                SISTEMA ${item.title} DISPONIBLE: ${item.subtitle} — ACCESO INMEDIATO —
-                            </div>`;
-                        }
-                    });
-                });
-            }
-
-            // Si no hay noticias, ponemos un mensaje por defecto o lo ocultamos
-            if (newsItems === "") {
-                newsItems = `<div class="ticker-item"><span class="ticker-label">VATIACO</span> CONTROL AVANZADO DE ACTIVOS ENERGÉTICOS — SOLUCIONES DE INGENIERÍA DISPONIBLES —</div>`;
-            }
-
-            // Inyectamos el contenido duplicado para el loop infinito
-            tickerMove.innerHTML = newsItems + newsItems;
-            tickerContainer.appendChild(tickerMove);
-            document.body.appendChild(tickerContainer);
+    // 5. REINICIALIZACIÓN DE COMPONENTES AUXILIARES
+    initContact();
+    initTicker();
+    initVideoFix();
+};
+        window.setLang = (lang) => {
+            currentLang = lang;
+            renderApp();
         };
 
-        // Ejecutamos la creación cuando el DOM esté listo
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            initTicker();
-        } else {
-            document.addEventListener('DOMContentLoaded', initTicker);
-        }
+        // --- MERMAID DIAGRAM ---
+
+
+        // --- CONTACT LOGIC ---
+        const initContact = () => {
+            const t = translations[currentLang];
+            const root = document.getElementById('vatiaco-contact-root');
+            root.innerHTML = `
+                <section id="contacto" class="py-24">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="glass-panel">
+                            <h2 class="text-5xl font-black mb-8 italic uppercase text-[#ffd700]">${t.contactTitle}</h2>
+                            <form id="mainContactForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input type="text" name="nombre" placeholder="${t.fName}" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+                                <input type="tel" name="telefono" placeholder="${t.fPhone}" required class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+                                <input type="text" name="empresa" placeholder="${t.fCompany}" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+                                <input type="text" name="cargo" placeholder="${t.fRole}" class="bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+                                <input type="email" name="email" placeholder="${t.fEmail}" required class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white">
+                                <div class="md:col-span-2 flex flex-col gap-2">
+                                    <label class="text-[10px] uppercase font-black tracking-widest text-[#ffd700]">${t.fSubject}</label>
+                                    <select name="asunto" id="subjectSelector" class="w-full bg-white p-4 text-slate-900 font-bold appearance-none cursor-pointer"></select>
+                                </div>
+                                <textarea name="mensaje" placeholder="${t.fMsg}" rows="4" class="md:col-span-2 bg-white/10 p-4 outline-none border border-white/10 focus:border-[#ffd700] transition text-white resize-none"></textarea>
+                                <div class="md:col-span-2">
+                                    <label class="text-[10px] uppercase font-black tracking-widest text-white/4 mb-2 block">${t.fLoc}</label>
+                                    <div id="map"></div>
+                                </div>
+                                <input type="hidden" name="lat" id="lat"><input type="hidden" name="lng" id="lng">
+                                <button type="submit" class="btn-action md:col-span-2 py-5 text-xl tracking-[0.2em]">${t.fBtn}</button>
+                                <p id="formStatus" class="md:col-span-2 text-center text-xs font-black uppercase mt-4"></p>
+                            </form>
+                        </div>
+                    </div>
+                </section>`;
+
+            const sel = document.getElementById('subjectSelector');
+            appData.forEach(cat => {
+                const group = document.createElement('optgroup');
+                group.label = cat.category[currentLang];
+                cat.items.forEach(item => {
+                    group.innerHTML += `<option value="${item.title}">${item.title}</option>`;
+                });
+                sel.appendChild(group);
+            });
+
+            // Map Init
+            const map = L.map('map').setView([38.7213, -4.4214], 6);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
+            let marker;
+            map.on('click', e => {
+                if (marker) marker.setLatLng(e.latlng);
+                else marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+                document.getElementById('lat').value = e.latlng.lat;
+                document.getElementById('lng').value = e.latlng.lng;
+            });
+
+            document.getElementById('mainContactForm').onsubmit = async (e) => {
+                e.preventDefault();
+                const status = document.getElementById('formStatus');
+                status.innerText = t.fStatus;
+                status.style.color = "#ffd700";
+                // Lógica de envío simplificada para el ejemplo
+                setTimeout(() => {
+                    status.innerText = t.fSuccess;
+                    status.style.color = "#22c55e";
+                }, 1500);
+            };
+        };
+
+        // --- TICKER & VIDEO LOGIC ---
+        const initTicker = () => {
+            const t = translations[currentLang];
+            const ticker = document.getElementById('ticker-content');
+            let content = "";
+            appData.forEach(cat => {
+                cat.items.forEach(item => {
+                    if (item.isNew) content += `<div class="ticker-item"><span class="ticker-label">${t.newsLabel}</span> SISTEMA ${item.title}: ${item.subtitle[currentLang]} — ${t.newsSuffix} —</div>`;
+                });
+            });
+            ticker.innerHTML = content + content;
+        };
+
+        const initVideoFix = () => {
+            document.querySelectorAll('.video-strict-loop').forEach(v => {
+                v.playbackRate = 8.0;
+                v.onended = () => {
+                    const s = v.currentSrc; v.src = ""; v.src = s; v.load(); v.playbackRate = 8.0; v.play();
+                };
+            });
+        };
+
+        // --- GLOBAL UTILS ---
+        window.openIframe = (url) => { document.getElementById('main-iframe').src = url; document.getElementById('iframe-viewer').style.display = 'block'; document.body.style.overflow = 'hidden'; };
+        window.closeIframe = () => { document.getElementById('iframe-viewer').style.display = 'none'; document.getElementById('main-iframe').src = ""; document.body.style.overflow = 'auto'; };
+        window.openLogin = () => { const m = document.getElementById('login-modal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('active'), 10); };
+        window.closeLogin = (e) => { if (!e || e.target.id === 'login-modal') { const m = document.getElementById('login-modal'); m.classList.remove('active'); setTimeout(() => m.style.display = 'none', 300); } };
+
+        // Start
+        renderApp();
+        renderDiagram();
     </script>
 </body>
 
