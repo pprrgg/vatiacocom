@@ -739,7 +739,7 @@
                     const navGroup = document.createElement('div');
                     navGroup.className = 'nav-item-group';
                     navGroup.innerHTML = `
-                        <span class="nav-link-text !text-[#ff8c00]">${catName}</span>
+                        <span class="nav-link-text !text-[#000000]">${catName}</span>
                         <div class="dropdown-menu">
                             ${cat.items.map(item => `
                                 <a href="#${item.id}" class="dropdown-item" onclick="closeIframe()"> 
@@ -753,16 +753,41 @@
                 }
 
                 // --- Mobile Nav ---
+                // --- Mobile Nav ---
+                // --- Mobile Nav ---
                 if (mobileNav) {
                     const mCat = document.createElement('div');
-                    mCat.innerHTML = `<div class="text-[#ff8c00] font-black uppercase text-xs border-b pb-2 mb-3 text-center">${catName}</div>`;
+                    mCat.className = "mb-6"; // Espacio entre categorías
+
+                    // Título de categoría: Naranja, alineado a la izquierda
+                    mCat.innerHTML = `
+        <div class="text-[#000000] font-black uppercase text-[10px] tracking-[0.2em] mb-4 border-b border-slate-100 pb-2">
+            ${catName}
+        </div>`;
+
                     const mList = document.createElement('div');
-                    mList.className = "flex flex-col items-center gap-3 pl-4 border-l";
+                    // Indentación tipo árbol: borde izquierdo gris y padding
+                    mList.className = "flex flex-col gap-5 ml-2 pl-4 border-l-2 border-slate-100";
+
                     cat.items.forEach(item => {
                         const a = document.createElement('a');
                         a.href = `#${item.id}`;
-                        a.className = "text-slate-800 font-bold uppercase text-[10px]";
-                        a.innerText = item.title[currentLang];
+                        // Alineación a la izquierda y texto negro
+                        a.className = "flex flex-col items-start group no-underline";
+
+                        a.innerHTML = `
+            <div class="flex items-center gap-2">
+                <!-- Pequeño indicador visual de rama -->
+                <div class="w-2 h-[1px] bg-slate-300"></div>
+                <span class="text-black font-black uppercase text-[12px] leading-tight group-hover:text-[#000000] transition-colors">
+                    ${item.title[currentLang]}
+                </span>
+            </div>
+            <span class="text-slate-500 font-medium uppercase text-[9px] tracking-wider mt-1 ml-4 opacity-70">
+                ${item.subtitle[currentLang]}
+            </span>
+        `;
+
                         a.onclick = () => {
                             closeIframe();
                             document.getElementById('mobile-menu').classList.remove('active');
@@ -779,10 +804,10 @@
                     sectionGroup.className = "pt-24 pb-10";
                     sectionGroup.innerHTML = `
                         <div class="max-w-7xl mx-auto px-6 mb-10 text-center">
-                            <h3 class="text-3xl font-black uppercase italic text-[#ff8c00] opacity-80 tracking-tighter">
+                            <h3 class="text-3xl font-black uppercase italic text-[#ffffff] opacity-80 tracking-tighter">
                                 ${catName}
                             </h3>
-                            <div class="w-12 h-[2px] bg-[#ff8c00] mx-auto mt-2 opacity-50"></div>
+                            <div class="w-12 h-[2px] bg-[#ffffff] mx-auto mt-2 opacity-50"></div>
                         </div>`;
 
                     cat.items.forEach((sec, idx) => {
@@ -830,7 +855,7 @@
                 // --- Footer Links ---
                 if (footer) {
                     const fCat = document.createElement('div');
-                    fCat.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#ff8c00] mb-4 text-center md:text-left">${catName}</h4>`;
+                    fCat.innerHTML = `<h4 class="text-[10px] font-black uppercase text-[#000000] mb-4 text-center md:text-left">${catName}</h4>`;
                     cat.items.forEach(item => {
                         fCat.innerHTML += `<a href="#${item.id}" onclick="closeIframe()" class="footer-link">${item.title[currentLang]}</a>`;
                     });
