@@ -793,12 +793,25 @@
                         section.innerHTML = `
                             <div class="max-w-7xl mx-auto px-6">
                                 <div class="flex flex-col-reverse ${layout} items-center gap-12">
+                                    
                                     <div class="w-full md:w-1/2 img-container-mobile group">
                                         ${sec.isNew ? '<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg]">NEW</div>' : ''}
-                                        <video class="mobile-frame video-strict-loop" autoplay muted playsinline preload="auto" onclick="openIframe('${sec.btnLink}')">
-                                            <source src="${sec.image}" type="video/mp4">
-                                        </video>
+<video 
+    class="mobile-frame video-strict-loop" 
+    autoplay 
+    muted 
+    playsinline 
+    preload="auto" 
+    onloadeddata="this.playbackRate = 6.0; this.play();" 
+    onended="this.currentTime = 0; this.play();"
+    onclick="openIframe('${sec.btnLink}')">
+    <source src="${sec.image}" type="video/mp4">
+</video>
+
+
+                                        
                                     </div>
+
                                     <div class="w-full md:w-1/2">
                                         <h2 class="text-4xl md:text-5xl font-black mb-4 italic uppercase text-white">${sec.title[currentLang]}</h2>
                                         <div class="text-[#ffd700] font-black uppercase text-sm tracking-[0.2em] mb-6 border-b-2 border-[#ffd700] inline-block pb-1">${sec.subtitle[currentLang]}</div>
