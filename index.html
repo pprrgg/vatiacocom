@@ -5,6 +5,7 @@
     // Configuración de Idiomas
     const translations = {
         es: {
+            heroVideo: "mp_.mp4", // Tu video original
             heroTag: "Gestión y Control",
             heroSub: "Optimización de Activos y Estabilidad de Red en Tiempo Real",
             contactTitle: "Contacto",
@@ -28,6 +29,7 @@
             communityTitle: "Gestión de Comunidades Energéticas"
         },
         en: {
+            heroVideo: "bg_en.mp4",
             heroTag: "Management & Control",
             heroSub: "Asset Optimization and Grid Stability in Real Time",
             contactTitle: "Contact Us",
@@ -51,6 +53,7 @@
             communityTitle: "Energy Communities Management"
         },
         it: {
+            heroVideo: "bg_it.mp4",
             heroTag: "Gestione e Controllo",
             heroSub: "Ottimizzazione degli Asset e Stabilità della Rete in Tempo Reale",
             contactTitle: "Contatto",
@@ -75,7 +78,7 @@
         }
     };
 
-    let currentLang = 'en';
+    let currentLang = 'es';
 
     const appData = [
         {
@@ -335,7 +338,7 @@
             left: 0;
             width: 100%;
             /* Altura ajustada: 100% de la pantalla menos el desplazamiento */
-            height: calc(100vh - 60px);
+            height: calc(100vh - 30px);
             background: white;
             z-index: 9999;
             /* Sombra opcional para dar profundidad sobre la web base */
@@ -712,8 +715,20 @@
 
         // Lógica de Renderizado Dinámico
         const renderApp = () => {
+
             const t = translations[currentLang];
 
+            // --- Cambio del Video de Fondo ---
+            const bgVideo = document.querySelector('.fixed-video-bg');
+            if (bgVideo) {
+                const source = bgVideo.querySelector('source');
+                // Solo cambiamos si la fuente es distinta para evitar parpadeos innecesarios
+                if (source.src !== window.location.origin + '/' + t.heroVideo) {
+                    source.src = t.heroVideo;
+                    bgVideo.load(); // Recarga el video con la nueva ruta
+                    bgVideo.play();
+                }
+            }
             // 1. ACTUALIZACIÓN DEL SELECTOR DE IDIOMA (DROPDOWN)
             const langMeta = {
                 en: { flag: '🇬🇧', label: 'ENG' },
@@ -839,17 +854,17 @@
                                     
                                     <div class="w-full md:w-1/2 img-container-mobile group">
                                         ${sec.isNew ? '<div class="absolute -top-3 -left-3 z-10 bg-[#e74c3c] text-white px-3 py-1 font-black italic text-xs shadow-2xl rotate-[-5deg]">NEW</div>' : ''}
-<video 
-    class="mobile-frame video-strict-loop" 
-    autoplay 
-    muted 
-    playsinline 
-    preload="auto" 
-    onloadeddata="this.playbackRate = 6.0; this.play();" 
-    onended="this.currentTime = 0; this.play();"
-    onclick="openIframe('${sec.btnLink}')">
-    <source src="${sec.image}" type="video/mp4">
-</video>
+                                            <video 
+                                                class="mobile-frame video-strict-loop" 
+                                                autoplay 
+                                                muted 
+                                                playsinline 
+                                                preload="auto" 
+                                                onloadeddata="this.playbackRate = 6.0; this.play();" 
+                                                onended="this.currentTime = 0; this.play();"
+                                                onclick="openIframe('${sec.btnLink}')">
+                                                <source src="${sec.image}" type="video/mp4">
+                                            </video>
 
 
                                         
@@ -887,10 +902,18 @@
         };
 
         window.setLang = (lang) => {
+            // 1. Colapsar el menú de idiomas quitando el foco del teclado/ratón
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+
+
+            // 3. Cambiar idioma y re-renderizar
             currentLang = lang;
             renderApp();
-        };
 
+            // 4. Reset de scroll
+        };
         // --- CONTACT LOGIC ---
         const initContact = () => {
             const t = translations[currentLang];
