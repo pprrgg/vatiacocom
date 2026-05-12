@@ -75,6 +75,54 @@
             authTitle: "Accesso Terminale",
             authBtn: "Stabilire Collegamento",
             communityTitle: "Gestione delle Comunità Energetiche"
+        },
+        fr: {
+            heroVideo: "bg_fr.mp4",
+            heroTag: "Gestion et Contrôle",
+            heroSub: "Optimisation des Actifs et Stabilité du Réseau en Temps Réel",
+            contactTitle: "Contact",
+            fName: "Nom Complet",
+            fPhone: "Téléphone de Contact",
+            fCompany: "Entreprise / Institution",
+            fRole: "Poste / Département",
+            fEmail: "E-mail Professionnel",
+            fSubject: "Objet de la demande",
+            fMsg: "Décrivez votre projet ou besoin technique...",
+            fLoc: "Emplacement du projet (Optionnel - Cliquez sur la carte)",
+            fBtn: "Transmettre la Demande Technique",
+            fStatus: "TRANSMISSION EN COURS...",
+            fSuccess: "✓ TRANSMISSION TERMINÉE",
+            fError: "ERREUR DE CONNEXION",
+            fForbidden: "E-MAIL PROFESSIONNEL REQUIS",
+            newsLabel: "NOUVEL OUTIL",
+            newsSuffix: "ACCÈS IMMÉDIAT",
+            authTitle: "Accès Terminal",
+            authBtn: "Établir la Liaison",
+            communityTitle: "Gestion des Communautés Énergétiques"
+        },
+        de: {
+            heroVideo: "bg_de.mp4",
+            heroTag: "Management & Steuerung",
+            heroSub: "Asset-Optimierung und Netzstabilität in Echtzeit",
+            contactTitle: "Kontakt",
+            fName: "Vollständiger Name",
+            fPhone: "Kontakttelefon",
+            fCompany: "Unternehmen / Institution",
+            fRole: "Position / Abteilung",
+            fEmail: "Geschäftliche E-Mail",
+            fSubject: "Betreff der Anfrage",
+            fMsg: "Beschreiben Sie Ihr Projekt oder Ihre technischen Anforderungen...",
+            fLoc: "Projektstandort (Optional - Auf der Karte anklicken)",
+            fBtn: "Technische Anfrage Senden",
+            fStatus: "ÜBERTRAGUNG...",
+            fSuccess: "✓ ÜBERTRAGUNG ABGESCHLOSSEN",
+            fError: "VERBINDUNGSFEHLER",
+            fForbidden: "GESCHÄFTLICHE E-MAIL ERFORDERLICH",
+            newsLabel: "NEUES TOOL",
+            newsSuffix: "SOFORTIGER ZUGRIFF",
+            authTitle: "Terminal-Zugriff",
+            authBtn: "Verbindung Herstellen",
+            communityTitle: "Management von Energiegemeinschaften"
         }
     };
 
@@ -85,26 +133,52 @@
             category: {
                 es: "Herramientas de Acceso Libre",
                 en: "Free Access Tools",
-                it: "Strumenti ad Accesso Libero"
+                it: "Strumenti ad Accesso Libero",
+                fr: "Outils en Accès Libre",
+                de: "Frei Zugängliche Tools"
             },
             items: [
                 {
                     id: "pv",
-                    title: { es: "PV.Design", en: "PV.Design", it: "PV.Design" },
+                    title: { es: "PV.Design", en: "PV.Design", it: "PV.Design", fr: "PV.Design", de: "PV.Design" },
                     isNew: true,
-                    subtitle: { es: "Simulación fotovoltaica basada en PVGIS", en: "PV simulation based on PVGIS", it: "Simulazione fotovoltaica basata su PVGIS" },
-                    description: { es: "Plataforma de software para diseño técnico y simulación de proyectos.", en: "Software platform for technical design and project simulation.", it: "Piattaforma software per la progettazione tecnica e la simulazione." },
+                    subtitle: {
+                        es: "Simulación fotovoltaica basada en PVGIS",
+                        en: "PV simulation based on PVGIS",
+                        it: "Simulazione fotovoltaica basata su PVGIS",
+                        fr: "Simulation photovoltaïque basée sur PVGIS",
+                        de: "Photovoltaik-Simulation auf Basis von PVGIS"
+                    },
+                    description: {
+                        es: "Plataforma de software para diseño técnico y simulación de proyectos.",
+                        en: "Software platform for technical design and project simulation.",
+                        it: "Piattaforma software per la progettazione tecnica e la simulazione.",
+                        fr: "Plateforme logicielle pour la conception technique et la simulation de projets.",
+                        de: "Softwareplattform für technisches Design und Projektsimulation."
+                    },
                     image: "v1.webm",
-                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore" },
+                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore", fr: "Lancer le Simulateur", de: "Simulator Ausführen" },
                     btnLink: "https://informetecnicoeconomico.com/#/A0_Sistema_FV/A61_Conectado_a_red/FV01_Autoconsumo_sin_excedentes"
                 },
                 {
                     id: "pow",
-                    title: { es: "Pow.Opt", en: "Pow.Opt", it: "Pow.Opt" },
-                    subtitle: { es: "Optimización de Contratos", en: "Contract Optimization", it: "Ottimizzazione Contratti" },
-                    description: { es: "Optimización de la potencia a contratar para minimizar costes anuales.", en: "Contracted power optimization to minimize total annual costs.", it: "Ottimizzazione della potenza contrattuale per minimizzare i costi." },
+                    title: { es: "Pow.Opt", en: "Pow.Opt", it: "Pow.Opt", fr: "Pow.Opt", de: "Pow.Opt" },
+                    subtitle: {
+                        es: "Optimización de Contratos",
+                        en: "Contract Optimization",
+                        it: "Ottimizzazione Contratti",
+                        fr: "Optimisation des Contrats",
+                        de: "Vertragsoptimierung"
+                    },
+                    description: {
+                        es: "Optimización de la potencia a contratar para minimizar costes anuales.",
+                        en: "Contracted power optimization to minimize total annual costs.",
+                        it: "Ottimizzazione della potenza contrattuale per minimizzare i costi.",
+                        fr: "Optimisation de la puissance souscrite pour minimiser les coûts annuels.",
+                        de: "Optimierung der Anschlussleistung zur Minimierung der jährlichen Kosten."
+                    },
                     image: "v2.webm",
-                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore" },
+                    btnText: { es: "Ejecutar Simulador", en: "Run Simulator", it: "Esegui Simulatore", fr: "Lancer le Simulateur", de: "Simulator Ausführen" },
                     btnLink: "https://informetecnicoeconomico.com/#/A2_Contrato_de_energ%C3%ADa_el%C3%A9ctrica/A11_Hasta_50_kW/A111_Optimizaci%C3%B3n_de_la_potencia_contratada"
                 }
             ]
@@ -113,58 +187,101 @@
             category: {
                 es: "Servicios Especializados",
                 en: "Specialized Services",
-                it: "Servizi Specializzati"
+                it: "Servizi Specializzati",
+                fr: "Services Spécialisés",
+                de: "Spezialisierte Dienstleistungen"
             },
             items: [
                 {
                     id: "comunidades-energeticas",
-                    title: { es: "Comunidades Energéticas", en: "Energy Communities", it: "Comunità Energetiche" },
+                    title: { es: "Comunidades Energéticas", en: "Energy Communities", it: "Comunità Energetiche", fr: "Communautés Énergétiques", de: "Energiegemeinschaften" },
                     isNew: true,
-                    subtitle: { es: "Gestión de Autoconsumo Colectivo", en: "Collective Self-Consumption Management", it: "Gestione Autoconsumo Collettivo" },
-                    description: { es: "Optimización de repartos dinámicos y maximización del ahorro compartido entre participantes de la comunidad.", en: "Optimization of dynamic sharing and maximization of shared savings among community participants.", it: "Ottimizzazione della ripartizione dinamica e massimizzazione del risparmio condiviso tra i partecipanti." },
+                    subtitle: {
+                        es: "Gestión de Autoconsumo Colectivo",
+                        en: "Collective Self-Consumption Management",
+                        it: "Gestione Autoconsumo Collettivo",
+                        fr: "Gestion de l'Autoconsommation Collective",
+                        de: "Management von Eigenverbrauchsgemeinschaften"
+                    },
+                    description: {
+                        es: "Optimización de repartos dinámicos y maximización del ahorro compartido entre participantes de la comunidad.",
+                        en: "Optimization of dynamic sharing and maximization of shared savings among community participants.",
+                        it: "Ottimizzazione della ripartizione dinamica e massimizzazione del risparmio condiviso tra i partecipanti.",
+                        fr: "Optimisation de la répartition dynamique et maximisation des économies partagées entre les membres.",
+                        de: "Optimierung der dynamischen Verteilung und Maximierung der gemeinsamen Einsparungen."
+                    },
                     image: "v3.webm",
-                    btnText: { es: "Explorar Solución", en: "Explore Solution", it: "Esplora Soluzione" },
+                    btnText: { es: "Explorar Solución", en: "Explore Solution", it: "Esplora Soluzione", fr: "Explorer la Solution", de: "Lösung Erkunden" },
                     btnLink: "#contacto"
                 },
                 {
                     id: "ems-predictivo",
-                    title: { es: "EMS Predictivo", en: "Predictive EMS", it: "EMS Predittivo" },
-                    subtitle: { es: "Gestión Inteligente de Activos", en: "Smart Asset Management", it: "Gestione Intelligente degli Asset" },
-                    description: { es: "Algoritmos que programan el uso de baterías y cargas según previsión meteorológica y precios de mercado.", en: "Algorithms that schedule battery and load usage based on weather forecasts and market prices.", it: "Algoritmi che programmano l'uso di batterie e carichi in base alle previsioni meteo e ai prezzi di mercato." },
+                    title: { es: "EMS Predictivo", en: "Predictive EMS", it: "EMS Predittivo", fr: "EMS Prédictif", de: "Prädiktives EMS" },
+                    subtitle: {
+                        es: "Gestión Inteligente de Activos",
+                        en: "Smart Asset Management",
+                        it: "Gestione Intelligente degli Asset",
+                        fr: "Gestion Intelligente des Actifs",
+                        de: "Intelligentes Asset-Management"
+                    },
+                    description: {
+                        es: "Algoritmos que programan el uso de baterías y cargas según previsión meteorológica y precios de mercado.",
+                        en: "Algorithms that schedule battery and load usage based on weather forecasts and market prices.",
+                        it: "Algoritmi che programmano l'uso di batterie e carichi in base alle previsioni meteo e ai prezzi di mercato.",
+                        fr: "Algorithmes planifiant l'usage des batteries selon la météo et les prix du marché.",
+                        de: "Algorithmen zur Planung der Batterie- und Lastnutzung basierend auf Wetterprognosen und Marktpreisen."
+                    },
                     image: "v4.webm",
-                    btnText: { es: "Ver Capacidades", en: "View Capabilities", it: "Vedi Capacità" },
+                    btnText: { es: "Ver Capacidades", en: "View Capabilities", it: "Vedi Capacità", fr: "Voir les Capacités", de: "Funktionen Anzeigen" },
                     btnLink: "#contacto"
                 },
                 {
                     id: "microredes",
-                    title: { es: "Microredes Industriales", en: "Industrial Microgrids", it: "Microreti Industriali" },
-                    subtitle: { es: "Arquitectura AC/DC", en: "AC/DC Architecture", it: "Architettura AC/DC" },
-                    description: { es: "Diseño y control de microredes resilientes con integración de generación distribuida y almacenamiento.", en: "Design and control of resilient microgrids with integration of distributed generation and storage.", it: "Progettazione e controllo di microreti resilienti con integrazione di generazione distribuita." },
+                    title: { es: "Microredes Industriales", en: "Industrial Microgrids", it: "Microreti Industriali", fr: "Micro-réseaux Industriels", de: "Industrielle Mikro-Netze" },
+                    subtitle: {
+                        es: "Arquitectura AC/DC",
+                        en: "AC/DC Architecture",
+                        it: "Architettura AC/DC",
+                        fr: "Architecture AC/DC",
+                        de: "AC/DC-Architektur"
+                    },
+                    description: {
+                        es: "Diseño y control de microredes resilientes con integración de generación distribuida y almacenamiento.",
+                        en: "Design and control of resilient microgrids with integration of distributed generation and storage.",
+                        it: "Progettazione e controllo di microreti resilienti con integrazione di generazione distribuita.",
+                        fr: "Conception et contrôle de micro-réseaux résilients avec intégration de génération et stockage.",
+                        de: "Design und Steuerung resilienter Mikro-Netze mit dezentraler Erzeugung und Speicherung."
+                    },
                     image: "v5.webm",
-                    btnText: { es: "Detalles Técnicos", en: "Technical Details", it: "Dettagli Tecnici" },
+                    btnText: { es: "Detalles Técnicos", en: "Technical Details", it: "Dettagli Tecnici", fr: "Détails Techniques", de: "Technische Details" },
                     btnLink: "https://vatiaco.com/tech"
                 },
-                // Añadir estos items dentro de la categoría de "Servicios Especializados" en appData
                 {
                     id: "edge-control",
                     title: {
                         es: "Control Local de Alta Velocidad",
                         en: "High-Speed Local Control",
-                        it: "Controllo Locale ad Alta Velocità"
+                        it: "Controllo Locale ad Alta Velocità",
+                        fr: "Contrôle Local Haute Vitesse",
+                        de: "Hochgeschwindigkeits-Lokale Steuerung"
                     },
                     isNew: true,
                     subtitle: {
                         es: "Arquitectura Edge Computing",
                         en: "Edge Computing Architecture",
-                        it: "Architettura Edge Computing"
+                        it: "Architettura Edge Computing",
+                        fr: "Architecture Edge Computing",
+                        de: "Edge-Computing-Architektur"
                     },
                     description: {
                         es: "Control de activos en milisegundos sin dependencia de la nube. Estabilidad de red, balanceo de fases y respuesta ultrarrápida ante variaciones de carga.",
                         en: "Asset control in milliseconds without cloud dependency. Grid stability, phase balancing, and ultra-fast response to load variations.",
-                        it: "Controllo degli asset in millisecondi senza dipendenza dal cloud. Stabilità della rete e risposta rapidissima alle variazioni di carico."
+                        it: "Controllo degli asset in millisecondi senza dipendenza dal cloud. Stabilità della rete e risposta rapidissima alle variazioni di carico.",
+                        fr: "Contrôle des actifs en millisecondes sans dépendance au cloud. Stabilité du réseau et réponse ultra-rapide.",
+                        de: "Asset-Steuerung in Millisekunden ohne Cloud-Abhängigkeit. Netzstabilität und ultraschnelle Reaktion auf Lastschwankungen."
                     },
                     image: "v6.webm",
-                    btnText: { es: "Especificaciones", en: "Specifications", it: "Specifiche" },
+                    btnText: { es: "Especificaciones", en: "Specifications", it: "Specifiche", fr: "Spécifications", de: "Spezifikationen" },
                     btnLink: "#contacto"
                 },
                 {
@@ -172,20 +289,26 @@
                     title: {
                         es: "Integración Multimarca",
                         en: "Multi-Brand Integration",
-                        it: "Integrazione Multimarca"
+                        it: "Integrazione Multimarca",
+                        fr: "Intégration Multi-marques",
+                        de: "Herstellerübergreifende Integration"
                     },
                     subtitle: {
                         es: "Ecosistema de Hardware Agnóstico",
                         en: "Agnostic Hardware Ecosystem",
-                        it: "Ecosistema Hardware Agnostico"
+                        it: "Ecosistema Hardware Agnostico",
+                        fr: "Écosystème Matériel Agnostique",
+                        de: "Hardware-agnostisches Ökosystem"
                     },
                     description: {
                         es: "Protocolo de comunicación universal compatible con cientos de inversores, baterías y medidores. Unifique toda su infraestructura en una única interfaz lógica.",
                         en: "Universal communication protocol compatible with hundreds of inverters, batteries, and meters. Unify your entire infrastructure into a single logical interface.",
-                        it: "Protocollo di comunicazione universale compatibile con centinaia di inverter e batterie. Unifica l'intera infrastruttura in un'unica interfaccia."
+                        it: "Protocollo di comunicazione universale compatibile con centinaia di inverter e batterie. Unifica l'intera infrastruttura.",
+                        fr: "Protocole universel compatible avec des centaines d'onduleurs et batteries. Unifiez toute votre infrastructure.",
+                        de: "Universelles Kommunikationsprotokoll, kompatibel mit Hunderten von Wechselrichtern und Batterien. Vereinheitlichen Sie Ihre Infrastruktur."
                     },
                     image: "v7.webm",
-                    btnText: { es: "Ver Compatibilidad", en: "Check Compatibility", it: "Verifica Compatibilità" },
+                    btnText: { es: "Ver Compatibilidad", en: "Check Compatibility", it: "Verifica Compatibilità", fr: "Voir Compatibilité", de: "Kompatibilität Prüfen" },
                     btnLink: "#contacto"
                 },
                 {
@@ -193,22 +316,28 @@
                     title: {
                         es: "Control de Picos Dinámicos",
                         en: "Dynamic Peak Shaving",
-                        it: "Peak Shaving Dinamico"
+                        it: "Peak Shaving Dinamico",
+                        fr: "Écrêtage des Pointes Dynamique",
+                        de: "Dynamisches Peak Shaving"
                     },
                     subtitle: {
                         es: "Protección de Infraestructura",
                         en: "Infrastructure Protection",
-                        it: "Protezione Infrastruttura"
+                        it: "Protezione Infrastruttura",
+                        fr: "Protection de l'Infrastructure",
+                        de: "Infrastrukturschutz"
                     },
                     description: {
                         es: "Algoritmos de protección de potencia contratada que gestionan el almacenamiento para evitar penalizaciones y reducir la inversión en refuerzos de red.",
                         en: "Contracted power protection algorithms that manage storage to avoid penalties and reduce investment in grid reinforcements.",
-                        it: "Algoritmi di protezione della potenza contrattuale che gestiscono lo stoccaggio per evitare penali e ridurre i costi di rete."
+                        it: "Algoritmi di protezione della potenza contrattuale che gestiscono lo stoccaggio per evitare penali.",
+                        fr: "Algorithmes gérant le stockage pour éviter les pénalités de dépassement de puissance et réduire les coûts.",
+                        de: "Algorithmen zum Schutz der Anschlussleistung, die Speicher verwalten, um Strafen zu vermeiden."
                     },
                     image: "v8.webm",
-                    btnText: { es: "Solicitar Demo", en: "Request Demo", it: "Richiedi Demo" },
+                    btnText: { es: "Solicitar Demo", en: "Request Demo", it: "Richiedi Demo", fr: "Demander une Démo", de: "Demo Anfordern" },
                     btnLink: "#contacto"
-                }
+                },
             ]
         }
     ];
@@ -591,9 +720,10 @@
                     <div class="text-base font-black tracking-tighter leading-none">
                         <span class="text-[#003399]">OWL</span><span class="text-[#D4AF37]">ERGY</span>
                     </div>
+                    <!-- Ajuste en tracking-tighter o valores negativos personalizados -->
                     <div id="nav-smart-energy"
-                        class="text-[7px] uppercase tracking-[0.35em] font-bold text-slate-400 mt-1 leading-none">
-                        Smart Energy
+                        class="text-[7px] uppercase tracking-[-0.02em] font-light text-slate-400 mt-1 leading-none inline-block origin-left scale-y-[1.5]">
+                        Microgrid Intelligence
                     </div>
                 </div>
             </div>
@@ -610,7 +740,6 @@
                         <!-- Se rellena en renderApp -->
                     </div>
                     <div class="dropdown-menu !min-w-[120px] !left-auto !right-0">
-
                         <a href="javascript:void(0)" onclick="setLang('en')"
                             class="dropdown-item flex items-center gap-2">
                             <span class="text-lg">🇬🇧</span> <b>ENG</b>
@@ -619,10 +748,18 @@
                             class="dropdown-item flex items-center gap-2">
                             <span class="text-lg">🇪🇸</span> <b>ESP</b>
                         </a>
-
                         <a href="javascript:void(0)" onclick="setLang('it')"
                             class="dropdown-item flex items-center gap-2">
                             <span class="text-lg">🇮🇹</span> <b>ITA</b>
+                        </a>
+                        <!-- Nuevos Idiomas -->
+                        <a href="javascript:void(0)" onclick="setLang('fr')"
+                            class="dropdown-item flex items-center gap-2">
+                            <span class="text-lg">🇫🇷</span> <b>FRA</b>
+                        </a>
+                        <a href="javascript:void(0)" onclick="setLang('de')"
+                            class="dropdown-item flex items-center gap-2">
+                            <span class="text-lg">🇩🇪</span> <b>DEU</b>
                         </a>
                     </div>
                 </div>
@@ -660,16 +797,24 @@
         <div class="mb-6 flex items-center gap-3">
             <span class="text-4xl md:text-5xl">🦉</span>
             <div class="h-8 w-[1px] bg-white/20"></div>
-
         </div>
 
         <!-- Título Principal Estilo Logo -->
-        <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-8">
-            <span class="text-white">OWL</span><span class="text-[#ffd700]">ERGY</span>
-            <span class="block text-xl md:text-2xl font-light tracking-[0.15em] text-slate-300 mt-4 italic">
+        <h1 class="flex flex-col items-center mb-12">
+            <!-- Parte Superior: OWL ERGY -->
+            <div class="text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                <span class="text-white">OWL</span><span class="text-[#ffd700]">ERGY</span>
+            </div>
+
+            <!-- Microgrid Intelligence: Estirado, Fino y Pegado -->
+            <span
+                class="block text-xl md:text-2xl font-extralight uppercase tracking-[-0.02em] text-slate-300 mt-6 inline-block origin-center scale-y-[1.6]">
                 Microgrid Intelligence
             </span>
-            <span id="hero-tag" class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
+
+            <!-- Advanced Power Solutions: Estilo compacto -->
+            <span id="hero-tag"
+                class="block text-white text-[10px] md:text-xs font-light uppercase tracking-[-0.01em] mt-4 inline-block origin-center scale-y-[1.4] opacity-80">
                 Advanced Power Solutions
             </span>
         </h1>
@@ -678,10 +823,9 @@
         <div class="flex flex-col items-center max-w-3xl">
             <div class="w-12 h-[2px] bg-[#ffd700] mb-8"></div>
             <p id="hero-sub"
-                class="text-white text-xs md:text-base font-medium uppercase tracking-[0.5em] leading-relaxed opacity-90">
+                class="text-white text-xs md:text-base font-medium uppercase tracking-[0.4em] leading-relaxed opacity-90">
                 Resiliencia Energética y Control Predictivo en AC/DC
             </p>
-
         </div>
     </header>
 
@@ -733,9 +877,10 @@
             const langMeta = {
                 en: { flag: '🇬🇧', label: 'ENG' },
                 es: { flag: '🇪🇸', label: 'ESP' },
-                it: { flag: '🇮🇹', label: 'ITA' }
+                it: { flag: '🇮🇹', label: 'ITA' },
+                fr: { flag: '🇫🇷', label: 'FRA' },
+                de: { flag: '🇩🇪', label: 'DEU' }
             };
-
             const langDisplay = document.getElementById('current-lang-display');
             if (langDisplay) {
                 langDisplay.innerHTML = `
