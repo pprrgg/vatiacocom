@@ -5,7 +5,7 @@
     // Configuración de Idiomas
     const translations = {
         es: {
-            heroTag: "Gestión y Control de",
+            heroTag: "Gestión y Control",
             heroSub: "Optimización de Activos y Estabilidad de Red en Tiempo Real",
             contactTitle: "Contacto",
             fName: "Nombre Completo",
@@ -28,7 +28,7 @@
             communityTitle: "Gestión de Comunidades Energéticas"
         },
         en: {
-            heroTag: "Management & Control of",
+            heroTag: "Management & Control",
             heroSub: "Asset Optimization and Grid Stability in Real Time",
             contactTitle: "Contact Us",
             fName: "Full Name",
@@ -51,7 +51,7 @@
             communityTitle: "Energy Communities Management"
         },
         it: {
-            heroTag: "Gestione e Controllo di",
+            heroTag: "Gestione e Controllo",
             heroSub: "Ottimizzazione degli Asset e Stabilità della Rete in Tempo Reale",
             contactTitle: "Contatto",
             fName: "Nome Completo",
@@ -103,7 +103,7 @@
             ]
         },
         {
-            category: { es: "Ingeniería", en: "Engineering", it: "Ingegneria" },
+            category: { es: "Servicios", en: "Services", it: "Servizi" },
             items: [
                 {
                     id: "microredes",
@@ -542,23 +542,34 @@
         <div id="mobile-nav-content" class="flex flex-col gap-6"></div>
     </div>
 
-    <header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center ">
-        <h1 class="text-7xl md:text-5xl font-black italic leading-[0.8] tracking-tighter mb-12 text-white">
-            <span id="hero-tag"
-                class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">Gestión y Control
-                de</span>
-            Micro Redes
-            <span class="text-white text-xs md:text-sm font-bold uppercase tracking-[0.12em] block mb-2">( CA, CC
-                )</span>
-        </h1>
-        <div class="flex flex-col items-center">
-            <p id="hero-sub"
-                class="text-white text-[10px] md:text-sm font-bold uppercase tracking-[0.4em] leading-loose max-w-2xl">
-                Optimización de Activos y Estabilidad de Red en Tiempo Real</p>
-            <div class="w-20 h-1.5 bg-[#ffd700] mt-8"></div>
-        </div>
-    </header>
+<header class="h-[75vh] flex flex-col items-center justify-center px-10 text-center">
+    <!-- Badge Superior -->
+    <div class="mb-6 flex items-center gap-3">
+        <span class="text-4xl md:text-5xl">🦉</span>
+        <div class="h-8 w-[1px] bg-white/20"></div>
 
+    </div>
+
+    <!-- Título Principal Estilo Logo -->
+    <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-8">
+        <span class="text-white">OWL</span><span class="text-[#ffd700]">ERGY</span>
+        <span class="block text-xl md:text-2xl font-light tracking-[0.15em] text-slate-300 mt-4 italic">
+            Microgrid Intelligence
+        </span>
+                <span id="hero-tag" class="text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
+            Advanced Power Solutions
+        </span>
+    </h1>
+
+    <!-- Subtítulo y Separador -->
+    <div class="flex flex-col items-center max-w-3xl">
+        <div class="w-12 h-[2px] bg-[#ffd700] mb-8"></div>
+        <p id="hero-sub" class="text-white text-xs md:text-base font-medium uppercase tracking-[0.5em] leading-relaxed opacity-90">
+            Resiliencia Energética y Control Predictivo en AC/DC
+        </p>
+        
+    </div>
+</header>
 
 
     <main id="main-content" class="space-y-16"></main>
